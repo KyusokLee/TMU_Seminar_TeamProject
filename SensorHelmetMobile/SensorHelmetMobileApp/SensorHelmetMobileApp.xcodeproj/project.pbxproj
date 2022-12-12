@@ -1,0 +1,647 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9478639D29471A48003EC94F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478639C29471A48003EC94F /* AppDelegate.swift */; };
+		9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478639E29471A48003EC94F /* SceneDelegate.swift */; };
+		947863A129471A48003EC94F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863A029471A48003EC94F /* ViewController.swift */; };
+		947863A429471A48003EC94F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 947863A229471A48003EC94F /* Main.storyboard */; };
+		947863A629471A49003EC94F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947863A529471A49003EC94F /* Assets.xcassets */; };
+		947863A929471A49003EC94F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 947863A729471A49003EC94F /* LaunchScreen.storyboard */; };
+		947863B429471A49003EC94F /* SensorHelmetMobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863B329471A49003EC94F /* SensorHelmetMobileAppTests.swift */; };
+		947863BE29471A49003EC94F /* SensorHelmetMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */; };
+		947863C029471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		947863B029471A49003EC94F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9478639129471A48003EC94F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9478639829471A48003EC94F;
+			remoteInfo = SensorHelmetMobileApp;
+		};
+		947863BA29471A49003EC94F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9478639129471A48003EC94F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9478639829471A48003EC94F;
+			remoteInfo = SensorHelmetMobileApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9478639929471A48003EC94F /* SensorHelmetMobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SensorHelmetMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9478639C29471A48003EC94F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9478639E29471A48003EC94F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		947863A029471A48003EC94F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		947863A329471A48003EC94F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		947863A529471A49003EC94F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		947863A829471A49003EC94F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		947863AA29471A49003EC94F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		947863AF29471A49003EC94F /* SensorHelmetMobileAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SensorHelmetMobileAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		947863B329471A49003EC94F /* SensorHelmetMobileAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppTests.swift; sourceTree = "<group>"; };
+		947863B929471A49003EC94F /* SensorHelmetMobileAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SensorHelmetMobileAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITests.swift; sourceTree = "<group>"; };
+		947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9478639629471A48003EC94F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		947863AC29471A49003EC94F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		947863B629471A49003EC94F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9478639029471A48003EC94F = {
+			isa = PBXGroup;
+			children = (
+				9478639B29471A48003EC94F /* SensorHelmetMobileApp */,
+				947863B229471A49003EC94F /* SensorHelmetMobileAppTests */,
+				947863BC29471A49003EC94F /* SensorHelmetMobileAppUITests */,
+				9478639A29471A48003EC94F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9478639A29471A48003EC94F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9478639929471A48003EC94F /* SensorHelmetMobileApp.app */,
+				947863AF29471A49003EC94F /* SensorHelmetMobileAppTests.xctest */,
+				947863B929471A49003EC94F /* SensorHelmetMobileAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9478639B29471A48003EC94F /* SensorHelmetMobileApp */ = {
+			isa = PBXGroup;
+			children = (
+				9478639C29471A48003EC94F /* AppDelegate.swift */,
+				9478639E29471A48003EC94F /* SceneDelegate.swift */,
+				947863CE29471A73003EC94F /* Presenter */,
+				947863CD29471A66003EC94F /* View */,
+				947863CC29471A5B003EC94F /* Model */,
+				947863A529471A49003EC94F /* Assets.xcassets */,
+				947863AA29471A49003EC94F /* Info.plist */,
+			);
+			path = SensorHelmetMobileApp;
+			sourceTree = "<group>";
+		};
+		947863B229471A49003EC94F /* SensorHelmetMobileAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				947863B329471A49003EC94F /* SensorHelmetMobileAppTests.swift */,
+			);
+			path = SensorHelmetMobileAppTests;
+			sourceTree = "<group>";
+		};
+		947863BC29471A49003EC94F /* SensorHelmetMobileAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */,
+				947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */,
+			);
+			path = SensorHelmetMobileAppUITests;
+			sourceTree = "<group>";
+		};
+		947863CC29471A5B003EC94F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		947863CD29471A66003EC94F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				947863D029471A9C003EC94F /* Storyboard */,
+				947863CF29471A80003EC94F /* Controller */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		947863CE29471A73003EC94F /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		947863CF29471A80003EC94F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				947863A029471A48003EC94F /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		947863D029471A9C003EC94F /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				947863A729471A49003EC94F /* LaunchScreen.storyboard */,
+				947863A229471A48003EC94F /* Main.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9478639829471A48003EC94F /* SensorHelmetMobileApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 947863C329471A49003EC94F /* Build configuration list for PBXNativeTarget "SensorHelmetMobileApp" */;
+			buildPhases = (
+				9478639529471A48003EC94F /* Sources */,
+				9478639629471A48003EC94F /* Frameworks */,
+				9478639729471A48003EC94F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SensorHelmetMobileApp;
+			productName = SensorHelmetMobileApp;
+			productReference = 9478639929471A48003EC94F /* SensorHelmetMobileApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		947863AE29471A49003EC94F /* SensorHelmetMobileAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 947863C629471A49003EC94F /* Build configuration list for PBXNativeTarget "SensorHelmetMobileAppTests" */;
+			buildPhases = (
+				947863AB29471A49003EC94F /* Sources */,
+				947863AC29471A49003EC94F /* Frameworks */,
+				947863AD29471A49003EC94F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				947863B129471A49003EC94F /* PBXTargetDependency */,
+			);
+			name = SensorHelmetMobileAppTests;
+			productName = SensorHelmetMobileAppTests;
+			productReference = 947863AF29471A49003EC94F /* SensorHelmetMobileAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		947863B829471A49003EC94F /* SensorHelmetMobileAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 947863C929471A49003EC94F /* Build configuration list for PBXNativeTarget "SensorHelmetMobileAppUITests" */;
+			buildPhases = (
+				947863B529471A49003EC94F /* Sources */,
+				947863B629471A49003EC94F /* Frameworks */,
+				947863B729471A49003EC94F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				947863BB29471A49003EC94F /* PBXTargetDependency */,
+			);
+			name = SensorHelmetMobileAppUITests;
+			productName = SensorHelmetMobileAppUITests;
+			productReference = 947863B929471A49003EC94F /* SensorHelmetMobileAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9478639129471A48003EC94F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					9478639829471A48003EC94F = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					947863AE29471A49003EC94F = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 9478639829471A48003EC94F;
+					};
+					947863B829471A49003EC94F = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 9478639829471A48003EC94F;
+					};
+				};
+			};
+			buildConfigurationList = 9478639429471A48003EC94F /* Build configuration list for PBXProject "SensorHelmetMobileApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9478639029471A48003EC94F;
+			productRefGroup = 9478639A29471A48003EC94F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9478639829471A48003EC94F /* SensorHelmetMobileApp */,
+				947863AE29471A49003EC94F /* SensorHelmetMobileAppTests */,
+				947863B829471A49003EC94F /* SensorHelmetMobileAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9478639729471A48003EC94F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				947863A929471A49003EC94F /* LaunchScreen.storyboard in Resources */,
+				947863A629471A49003EC94F /* Assets.xcassets in Resources */,
+				947863A429471A48003EC94F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		947863AD29471A49003EC94F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		947863B729471A49003EC94F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9478639529471A48003EC94F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				947863A129471A48003EC94F /* ViewController.swift in Sources */,
+				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
+				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		947863AB29471A49003EC94F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				947863B429471A49003EC94F /* SensorHelmetMobileAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		947863B529471A49003EC94F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				947863BE29471A49003EC94F /* SensorHelmetMobileAppUITests.swift in Sources */,
+				947863C029471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		947863B129471A49003EC94F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9478639829471A48003EC94F /* SensorHelmetMobileApp */;
+			targetProxy = 947863B029471A49003EC94F /* PBXContainerItemProxy */;
+		};
+		947863BB29471A49003EC94F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9478639829471A48003EC94F /* SensorHelmetMobileApp */;
+			targetProxy = 947863BA29471A49003EC94F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		947863A229471A48003EC94F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				947863A329471A48003EC94F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		947863A729471A49003EC94F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				947863A829471A49003EC94F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		947863C129471A49003EC94F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		947863C229471A49003EC94F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		947863C429471A49003EC94F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNTPRP3C66;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SensorHelmetMobileApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kyulee.SensorHelmetMobileApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		947863C529471A49003EC94F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNTPRP3C66;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SensorHelmetMobileApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kyulee.SensorHelmetMobileApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		947863C729471A49003EC94F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNTPRP3C66;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kyulee.SensorHelmetMobileAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SensorHelmetMobileApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SensorHelmetMobileApp";
+			};
+			name = Debug;
+		};
+		947863C829471A49003EC94F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNTPRP3C66;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kyulee.SensorHelmetMobileAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SensorHelmetMobileApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SensorHelmetMobileApp";
+			};
+			name = Release;
+		};
+		947863CA29471A49003EC94F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNTPRP3C66;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kyulee.SensorHelmetMobileAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SensorHelmetMobileApp;
+			};
+			name = Debug;
+		};
+		947863CB29471A49003EC94F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNTPRP3C66;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.kyulee.SensorHelmetMobileAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SensorHelmetMobileApp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9478639429471A48003EC94F /* Build configuration list for PBXProject "SensorHelmetMobileApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				947863C129471A49003EC94F /* Debug */,
+				947863C229471A49003EC94F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		947863C329471A49003EC94F /* Build configuration list for PBXNativeTarget "SensorHelmetMobileApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				947863C429471A49003EC94F /* Debug */,
+				947863C529471A49003EC94F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		947863C629471A49003EC94F /* Build configuration list for PBXNativeTarget "SensorHelmetMobileAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				947863C729471A49003EC94F /* Debug */,
+				947863C829471A49003EC94F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		947863C929471A49003EC94F /* Build configuration list for PBXNativeTarget "SensorHelmetMobileAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				947863CA29471A49003EC94F /* Debug */,
+				947863CB29471A49003EC94F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9478639129471A48003EC94F /* Project object */;
+}
