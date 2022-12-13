@@ -16,6 +16,7 @@
 		947863B429471A49003EC94F /* SensorHelmetMobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863B329471A49003EC94F /* SensorHelmetMobileAppTests.swift */; };
 		947863BE29471A49003EC94F /* SensorHelmetMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */; };
 		947863C029471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */; };
+		947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863D129471C3B003EC94F /* BluetoothSerial.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		947863B929471A49003EC94F /* SensorHelmetMobileAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SensorHelmetMobileAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITests.swift; sourceTree = "<group>"; };
 		947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		947863D129471C3B003EC94F /* BluetoothSerial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerial.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 		947863CE29471A73003EC94F /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				947863D129471C3B003EC94F /* BluetoothSerial.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			files = (
 				947863A129471A48003EC94F /* ViewController.swift in Sources */,
 				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
+				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
