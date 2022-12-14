@@ -17,6 +17,12 @@
 		947863BE29471A49003EC94F /* SensorHelmetMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */; };
 		947863C029471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */; };
 		947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863D129471C3B003EC94F /* BluetoothSerial.swift */; };
+		94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD51112949FAA400DB0287 /* ScanVC.swift */; };
+		94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94DD51132949FAB200DB0287 /* ScanView.storyboard */; };
+		94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD51152949FBFD00DB0287 /* SerialVC.swift */; };
+		94DD51182949FC0700DB0287 /* SerialView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94DD51172949FC0700DB0287 /* SerialView.storyboard */; };
+		94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */; };
+		94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,12 @@
 		947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITests.swift; sourceTree = "<group>"; };
 		947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		947863D129471C3B003EC94F /* BluetoothSerial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerial.swift; sourceTree = "<group>"; };
+		94DD51112949FAA400DB0287 /* ScanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanVC.swift; sourceTree = "<group>"; };
+		94DD51132949FAB200DB0287 /* ScanView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScanView.storyboard; sourceTree = "<group>"; };
+		94DD51152949FBFD00DB0287 /* SerialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialVC.swift; sourceTree = "<group>"; };
+		94DD51172949FC0700DB0287 /* SerialView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SerialView.storyboard; sourceTree = "<group>"; };
+		94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTableViewCell.swift; sourceTree = "<group>"; };
+		94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +151,7 @@
 		947863CD29471A66003EC94F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				94DD5119294A009300DB0287 /* Cells */,
 				947863D029471A9C003EC94F /* Storyboard */,
 				947863CF29471A80003EC94F /* Controller */,
 			);
@@ -157,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				947863A029471A48003EC94F /* ViewController.swift */,
+				94DD51112949FAA400DB0287 /* ScanVC.swift */,
+				94DD51152949FBFD00DB0287 /* SerialVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -166,8 +181,35 @@
 			children = (
 				947863A729471A49003EC94F /* LaunchScreen.storyboard */,
 				947863A229471A48003EC94F /* Main.storyboard */,
+				94DD51132949FAB200DB0287 /* ScanView.storyboard */,
+				94DD51172949FC0700DB0287 /* SerialView.storyboard */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		94DD5119294A009300DB0287 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				94DD511B294A00C500DB0287 /* View */,
+				94DD511A294A009900DB0287 /* Scene */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		94DD511A294A009900DB0287 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		94DD511B294A00C500DB0287 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */,
+				94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,7 +317,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				947863A929471A49003EC94F /* LaunchScreen.storyboard in Resources */,
+				94DD51182949FC0700DB0287 /* SerialView.storyboard in Resources */,
 				947863A629471A49003EC94F /* Assets.xcassets in Resources */,
+				94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */,
+				94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */,
 				947863A429471A48003EC94F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,9 +346,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */,
 				947863A129471A48003EC94F /* ViewController.swift in Sources */,
+				94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */,
 				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
+				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

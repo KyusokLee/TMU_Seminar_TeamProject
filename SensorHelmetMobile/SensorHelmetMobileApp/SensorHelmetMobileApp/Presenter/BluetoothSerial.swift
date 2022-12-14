@@ -20,6 +20,13 @@ protocol BluetoothSerialDelegate: AnyObject {
     func serialDidReceiveMessage(message : String)
 }
 
+// プロトコルに含まれている一部の間数をOptionalに設定する
+extension BluetoothSerialDelegate {
+    func serialDidDiscoverPeripheral(peripheral: CBPeripheral, RSSI: NSNumber?) {}
+    func serialDidConnectPeripheral(peripheral : CBPeripheral) {}
+    func serialDidReceiveMessage(message : String) {}
+}
+
 
 class BluetoothSerial: NSObject {
     
@@ -214,10 +221,12 @@ extension BluetoothSerial: CBPeripheralDelegate {
             print(service.uuid.uuidString)
             // 検索した全てのservicesに対してCharacteristicsを検索する
             // パラメータをnilに設定すると、serviceの全てのcharacteristicsを検索する
-            if service.uuid.uuidString == "FF10" {
-                print("discovering characteristics")
-                peripheral.discoverCharacteristics(nil, for: service)
-            }
+            print("discovering characteristics")
+            peripheral.discoverCharacteristics([characteristicUUID], for: service)
+//            if service.uuid.uuidString == "FFE0" {
+//                print("discovering characteristics")
+//                peripheral.discoverCharacteristics(nil, for: service)
+//            }
         }
     }
      
@@ -232,13 +241,13 @@ extension BluetoothSerial: CBPeripheralDelegate {
         print("Found \(characteristics) characteristics! : \(characteristics)")
         
         for characteristic in characteristics {
-            // 검색된 모든 characteristic에 대해 characteristicUUID를 한번 더 체크하고, 일치한다면 peripheral을 구독하고 통신을 위한 설정을 완료
-            if characteristic.uuid.uuidString == "FF11" {
+            // 検索された全てのCharacteristicについて、characteristicUUIDをもう一度チェックし、一致すればperipheralを登録し、通信のための設定を完了させる
+            if characteristic.uuid == characteristicUUID {
                 // 該当のデバイスを登録する
                 peripheral.setNotifyValue(true, for: characteristic)
-                // 데이터를 보내기 위한 characteristic을 저장
+                // データを送るためのCharacteristicを保存
                 self.writeCharacteristics = characteristic
-                // 데이터를 보내는 타입을 설정합니다. 이는 주변기기가 어떤 type으로 설정되어 있는지에 따라 변경
+                // データを送るためのタイプを設定する。これは、周辺機器がどんなTypeに設定されているかによって変更する
                 self.writeType = characteristic.properties.contains(.write) ? .withResponse : .withoutResponse
                 // 周辺機器と接続完了し、動作するコードをここに作成する
                 delegate?.serialDidConnectPeripheral(peripheral: peripheral)
