@@ -11,6 +11,11 @@ import CoreBluetooth
 // Bluetooth通信を担当するserialをクラスで宣言
 // CoreBluetoothを使うためのプロトコルを追加
 // Global Handlerにした
+
+// Central Managerがmain device
+// peripheral がair podsなどの周辺機器
+
+
 var serial: BluetoothSerial!
 
 // Delegate Patternでviewとserialの連動を行う
@@ -157,6 +162,7 @@ extension BluetoothSerial: CBCentralManagerDelegate {
             isSwitchedOn = true
         } else {
             isSwitchedOn = false
+            print("Turn on Bluetooth")
         }
         
         self.pendingPeripheral = nil
@@ -164,6 +170,7 @@ extension BluetoothSerial: CBCentralManagerDelegate {
     }
     
     // デバイスが検索されるたびに、呼び出されるメソッド
+    // デバイスを見つかったときに、呼び出されるメソッド
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
         // TODO: 🔥機器が検索されるたびに、必要なコードをここに作成する予定
