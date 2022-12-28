@@ -24,7 +24,7 @@ finally:
     # 動画ファイル保存用の設定
     #save_dir = "/var/www/html/camera/pictures"
     save_dir = "/home/zemi/start/python_code/video/"
-    f_name = now.strftime("%Y%M%d%H%M%S") + ".avi"
+    f_name = now.strftime("%Y%m%d%H%M%S") + ".avi"
     f_name = os.path.join("/home/zemi/start/python_code/video/",f_name)
     digit_num = len(str(int(video.get(cv2.CAP_PROP_FRAME_COUNT))))
     #nowifn = now.strftime('%Y%m%d_%H%M%S') + '.mp4'
