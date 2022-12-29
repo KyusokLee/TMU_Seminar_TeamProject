@@ -32,7 +32,7 @@
     <div id="map"></div>
     <td><div id="sidebar"></div></td>
     <script src="constants.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=[API キーを入力してください]&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=[AIzaSyBSKSbBMF-rQ4VtKU9kSHs7Nwt_38tpt0E]&callback=initMap" async defer></script>
     <script>
       var map;
       var marker = [];
@@ -100,7 +100,7 @@
           var latitude = markerData[i]['緯度'];
           if (!latitude) { continue; }
           addMarker(i, markerData[i]);
-          var name = markerData[i]['名称'];
+          var name = markerData[i]['時間'];
 
           sidebar_html += `<b>${i + 1}</b> <a href="javascript:openWindow(${i})">${name}<\/a><br />`;
         }
