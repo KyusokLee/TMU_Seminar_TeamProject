@@ -1,25 +1,16 @@
+import socket
 import os.path
 import cv2
 import time
 import datetime
 import urllib.request
+import subprocess
 
 #time.sleep(10)
 #url = "http://192.168.151.126:8080/?action=stream"
-url = "http://192.168.0.37:8080/?action=stream"
-
-try:
-    f = urllib.request.urlopen(url)
-    f.close()
-    video = cv2.VideoCapture(url)
-    #get_video(video_)
-    
-except Exception:
-    print("no url")
-    video = cv2.VideoCapture(0)
-    #get_video(video_2)
-
-finally:
+#url = "http://192.168.0.37:8080/?action=stream"
+flg = False
+def get_video(video):
     now = datetime.datetime.now()
     # 動画ファイル保存用の設定
     #save_dir = "/var/www/html/camera/pictures"
@@ -51,6 +42,46 @@ finally:
         n += 1
     
     writer.release()
+    video.release()
     cv2.destroyAllWindows()
+
+try:
+    connect_interface = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    connect_interface.connect(("8.8.8.8", 80))
+    #print(connect_interface.getsockname()[0])
+        
+    url = "http://"+str(connect_interface.getsockname()[0])+":8080/?action=stream"
+
+    f = urllib.request.urlopen(url)
+    f.close()
+    video_ = cv2.VideoCapture(url)
+    #get_video(video_)
+
+ #ipアドレスが取得できない＝ネットに繋がっていないかつ，次につながったときはIPアドレスが変更されるか脳性が高い
+except (OSError, cv2.error) as e:
+    t = e.__class__.__name__
+    print(t)
+    #mjpg-streamerを停止
+    print("stop_mjpg-streamer")
+    subprocess.run(["/home/zemi/start/stop_mjpg-streamer.sh", "arguments"], shell=True)
+    video_ = cv2.VideoCapture(0)
+    flg = True
+#mjpg-streamerが起動していない場合
+except (URLError, urlib.error.URLError, ConnectionError, ConnectionRefusedError) as e:
+    t = e.__class__.__name__
+    print(t)
+    print("no url")
+    #get_video(video_2)
+    subprocess.run(["/home/zemi/start/stop_mjpg-streamer.sh", "arguments"], shell=True)
+    time.sleep(1)
+    video_ = cv2.VideoCapture(0)
+    #subprocess.run(["/home/zemi/start/autostart.sh", "arguments"], shell=True)
+    flg = True
+finally:
+    get_video(video_)
+    time.sleep(3)
+    if (flg == True):
+        subprocess.run(["/home/zemi/start/autostart.sh", "arguments"], shell=True)
+
 
 
