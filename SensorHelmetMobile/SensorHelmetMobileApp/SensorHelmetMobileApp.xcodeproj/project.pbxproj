@@ -17,6 +17,7 @@
 		947863BE29471A49003EC94F /* SensorHelmetMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */; };
 		947863C029471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */; };
 		947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863D129471C3B003EC94F /* BluetoothSerial.swift */; };
+		948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */; };
 		94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD51112949FAA400DB0287 /* ScanVC.swift */; };
 		94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94DD51132949FAB200DB0287 /* ScanView.storyboard */; };
 		94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD51152949FBFD00DB0287 /* SerialVC.swift */; };
@@ -57,6 +58,7 @@
 		947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITests.swift; sourceTree = "<group>"; };
 		947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		947863D129471C3B003EC94F /* BluetoothSerial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerial.swift; sourceTree = "<group>"; };
+		948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIClient.swift; sourceTree = "<group>"; };
 		94DD51112949FAA400DB0287 /* ScanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanVC.swift; sourceTree = "<group>"; };
 		94DD51132949FAB200DB0287 /* ScanView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScanView.storyboard; sourceTree = "<group>"; };
 		94DD51152949FBFD00DB0287 /* SerialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialVC.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		947863CC29471A5B003EC94F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				947863A129471A48003EC94F /* ViewController.swift in Sources */,
 				94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */,
 				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
+				948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
