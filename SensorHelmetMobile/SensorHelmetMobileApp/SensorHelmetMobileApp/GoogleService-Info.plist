@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>935367755278-6hc99cg8e6m6ejcs63kiunfk57vq2qsr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.935367755278-6hc99cg8e6m6ejcs63kiunfk57vq2qsr</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDDh1_pCZHwpdKMdwubhA8vkkT3gF4uvEc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>935367755278</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>jp.kyulee.SensorHelmetMobileApp</string>
+	<key>PROJECT_ID</key>
+	<string>raspi-sensorhelmet</string>
+	<key>STORAGE_BUCKET</key>
+	<string>raspi-sensorhelmet.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:935367755278:ios:bce0c320cd0564ac76de5f</string>
+</dict>
+</plist>

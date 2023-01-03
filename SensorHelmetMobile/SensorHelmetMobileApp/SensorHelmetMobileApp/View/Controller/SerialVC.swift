@@ -31,7 +31,8 @@ class SerialVC: UIViewController {
     }
     
     @IBAction func scanButtonAction(_ sender: Any) {
-        performSegue(withIdentifier: "ScanVC", sender: nil)
+        let scanVC = UIStoryboard.init(name: "ScanView", bundle: nil).instantiateViewController(withIdentifier: "ScanVC")
+        self.present(scanVC, animated: true, completion: nil)
     }
     
     // 周辺機器にデータを転送する
@@ -42,7 +43,7 @@ class SerialVC: UIViewController {
         }
         
         serial.delegate = self
-        let msg = "123"
+        let msg = "okokok"
         serial.sendMessageToDevice(msg)
         serialMessageLabel.text = "waiting for Peripheral's messege"
     }
