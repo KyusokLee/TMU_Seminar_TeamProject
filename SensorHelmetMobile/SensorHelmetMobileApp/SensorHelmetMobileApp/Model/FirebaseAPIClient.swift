@@ -10,17 +10,11 @@ import Foundation
 struct GoogleVisonAPIClient: GoogleVisonAPIClientProtocol {
     // typealiasの指定
 //    typealias NetworkCompletion = (_ data: Data?, _ error: Error?) -> Void
-    
-    // API仕様はこちらを参照
-    // https://cloud.google.com/vision/docs/ocr?hl=ja
-    // https://cloud.google.com/vision/docs/reference/rest/v1/images/annotate?hl=ja#AnnotateImageRequest
     func send(base64String: String, completion: @escaping ((Data?, Error?) -> Void)) {
         // TODO: 課題2
         // ここでCloud Vision APIのリクエストを組み立て
         // URLSessionを使って通信をする
         // 通信が終わったらcompletionを呼ぶこと
-        // API Key: AIzaSyBGokVmQrGhd9PdYWUDRCKPSM6y-smmdcM
-        // 現在有効ではない
         let request = buildRequest(with: base64String)
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
