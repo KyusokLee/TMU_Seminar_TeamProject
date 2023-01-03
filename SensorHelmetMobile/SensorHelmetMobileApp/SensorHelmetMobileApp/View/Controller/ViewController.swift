@@ -6,40 +6,65 @@
 //
 
 import UIKit
+import FirebaseFirestore
+
+// Firebaseのデータを読む
+// Raspiの遠隔操作ができるように
+
 
 class ViewController: UIViewController {
-    @IBOutlet weak var serialMessageLabel: UILabel!
+    
+    @IBOutlet weak var readDataButton: UIButton! {
+        didSet {
+            readDataButton.setTitle("FireStoreからデータを読み込む", for: .normal)
+        }
+    }
+    
+    @IBOutlet weak var tempDataLabel: UILabel! {
+        didSet {
+            tempDataLabel.isHidden = true
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // serialの初期化
-        serial = BluetoothSerial.init()
+        
     }
     
-    @IBAction func scanButtonAction(_ sender: Any) {
-        let scanVC = UIStoryboard.init(name: "ScanView", bundle: nil).instantiateViewController(withIdentifier: "ScanVC")
-        self.present(scanVC, animated: true, completion: nil)
+    @IBAction func getDataAction(_ sender: Any) {
+        getData()
     }
     
-    @IBAction func sendMessageButtonAction(_ sender: Any) {
-        if !serial.isReadyToUseBluetooth {
-            print("Serial is not ready!")
-            return
+    func getData() {
+        Firestore.firestore().collection("Raspi").getDocuments { snapshot, error in
+            if let error = error {
+                print("Debug: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let documents = snapshot?.documents else { return }
+            
+            var tempInfos: [tempInfoModel] = []
+            let decoder = JSONDecoder()
+            
+            // Raspiで測定して、Firestoreに格納した温度のデータを読み込む
+            for document in documents {
+                do {
+                    let data = document.data()
+                    let jsonData = try JSONSerialization.data(withJSONObject: data)
+                    let tempInfo = try decoder.decode(tempInfoModel.self, from: jsonData)
+                    tempInfos.append(tempInfo)
+                    self.tempDataLabel.text = "Temp: " + tempInfo.temp!
+                    self.tempDataLabel.isHidden = false
+                    
+                } catch let error {
+                    print("error: \(error)")
+                }
+            }
+            
+            
         }
-        serial.delegate = self
-        // messageを設定し、これに繋がったperipheralに伝送するメソッドを呼び出す
-        let msg = "okokok"
-        serial.sendMessageToDevice(msg)
-        // ラベルのtextを変更し、データを待ち中であることを表現する
-        serialMessageLabel.text = "waiting for Peripheral's messege"
     }
-}
-
-extension ViewController: BluetoothSerialDelegate {
-    func serialDidReceiveMessage(message: String) {
-        // 返信で返ってきたメッセージをラベルに表示
-        serialMessageLabel.text = message
-    }
-    
 }
 

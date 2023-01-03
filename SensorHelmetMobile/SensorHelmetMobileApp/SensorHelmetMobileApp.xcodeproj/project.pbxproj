@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9478262629645FA100051115 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9478262529645FA100051115 /* GoogleService-Info.plist */; };
+		94782629296462E700051115 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 94782628296462E700051115 /* FirebaseAnalytics */; };
+		9478262B296462E700051115 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9478262A296462E700051115 /* FirebaseFirestore */; };
+		9478262D296462E700051115 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9478262C296462E700051115 /* FirebaseStorage */; };
+		9478262F29646A2E00051115 /* tempInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478262E29646A2E00051115 /* tempInfo.swift */; };
 		9478639D29471A48003EC94F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478639C29471A48003EC94F /* AppDelegate.swift */; };
 		9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478639E29471A48003EC94F /* SceneDelegate.swift */; };
 		947863A129471A48003EC94F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863A029471A48003EC94F /* ViewController.swift */; };
@@ -44,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9478262529645FA100051115 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9478262E29646A2E00051115 /* tempInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tempInfo.swift; sourceTree = "<group>"; };
 		9478639929471A48003EC94F /* SensorHelmetMobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SensorHelmetMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9478639C29471A48003EC94F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9478639E29471A48003EC94F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +79,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94782629296462E700051115 /* FirebaseAnalytics in Frameworks */,
+				9478262B296462E700051115 /* FirebaseFirestore in Frameworks */,
+				9478262D296462E700051115 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +131,7 @@
 				947863CD29471A66003EC94F /* View */,
 				947863CC29471A5B003EC94F /* Model */,
 				947863A529471A49003EC94F /* Assets.xcassets */,
+				9478262529645FA100051115 /* GoogleService-Info.plist */,
 				947863AA29471A49003EC94F /* Info.plist */,
 			);
 			path = SensorHelmetMobileApp;
@@ -147,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */,
+				9478262E29646A2E00051115 /* tempInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -231,6 +243,11 @@
 			dependencies = (
 			);
 			name = SensorHelmetMobileApp;
+			packageProductDependencies = (
+				94782628296462E700051115 /* FirebaseAnalytics */,
+				9478262A296462E700051115 /* FirebaseFirestore */,
+				9478262C296462E700051115 /* FirebaseStorage */,
+			);
 			productName = SensorHelmetMobileApp;
 			productReference = 9478639929471A48003EC94F /* SensorHelmetMobileApp.app */;
 			productType = "com.apple.product-type.application";
@@ -303,6 +320,9 @@
 				Base,
 			);
 			mainGroup = 9478639029471A48003EC94F;
+			packageReferences = (
+				94782627296462E700051115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 9478639A29471A48003EC94F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -325,6 +345,7 @@
 				94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */,
 				94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */,
 				947863A429471A48003EC94F /* Main.storyboard in Resources */,
+				9478262629645FA100051115 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +373,7 @@
 				94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */,
 				947863A129471A48003EC94F /* ViewController.swift in Sources */,
 				94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */,
+				9478262F29646A2E00051115 /* tempInfo.swift in Sources */,
 				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
 				948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
@@ -698,6 +720,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		94782627296462E700051115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		94782628296462E700051115 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94782627296462E700051115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		9478262A296462E700051115 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94782627296462E700051115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		9478262C296462E700051115 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94782627296462E700051115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9478639129471A48003EC94F /* Project object */;
 }

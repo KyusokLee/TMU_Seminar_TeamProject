@@ -16,42 +16,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3et-hx-Kfg">
-                                <rect key="frame" x="175.66666666666666" y="287.66666666666669" width="42" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cjV-ri-dCg">
+                                <rect key="frame" x="159" y="408.66666666666669" width="75" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="getDataAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W7s-Op-jaQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PNN-hj-BYk">
+                                <rect key="frame" x="15" y="493.66666666666669" width="363" height="21.000000000000057"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ukv-ig-U7F">
-                                <rect key="frame" x="159" y="536.33333333333337" width="75" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                <connections>
-                                    <action selector="scanButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XOW-LR-tFr"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCW-dA-Gax">
-                                <rect key="frame" x="159" y="591.33333333333337" width="75" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                <connections>
-                                    <action selector="sendMessageButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="24c-q2-ONp"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="MCW-dA-Gax" firstAttribute="top" secondItem="ukv-ig-U7F" secondAttribute="bottom" constant="20" id="8Vy-8t-hBI"/>
-                            <constraint firstItem="3et-hx-Kfg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="B06-Hg-Uy4"/>
-                            <constraint firstItem="3et-hx-Kfg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.7" id="Wgh-xd-uzi"/>
-                            <constraint firstItem="ukv-ig-U7F" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="1.3" id="ihH-g7-JJd"/>
-                            <constraint firstItem="MCW-dA-Gax" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wRf-cw-1PH"/>
-                            <constraint firstItem="ukv-ig-U7F" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yAT-Li-cJt"/>
+                            <constraint firstItem="PNN-hj-BYk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="2Sk-Q6-6jg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PNN-hj-BYk" secondAttribute="trailing" constant="15" id="Jg2-Ds-5gI"/>
+                            <constraint firstItem="cjV-ri-dCg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ThK-DS-ULO"/>
+                            <constraint firstItem="PNN-hj-BYk" firstAttribute="top" secondItem="cjV-ri-dCg" secondAttribute="bottom" constant="50" id="kpI-7v-Ue5"/>
+                            <constraint firstItem="cjV-ri-dCg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lzf-25-ncS"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="serialMessageLabel" destination="3et-hx-Kfg" id="RBo-uc-GbZ"/>
+                        <outlet property="readDataButton" destination="cjV-ri-dCg" id="iqB-9y-10Z"/>
+                        <outlet property="tempDataLabel" destination="PNN-hj-BYk" id="pl7-sf-taU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
