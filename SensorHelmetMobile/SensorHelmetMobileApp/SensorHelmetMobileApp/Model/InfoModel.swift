@@ -7,6 +7,9 @@
 
 import Foundation
 
-struct tempInfoModel: Codable {
+struct InfoModel: Codable {
+    var date: String?
+    var time: String?
     var temp: String?
+    var humid: String?
 }

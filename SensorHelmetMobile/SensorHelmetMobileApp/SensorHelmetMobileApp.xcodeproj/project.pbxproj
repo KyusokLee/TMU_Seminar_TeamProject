@@ -11,7 +11,7 @@
 		94782629296462E700051115 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 94782628296462E700051115 /* FirebaseAnalytics */; };
 		9478262B296462E700051115 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9478262A296462E700051115 /* FirebaseFirestore */; };
 		9478262D296462E700051115 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9478262C296462E700051115 /* FirebaseStorage */; };
-		9478262F29646A2E00051115 /* tempInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478262E29646A2E00051115 /* tempInfo.swift */; };
+		9478262F29646A2E00051115 /* InfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478262E29646A2E00051115 /* InfoModel.swift */; };
 		947826312964744100051115 /* TCPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947826302964744100051115 /* TCPNetwork.swift */; };
 		9478639D29471A48003EC94F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478639C29471A48003EC94F /* AppDelegate.swift */; };
 		9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478639E29471A48003EC94F /* SceneDelegate.swift */; };
@@ -24,6 +24,9 @@
 		947863C029471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */; };
 		947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863D129471C3B003EC94F /* BluetoothSerial.swift */; };
 		948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */; };
+		949E8E052965B73A0015FD1C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E042965B73A0015FD1C /* StringExtension.swift */; };
+		949E8E072965B9300015FD1C /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E062965B9300015FD1C /* MapVC.swift */; };
+		949E8E092965BFBA0015FD1C /* MapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949E8E082965BFBA0015FD1C /* MapView.storyboard */; };
 		94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD51112949FAA400DB0287 /* ScanVC.swift */; };
 		94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94DD51132949FAB200DB0287 /* ScanView.storyboard */; };
 		94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD51152949FBFD00DB0287 /* SerialVC.swift */; };
@@ -51,7 +54,7 @@
 
 /* Begin PBXFileReference section */
 		9478262529645FA100051115 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		9478262E29646A2E00051115 /* tempInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tempInfo.swift; sourceTree = "<group>"; };
+		9478262E29646A2E00051115 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
 		947826302964744100051115 /* TCPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPNetwork.swift; sourceTree = "<group>"; };
 		9478639929471A48003EC94F /* SensorHelmetMobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SensorHelmetMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9478639C29471A48003EC94F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +71,9 @@
 		947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		947863D129471C3B003EC94F /* BluetoothSerial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerial.swift; sourceTree = "<group>"; };
 		948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIClient.swift; sourceTree = "<group>"; };
+		949E8E042965B73A0015FD1C /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		949E8E062965B9300015FD1C /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		949E8E082965BFBA0015FD1C /* MapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapView.storyboard; sourceTree = "<group>"; };
 		94DD51112949FAA400DB0287 /* ScanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanVC.swift; sourceTree = "<group>"; };
 		94DD51132949FAB200DB0287 /* ScanView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScanView.storyboard; sourceTree = "<group>"; };
 		94DD51152949FBFD00DB0287 /* SerialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialVC.swift; sourceTree = "<group>"; };
@@ -127,6 +133,7 @@
 		9478639B29471A48003EC94F /* SensorHelmetMobileApp */ = {
 			isa = PBXGroup;
 			children = (
+				949E8E032965B7250015FD1C /* Extension */,
 				9478639C29471A48003EC94F /* AppDelegate.swift */,
 				9478639E29471A48003EC94F /* SceneDelegate.swift */,
 				947863CE29471A73003EC94F /* Presenter */,
@@ -160,7 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */,
-				9478262E29646A2E00051115 /* tempInfo.swift */,
+				9478262E29646A2E00051115 /* InfoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -190,6 +197,7 @@
 				947863A029471A48003EC94F /* ViewController.swift */,
 				94DD51112949FAA400DB0287 /* ScanVC.swift */,
 				94DD51152949FBFD00DB0287 /* SerialVC.swift */,
+				949E8E062965B9300015FD1C /* MapVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -201,8 +209,17 @@
 				947863A229471A48003EC94F /* Main.storyboard */,
 				94DD51132949FAB200DB0287 /* ScanView.storyboard */,
 				94DD51172949FC0700DB0287 /* SerialView.storyboard */,
+				949E8E082965BFBA0015FD1C /* MapView.storyboard */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		949E8E032965B7250015FD1C /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				949E8E042965B73A0015FD1C /* StringExtension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		94DD5119294A009300DB0287 /* Cells */ = {
@@ -344,6 +361,7 @@
 			files = (
 				947863A929471A49003EC94F /* LaunchScreen.storyboard in Resources */,
 				94DD51182949FC0700DB0287 /* SerialView.storyboard in Resources */,
+				949E8E092965BFBA0015FD1C /* MapView.storyboard in Resources */,
 				947863A629471A49003EC94F /* Assets.xcassets in Resources */,
 				94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */,
 				94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */,
@@ -374,14 +392,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				947826312964744100051115 /* TCPNetwork.swift in Sources */,
+				949E8E072965B9300015FD1C /* MapVC.swift in Sources */,
 				94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */,
 				947863A129471A48003EC94F /* ViewController.swift in Sources */,
 				94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */,
-				9478262F29646A2E00051115 /* tempInfo.swift in Sources */,
+				9478262F29646A2E00051115 /* InfoModel.swift in Sources */,
 				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
 				948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
+				949E8E052965B73A0015FD1C /* StringExtension.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
