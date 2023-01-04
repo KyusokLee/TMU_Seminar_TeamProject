@@ -8,6 +8,8 @@
 import Foundation
 import Network
 
+// TCP Networkを用いて、Raspiを遠隔操作する
+
 class TempHum : ObservableObject{
     var addTimer: Timer!
     var tempData = ""

@@ -14,17 +14,49 @@ import FirebaseFirestore
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var presentMapButton: UIButton! {
+        didSet {
+            presentMapButton.setTitle("Apple MapでGPS表示", for: .normal)
+        }
+    }
+    
     @IBOutlet weak var readDataButton: UIButton! {
         didSet {
             readDataButton.setTitle("FireStoreからデータを読み込む", for: .normal)
         }
     }
     
-    @IBOutlet weak var tempDataLabel: UILabel! {
+    @IBOutlet weak var curDateLabel: UILabel! {
         didSet {
-            tempDataLabel.isHidden = true
+            curDateLabel.isHidden = true
         }
     }
+    
+    
+    @IBOutlet weak var dateLabel: UILabel! {
+        didSet {
+            dateLabel.isHidden = true
+        }
+    }
+    
+    @IBOutlet weak var timeLabel: UILabel! {
+        didSet {
+            timeLabel.isHidden = true
+        }
+    }
+    
+    @IBOutlet weak var tempLabel: UILabel!{
+        didSet {
+            tempLabel.isHidden = true
+        }
+    }
+    
+    @IBOutlet weak var humidLabel: UILabel! {
+        didSet {
+            humidLabel.isHidden = true
+        }
+    }
+    
     
     
     override func viewDidLoad() {
@@ -32,8 +64,30 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func presentMapButtonAction(_ sender: Any) {
+        print("apple map display!")
+        
+        let appleMapVC = UIStoryboard(name: "MapView", bundle:nil).instantiateViewController(withIdentifier: "MapVC") as! MapVC
+                
+        appleMapVC.modalPresentationStyle = .currentContext
+        
+        self.present(appleMapVC, animated: true) {
+            print("complete to display GPS of Raspi")
+        }
+    }
+    
+    
     @IBAction func getDataAction(_ sender: Any) {
-        getData()
+        DispatchQueue.main.async {
+            self.curDateLabel.isHidden = true
+            self.dateLabel.isHidden = true
+            self.timeLabel.isHidden = true
+            self.tempLabel.isHidden = true
+            self.humidLabel.isHidden = true
+            
+            self.curDateLabel.text = "ボタンクリック時間: " + "yyyy-MM-dd HH:mm:ss".stringFromDate()
+            self.getData()
+        }
     }
     
     func getData() {
@@ -45,7 +99,7 @@ class ViewController: UIViewController {
             
             guard let documents = snapshot?.documents else { return }
             
-            var tempInfos: [tempInfoModel] = []
+            var infoDatas: [InfoModel] = []
             let decoder = JSONDecoder()
             
             // Raspiで測定して、Firestoreに格納した温度のデータを読み込む
@@ -53,17 +107,24 @@ class ViewController: UIViewController {
                 do {
                     let data = document.data()
                     let jsonData = try JSONSerialization.data(withJSONObject: data)
-                    let tempInfo = try decoder.decode(tempInfoModel.self, from: jsonData)
-                    tempInfos.append(tempInfo)
-                    self.tempDataLabel.text = "Temp: " + tempInfo.temp!
-                    self.tempDataLabel.isHidden = false
+                    let infoData = try decoder.decode(InfoModel.self, from: jsonData)
+                    infoDatas.append(infoData)
+                    self.dateLabel.text = "日付: " + infoData.date!
+                    self.timeLabel.text = "時間: " + infoData.time!
+                    self.tempLabel.text = "気温: " + infoData.temp!
+                    self.humidLabel.text = "湿度: " + infoData.humid!
+                    
+                    self.dateLabel.isHidden = false
+                    self.timeLabel.isHidden = false
+                    self.tempLabel.isHidden = false
+                    self.humidLabel.isHidden = false
                     
                 } catch let error {
                     print("error: \(error)")
                 }
             }
             
-            
+            self.curDateLabel.isHidden = false
         }
     }
 }
