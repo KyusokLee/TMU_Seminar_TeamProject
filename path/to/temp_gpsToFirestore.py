@@ -12,7 +12,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 #DHT11 connect to BCM_GPIO14
-DHTPIN = 14
+DHTPIN = 17
 
 GPIO.setmode(GPIO.BCM)
 
