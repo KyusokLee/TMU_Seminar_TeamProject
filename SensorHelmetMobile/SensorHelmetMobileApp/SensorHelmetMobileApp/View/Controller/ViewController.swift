@@ -14,6 +14,13 @@ import FirebaseFirestore
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var bluetoothButton: UIButton! {
+        didSet {
+            bluetoothButton.setTitle("Bluetooth 探索", for: .normal)
+        }
+    }
+    
+    
     @IBOutlet weak var presentMapButton: UIButton! {
         didSet {
             presentMapButton.setTitle("Apple MapでGPS表示", for: .normal)
@@ -57,12 +64,29 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var longitudeLabel: UILabel! {
+        didSet {
+            longitudeLabel.isHidden = true
+        }
+    }
+    
+    @IBOutlet weak var latitudeLabel: UILabel! {
+        didSet {
+            latitudeLabel.isHidden = true
+        }
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
+    
+    @IBAction func bluetoothButtonAction(_ sender: Any) {
+        let serialVC = UIStoryboard.init(name: "SerialView", bundle: nil).instantiateViewController(withIdentifier: "SerialVC")
+        self.present(serialVC, animated: true, completion: nil)
+    }
+    
     
     @IBAction func presentMapButtonAction(_ sender: Any) {
         print("apple map display!")
@@ -84,6 +108,8 @@ class ViewController: UIViewController {
             self.timeLabel.isHidden = true
             self.tempLabel.isHidden = true
             self.humidLabel.isHidden = true
+            self.longitudeLabel.isHidden = true
+            self.latitudeLabel.isHidden = true
             
             self.curDateLabel.text = "ボタンクリック時間: " + "yyyy-MM-dd HH:mm:ss".stringFromDate()
             self.getData()
@@ -113,11 +139,15 @@ class ViewController: UIViewController {
                     self.timeLabel.text = "時間: " + infoData.time!
                     self.tempLabel.text = "気温: " + infoData.temp!
                     self.humidLabel.text = "湿度: " + infoData.humid!
-                    
+                    self.longitudeLabel.text = "経度: " + infoData.longitude!
+                    self.latitudeLabel.text = "緯度: " + infoData.latitude!
+                
                     self.dateLabel.isHidden = false
                     self.timeLabel.isHidden = false
                     self.tempLabel.isHidden = false
                     self.humidLabel.isHidden = false
+                    self.longitudeLabel.isHidden = false
+                    self.latitudeLabel.isHidden = false
                     
                 } catch let error {
                     print("error: \(error)")

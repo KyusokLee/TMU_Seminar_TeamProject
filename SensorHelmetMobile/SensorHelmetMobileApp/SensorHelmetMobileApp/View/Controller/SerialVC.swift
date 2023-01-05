@@ -13,12 +13,14 @@ class SerialVC: UIViewController {
     
     @IBOutlet weak var scanButton: UIButton! {
         didSet {
+            scanButton.setTitle("Bluetooth scanを始める", for: .normal)
             scanButton.tintColor = .systemBlue
         }
     }
     
     @IBOutlet weak var sendMessageButton: UIButton! {
         didSet {
+            sendMessageButton.setTitle("Messageを送る", for: .normal)
             sendMessageButton.tintColor = .cyan
         }
     }
