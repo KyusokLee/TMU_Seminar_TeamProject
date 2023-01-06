@@ -15,17 +15,18 @@ def get_video(video):
     # 動画ファイル保存用の設定
     #save_dir = "/var/www/html/camera/pictures"
     save_dir = "/home/zemi/start/python_code/video/"
-    f_name = now.strftime("%Y%m%d%H%M%S") + ".avi"
-    f_name = os.path.join("/home/zemi/start/python_code/video/",f_name)
+    f_name = now.strftime("%Y年%m月%d日%H時%M分") + ".avi"
+    f_name = os.path.join("/home/zemi/start/python_code/video/", f_name)
     digit_num = len(str(int(video.get(cv2.CAP_PROP_FRAME_COUNT))))
-    #nowifn = now.strftime('%Y%m%d_%H%M%S') + '.mp4'
+    #nowifn = now.strftime('%Y%m%d_%H%M%S') + '.mp4' #mp4の場合
     fps = int(video.get(cv2.CAP_PROP_FPS))                    # カメラのFPSを取得
     w = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))              # カメラの横幅を取得
     h = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))             # カメラの縦幅を取得
     #fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')        # 動画保存時のfourcc設定（mp4用）
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')        # 動画保存時のfourcc設定（avi用）
     writer = cv2.VideoWriter(f_name, fourcc, fps, (w, h))  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
-    cycle = fps*600
+    cycle = fps*3000
+    
     # 撮影＝ループ中にフレームを1枚ずつ取得（qキーで撮影終了）
     n = 0
     while True:
@@ -34,9 +35,6 @@ def get_video(video):
         cv2.imshow("Test", frame)
         writer.write(frame)
         
-        key = cv2.waitKey(1)
-        if key == 27:
-            break
         if(n >= 100):
             break
         n += 1
@@ -57,7 +55,7 @@ try:
     video_ = cv2.VideoCapture(url)
     #get_video(video_)
 
- #ipアドレスが取得できない＝ネットに繋がっていないかつ，次につながったときはIPアドレスが変更されるか脳性が高い
+ #ipアドレスが取得できない＝ネットに繋がっていないかつ，次につながったときはIPアドレスが変更される可能性が高い
 except (OSError, cv2.error) as e:
     t = e.__class__.__name__
     print(t)
