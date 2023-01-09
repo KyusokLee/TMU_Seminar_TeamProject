@@ -140,7 +140,9 @@ def ip_addr():
         return (connect_interface.getsockname()[0])
     except (OSError):
         return 0
-    
+
+def destroy():
+    GPIO.cleanup()
 
 def main():
     #print ("Raspberry Pi wiringPi DHT11 Temperature test program/n")                                     # 引数はタイムゾーンの時差と出力フォーマット
@@ -178,8 +180,7 @@ def main():
                 })
                 flg = False
             
-def destroy():
-    GPIO.cleanup()
+    destroy()
 
 if __name__ == '__main__':
     try:
