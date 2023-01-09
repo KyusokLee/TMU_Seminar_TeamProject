@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import socket
 import time
 import datetime
 import requests
@@ -29,6 +30,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 doc_ref = db.collection(u'Raspi').document(u'Database')
+gps = micropyGPS.MicropyGPS(9, 'dd') # MicroGPSオブジェクトを生成する。
 
 def read_dht11_dat():
     GPIO.setup(DHTPIN, GPIO.OUT)
@@ -130,44 +132,51 @@ def rungps(): # GPSモジュールを読み、GPSオブジェクトを更新す�
             continue
         for x in sentence: # 読んだ文字列を解析してGPSオブジェクトにデーターを追加、更新する
             gps.update(x)
- 
+
+def ip_addr():
+    try:
+        connect_interface = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        connect_interface.connect(("8.8.8.8", 80))
+        return (connect_interface.getsockname()[0])
+    except (OSError):
+        return 0
+    
+
 def main():
-    #print ("Raspberry Pi wiringPi DHT11 Temperature test program/n")
-    gps = micropyGPS.MicropyGPS(9, 'dd') # MicroGPSオブジェクトを生成する。
-                                     # 引数はタイムゾーンの時差と出力フォーマット
+    #print ("Raspberry Pi wiringPi DHT11 Temperature test program/n")                                     # 引数はタイムゾーンの時差と出力フォーマット
+    gpsthread = threading.Thread(target=rungps, args=()) # 上の関数を実行するスレッドを生成
     gpsthread.daemon = True
     gpsthread.start() # スレッドを起動
     flg = True
     flg2 = True
-    while True (flg == True):
+    while (flg == True):
         result = read_dht11_dat()
         if (result):
-            humidity, temperature = result
-            print ("humidity: %s %%,  Temperature: %s C" % (humidity, temperature))
-            #this!!!!
-            message =  ("humidity:" + str(humidity) + "Temperature:" + str(temperature))
-            
-            t = datetime.datetime.today()
-            print (t.strftime("%Y/%m/%d,%H:%M"),",%-6.2f,%6.2f" % (temperature,humidity))
-            
             if gps.clean_sentences > 20:
+                humidity, temperature = result
+                print ("humidity: %s %%,  Temperature: %s C" % (humidity, temperature))
+                #this!!!!
+                message =  ("humidity:" + str(humidity) + "Temperature:" + str(temperature))
+            
+                t = datetime.datetime.today()
+                print (t.strftime("%Y/%m/%d,%H:%M"),",%-6.2f,%6.2f" % (temperature,humidity))
+            
                 #ちゃんとしたデーターがある程度たまったら出力する
                 h = gps.timestamp[0] if gps.timestamp[0] < 24 else gps.timestamp[0] - 24
-                
+                #ip_ad
+                ip_ad = ip_addr()
                 ##gps.latitude[0], gps.longitude[0]を書き込む
                 ## Data Update
                 doc_ref.update({
-                    u'date' : t.strftime('%Y/%m/%d'),
+                    u'date' : t.strftime('%Y年%m月%d日'),
                     u'time' : t.strftime('%H:%M'),
                     u'temp' : str(temperature),
                     u'humid' : str(humidity),
-                    U'latitude' : str(gps.latitude[0])
-                    U'longitude' : str(gps.longitude[0])
+                    u'latitude' : str(gps.latitude[0]),
+                    u'longitude' : str(gps.longitude[0])
+                    #,u'ip' : str(ip_ad)
                 })
                 flg = False
-            
-            
-            
             
 def destroy():
     GPIO.cleanup()
