@@ -7,12 +7,18 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseStorage
+// 動画の再生のためのimport
+import AVFoundation
 
 // Firebaseのデータを読む
 // Raspiの遠隔操作ができるように
 
 
 class ViewController: UIViewController {
+    
+    // Storageの指定
+    let storage = Storage.storage().reference()
     
     @IBOutlet weak var bluetoothButton: UIButton! {
         didSet {
@@ -76,6 +82,11 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var ipLabel: UILabel! {
+        didSet {
+            ipLabel.isHidden = true
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,10 +121,29 @@ class ViewController: UIViewController {
             self.humidLabel.isHidden = true
             self.longitudeLabel.isHidden = true
             self.latitudeLabel.isHidden = true
+            self.ipLabel.isHidden = true
             
             self.curDateLabel.text = "ボタンクリック時間: " + "yyyy-MM-dd HH:mm:ss".stringFromDate()
             self.getData()
         }
+    }
+    
+    func downloadData() {
+        // Storageの指定
+        
+    }
+    
+    //Firestoreからvideoをダウンロードする
+    public func downloadURL(for path: String, completion: @escaping (Result<URL, Error>) -> Void) {
+        let reference = storage.child(path)
+        
+        reference.downloadURL(completion: { url, error in
+            guard let url = url, error == nil else {
+                completion(.failure(StorageError.cancelled))
+                return
+            }
+            completion(.success(url))
+        })
     }
     
     func getData() {
@@ -141,6 +171,7 @@ class ViewController: UIViewController {
                     self.humidLabel.text = "湿度: " + infoData.humid!
                     self.longitudeLabel.text = "経度: " + infoData.longitude!
                     self.latitudeLabel.text = "緯度: " + infoData.latitude!
+                    self.ipLabel.text = "IPアドレス: " + infoData.ip!
                 
                     self.dateLabel.isHidden = false
                     self.timeLabel.isHidden = false
@@ -148,6 +179,7 @@ class ViewController: UIViewController {
                     self.humidLabel.isHidden = false
                     self.longitudeLabel.isHidden = false
                     self.latitudeLabel.isHidden = false
+                    self.ipLabel.isHidden = false
                     
                 } catch let error {
                     print("error: \(error)")
