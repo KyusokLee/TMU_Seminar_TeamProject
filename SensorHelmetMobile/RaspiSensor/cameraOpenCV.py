@@ -13,8 +13,10 @@ firebase_admin.initialize_app(cred, {
     'storageBucket': "raspi-sensorhelmet.appspot.com"
 })
 
+# Clientとしてのアクセス
+storageClient = storage.Client()
 #バケットはバイナリオブジェクトの上位コンテナである。バケットはStorageでデータを保管する基本コンテナ
-bucket = storage.bucket()
+bucket = storageClient.bucket()
 
 videoCapture = cv2.VideoCapture(0)
 path = "/home/zemi/start/python_code/video/"

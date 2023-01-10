@@ -14,4 +14,5 @@ struct InfoModel: Codable {
     var humid: String?
     var longitude: String?
     var latitude: String?
+    var ip: String?
 }

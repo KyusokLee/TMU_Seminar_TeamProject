@@ -82,6 +82,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56a-of-88J">
+                                <rect key="frame" x="15" y="685.66666666666663" width="363" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -90,6 +96,7 @@
                             <constraint firstItem="PNN-hj-BYk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="2Sk-Q6-6jg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MoC-BA-kQq" secondAttribute="trailing" constant="15" id="2fM-FD-0BA"/>
                             <constraint firstItem="iZ8-kx-HZC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="3e7-HM-f2f"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="56a-of-88J" secondAttribute="trailing" constant="15" id="4Ha-RJ-aLJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nof-ZQ-38d" secondAttribute="trailing" constant="15" id="4hH-2z-Zg4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iZ8-kx-HZC" secondAttribute="trailing" constant="15" id="BGH-cj-ssf"/>
                             <constraint firstItem="Fba-Uw-YkV" firstAttribute="top" secondItem="kDq-vg-v64" secondAttribute="bottom" constant="10" id="DeD-kR-JZh"/>
@@ -97,6 +104,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Drb-CP-LAX" secondAttribute="trailing" constant="15" id="Rdg-8e-z91"/>
                             <constraint firstItem="cjV-ri-dCg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ThK-DS-ULO"/>
                             <constraint firstItem="cjV-ri-dCg" firstAttribute="top" secondItem="jfr-Wo-qdq" secondAttribute="bottom" constant="15" id="U30-EP-s5I"/>
+                            <constraint firstItem="56a-of-88J" firstAttribute="top" secondItem="MoC-BA-kQq" secondAttribute="bottom" constant="10" id="XS1-Se-kYz"/>
                             <constraint firstItem="Drb-CP-LAX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="XeN-NK-iYS"/>
                             <constraint firstItem="MoC-BA-kQq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="ac0-Js-ih8"/>
                             <constraint firstItem="PNN-hj-BYk" firstAttribute="top" secondItem="nof-ZQ-38d" secondAttribute="bottom" constant="20" id="av2-d5-LKN"/>
@@ -113,6 +121,7 @@
                             <constraint firstItem="kDq-vg-v64" firstAttribute="top" secondItem="iZ8-kx-HZC" secondAttribute="bottom" constant="10" id="uPt-Ow-2bC"/>
                             <constraint firstItem="jfr-Wo-qdq" firstAttribute="top" secondItem="Cj6-aL-nq4" secondAttribute="bottom" constant="15" id="vbX-Jb-upQ"/>
                             <constraint firstItem="Cj6-aL-nq4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vmb-w6-6UP"/>
+                            <constraint firstItem="56a-of-88J" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="yPs-35-jxb"/>
                         </constraints>
                     </view>
                     <connections>
@@ -120,6 +129,7 @@
                         <outlet property="curDateLabel" destination="nof-ZQ-38d" id="yoe-Hz-AV2"/>
                         <outlet property="dateLabel" destination="PNN-hj-BYk" id="rUt-KO-8nD"/>
                         <outlet property="humidLabel" destination="Fba-Uw-YkV" id="Ije-1O-bGc"/>
+                        <outlet property="ipLabel" destination="56a-of-88J" id="GpW-jw-wSi"/>
                         <outlet property="latitudeLabel" destination="MoC-BA-kQq" id="y4c-8D-Dbs"/>
                         <outlet property="longitudeLabel" destination="Drb-CP-LAX" id="O1i-vU-B2l"/>
                         <outlet property="presentMapButton" destination="jfr-Wo-qdq" id="Kqd-3U-06K"/>
