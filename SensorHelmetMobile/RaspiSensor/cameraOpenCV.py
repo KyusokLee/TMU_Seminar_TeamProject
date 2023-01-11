@@ -25,7 +25,7 @@ path = "/home/zemi/start/python_code/video/"
 def fileUpload(pathName):
     fileName = pathName.lstrip(path)
     blob = bucket.blob('videos/'+fileName)
-    blob.upload_from_filename(pathName)
+    blob.upload_from_filename(filename=pathName, content_type='video/mp4')
     print(blob.public_url)
     
 def getVideo(video):
