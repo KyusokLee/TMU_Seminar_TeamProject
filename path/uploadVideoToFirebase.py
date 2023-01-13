@@ -32,7 +32,7 @@ directory = "/home/zemi/start/python_code/video"
 # Upload video File to Firebase Storage
 def fileUpload(pathName,fileName):
     #fileName = pathName.lstrip(path)
-    file_type = 'video/avi'
+    file_type = 'video/mp4'
     # video/quicktime だと、webでは見れないが、すぐダウンロードできる
     blob = bucket.blob('videos/'+fileName)
     # Generate uuid token to download video file from url
