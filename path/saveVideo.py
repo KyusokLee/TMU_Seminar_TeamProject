@@ -22,8 +22,7 @@ def get_video(video):
     fps = int(video.get(cv2.CAP_PROP_FPS))                    # カメラのFPSを取得
     w = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))              # カメラの横幅を取得
     h = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))             # カメラの縦幅を取得
-    #fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')        # 動画保存時のfourcc設定（mp4用）
+    fourcc = cv2.VideoWriter_fourcc(*'avc1')                  # 動画保存時のfourcc設定
     writer = cv2.VideoWriter(f_name, fourcc, fps, (w, h))  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
     cycle = fps*30
     # 撮影＝ループ中にフレームを1枚ずつ取得（qキーで撮影終了）
@@ -55,7 +54,7 @@ def main():
         f.close()
         video_ = cv2.VideoCapture(url)
         #get_video(video_)
-    #ipアドレスが取得できない＝ネットに繋がっていないかつ，次につながったときはIPアドレスが変更されるか脳性が高い
+    #ipアドレスが取得できない＝ネットに繋がっていないかつ，次につながったときはIPアドレスが変更される可能性が高い
     except (OSError, cv2.error) as e:
         t = e.__class__.__name__
         print(t)
