@@ -18,23 +18,23 @@ from uuid import uuid4
 # 初期化済みかを判定する
 if not firebase_admin._apps:
     # 初期済みでない場合は初期化処理を行う
-    cred = credentials.Certificate('/home/zemi/start/python_code/RaspiFirebase.json') 
+    cred = credentials.Certificate('[input path to json file to access Firebase Storage]') 
     default_app = firebase_admin.initialize_app(cred, {
-        'storageBucket' : "raspi-sensorhelmet.appspot.com"
+        'storageBucket' : "[input Bucket name (~[Project name].appspot.com)]"
     })
     
 #バケットはバイナリオブジェクトの上位コンテナである。バケットはStorageでデータを保管する基本コンテナ
-bucket = storage.bucket("raspi-sensorhelmet.appspot.com")
+bucket = storage.bucket("[input Bucket name (~[Project name].appspot.com)]")
 
 ##動画ファイルが格納されているディレクトリ
-directory = "/home/zemi/start/python_code/video"
+directory = "[path to folder with files you want to upload]"
 
 # Upload video File to Firebase Storage
 def fileUpload(pathName,fileName):
     #fileName = pathName.lstrip(path)
     file_type = 'video/mp4'
     # video/quicktime だと、webでは見れないが、すぐダウンロードできる
-    blob = bucket.blob('videos/'+fileName)
+    blob = bucket.blob('[folder name in the Firebase Storage]/'+fileName)
     # Generate uuid token to download video file from url
     new_token = uuid4()
     metadata = {"firebaseStorageDownloadTokens": new_token}
@@ -68,10 +68,8 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-        #subprocess.run(["/home/zemi/start/rmJpgFile.sh", "arguments"], shell=True)
         ##アップロードに成功したら，ファイルを退避
-        subprocess.run(["/home/zemi/start/mvVideoFile.sh", "arguments"], shell=True)
-
+        subprocess.run(["[Shell Script to Evacuate Files to Avoid Duplicate Uploads(~.sh)]", "arguments"], shell=True)
 
     except KeyboardInterrupt:
         print("error with main!")
