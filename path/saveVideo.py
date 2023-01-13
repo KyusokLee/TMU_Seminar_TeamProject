@@ -13,9 +13,8 @@ import subprocess
 def get_video(video):
     now = datetime.datetime.now()
     # 動画ファイル保存用の設定
-    #save_dir = "/var/www/html/camera/pictures"
-    save_dir = "/home/zemi/start/python_code/video/"
-    f_name = now.strftime("%Y年%m月%d日%H時%M分") + ".avi"
+    save_dir = "FOLDER FOR STORING VIDEO"
+    f_name = now.strftime("%Y年%m月%d日%H時%M分") + ".mp4"
     f_name = os.path.join("/home/zemi/start/python_code/video/",f_name)
     digit_num = len(str(int(video.get(cv2.CAP_PROP_FRAME_COUNT))))
     #nowifn = now.strftime('%Y%m%d_%H%M%S') + '.mp4'
@@ -42,8 +41,7 @@ def get_video(video):
     cv2.destroyAllWindows()
 
 def main():
-    #url = "http://192.168.151.126:8080/?action=stream"
-    #url = "http://192.168.0.37:8080/?action=stream"
+    #url = "http://[IP ad of RasPi]/?action=stream"
     flg = False
     try:
         connect_interface = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -60,7 +58,7 @@ def main():
         print(t)
         #mjpg-streamerを停止
         print("stop_mjpg-streamer")
-        subprocess.run(["/home/zemi/start/stop_mjpg-streamer.sh", "arguments"], shell=True)
+        subprocess.run(["Shell Script Paths to stop mjpg-streamer", "arguments"], shell=True)
         video_ = cv2.VideoCapture(0)
         flg = True
     #mjpg-streamerが起動していない場合
@@ -69,22 +67,22 @@ def main():
         print(t)
         print("no url")
         #get_video(video_2)
-        subprocess.run(["/home/zemi/start/stop_mjpg-streamer.sh", "arguments"], shell=True)
+        subprocess.run(["Shell Script Paths to stop mjpg-streamer", "arguments"], shell=True)
         time.sleep(1)
         video_ = cv2.VideoCapture(0)
-        #subprocess.run(["/home/zemi/start/autostart.sh", "arguments"], shell=True)
+        subprocess.run(["Shell Script Paths to start mjpg-streamer", "arguments"], shell=True)
         flg = True
     finally:
         get_video(video_)
         time.sleep(0.5)
         if (flg == True):
-            subprocess.run(["/home/zemi/start/autostart.sh", "arguments"], shell=True)
+            subprocess.run(["Shell Script Paths to start mjpg-streamer", "arguments"], shell=True)
             
             
 if __name__ == '__main__':
     try:
         main()
         #保存完了後，アップロード
-        subprocess.run(["/home/zemi/start/uploadVideoToFirebase.sh", "arguments"], shell=True)
+        subprocess.run(["Shell Script Paths to upload video to Firebase", "arguments"], shell=True)
     except KeyboardInterrupt:
         print("error with main!")
