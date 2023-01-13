@@ -15,7 +15,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-#DHT11 connect to BCM_GPIO14
+#DHT11 connect to BCM_GPIO17(temp_sensor GPIO)
 DHTPIN = 17
 
 GPIO.setmode(GPIO.BCM)
@@ -28,13 +28,15 @@ STATE_DATA_FIRST_PULL_DOWN = 3
 STATE_DATA_PULL_UP = 4
 STATE_DATA_PULL_DOWN = 5
 
-cred = credentials.Certificate("raspi.json")
+cred = credentials.Certificate("Input your json file path to access Firebase. ex)raspi.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
+# input the name you gave
 doc_ref = db.collection(u'Raspi').document(u'Database')
 gps = micropyGPS.MicropyGPS(9, 'dd') # MicroGPSオブジェクトを生成する。
 
+# def for measure temp and humi
 def read_dht11_dat():
     GPIO.setup(DHTPIN, GPIO.OUT)
     GPIO.output(DHTPIN, GPIO.HIGH)
@@ -126,6 +128,7 @@ def read_dht11_dat():
 
     return the_bytes[0], the_bytes[2]
 
+#def for get GPS
 def rungps(): # GPSモジュールを読み、GPSオブジェクトを更新する
     s = serial.Serial('/dev/serial0', 9600, timeout=10)
     s.readline() # 最初の1行は中途半端なデーターが読めることがあるので、捨てる
@@ -136,6 +139,7 @@ def rungps(): # GPSモジュールを読み、GPSオブジェクトを更新す�
         for x in sentence: # 読んだ文字列を解析してGPSオブジェクトにデーターを追加、更新する
             gps.update(x)
 
+#def for get IP ad
 def ip_addr():
     try:
         connect_interface = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -177,6 +181,7 @@ def main():
                 f.close()
                 ## Data Update
                 doc_ref.update({
+                    # name of the variable in the database
                     u'date' : t.strftime('%Y年%m月%d日'),
                     u'time' : t.strftime('%H:%M'),
                     u'temp' : str(temperature),
