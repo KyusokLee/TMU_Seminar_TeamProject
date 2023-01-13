@@ -8,7 +8,7 @@ from pydrive2.drive import GoogleDrive
 
 class GoogleDriveFacade:
     
-    def __init__(self, setting_path: str='/home/zemi/start/python_code/settings.yaml'):
+    def __init__(self, setting_path: str='[input settings], ex)settings.yaml'):
         gauth = GoogleAuth(setting_path)
         gauth.LocalWebserverAuth()
 
@@ -24,7 +24,7 @@ class GoogleDriveFacade:
                 {
                     'title': folder_name,
                     #IoT_for_B3
-                    'parents': [{'id':'1aIV9nZ42tzspbZ_gPo_AaueqAhcSQrEg'}],
+                    'parents': [{'id':'[drive key]'}],
                     'mimeType': 'application/vnd.google-apps.folder'
                 }
             )
@@ -42,7 +42,7 @@ class GoogleDriveFacade:
 
     def upload(self, 
                local_file_path: str,
-               save_folder_name: str = 'gps_log_data',
+               save_folder_name: str = '[folder name]',
                is_convert : bool=True,
         ):
         
@@ -52,9 +52,9 @@ class GoogleDriveFacade:
         file = self.drive.CreateFile(
             {
                 #gps_log_data/id
-                'id': '1KsyeVj5Nof3xLbT-DcXTr8y5mpFPRqvVVb2T-1ZwdoU',
+                'id': '[spread sheet key]',
                 'title':os.path.basename(local_file_path),
-                'parents': [{'id':'1l5d9HQoldezXaJ9wIiUKhJVJPov8nxLP'}]
+                'parents': [{'id':'[drive key]'}]
             }
         )
         file.SetContentFile(local_file_path)
@@ -68,8 +68,8 @@ if __name__ == "__main__":
     try:
         g = GoogleDriveFacade()
         g.upload(
-            local_file_path='/home/zemi/start/python_code/gps_log.csv',
-            save_folder_name='gps_log_data',
+            local_file_path='[path to csv file (RasPi)]',
+            save_folder_name='[save folder name (Google Drive)]',
             is_convert=True,
             )
     except:
