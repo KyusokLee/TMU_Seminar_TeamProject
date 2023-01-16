@@ -27,12 +27,19 @@
 		949E8E052965B73A0015FD1C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E042965B73A0015FD1C /* StringExtension.swift */; };
 		949E8E072965B9300015FD1C /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E062965B9300015FD1C /* MapVC.swift */; };
 		949E8E092965BFBA0015FD1C /* MapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949E8E082965BFBA0015FD1C /* MapView.storyboard */; };
+		94A3711E296ECA0900D4EF76 /* VideoListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A3711D296ECA0900D4EF76 /* VideoListVC.swift */; };
+		94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */; };
+		94A37122296ECB5E00D4EF76 /* VideoDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */; };
+		94A37124296ECB6D00D4EF76 /* VideoDetailView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */; };
+		94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A37125296ED88E00D4EF76 /* VideoListTableViewCell.swift */; };
+		94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A37126296ED88E00D4EF76 /* VideoListTableViewCell.xib */; };
 		94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD51112949FAA400DB0287 /* ScanVC.swift */; };
 		94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94DD51132949FAB200DB0287 /* ScanView.storyboard */; };
 		94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD51152949FBFD00DB0287 /* SerialVC.swift */; };
 		94DD51182949FC0700DB0287 /* SerialView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94DD51172949FC0700DB0287 /* SerialView.storyboard */; };
 		94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */; };
 		94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */; };
+		94FAA58C296E67C3007BD387 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAA58B296E67C3007BD387 /* ColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,12 +81,19 @@
 		949E8E042965B73A0015FD1C /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		949E8E062965B9300015FD1C /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		949E8E082965BFBA0015FD1C /* MapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapView.storyboard; sourceTree = "<group>"; };
+		94A3711D296ECA0900D4EF76 /* VideoListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListVC.swift; sourceTree = "<group>"; };
+		94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoListView.storyboard; sourceTree = "<group>"; };
+		94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailVC.swift; sourceTree = "<group>"; };
+		94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoDetailView.storyboard; sourceTree = "<group>"; };
+		94A37125296ED88E00D4EF76 /* VideoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListTableViewCell.swift; sourceTree = "<group>"; };
+		94A37126296ED88E00D4EF76 /* VideoListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListTableViewCell.xib; sourceTree = "<group>"; };
 		94DD51112949FAA400DB0287 /* ScanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanVC.swift; sourceTree = "<group>"; };
 		94DD51132949FAB200DB0287 /* ScanView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScanView.storyboard; sourceTree = "<group>"; };
 		94DD51152949FBFD00DB0287 /* SerialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialVC.swift; sourceTree = "<group>"; };
 		94DD51172949FC0700DB0287 /* SerialView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SerialView.storyboard; sourceTree = "<group>"; };
 		94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTableViewCell.swift; sourceTree = "<group>"; };
 		94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanTableViewCell.xib; sourceTree = "<group>"; };
+		94FAA58B296E67C3007BD387 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +212,8 @@
 				94DD51112949FAA400DB0287 /* ScanVC.swift */,
 				94DD51152949FBFD00DB0287 /* SerialVC.swift */,
 				949E8E062965B9300015FD1C /* MapVC.swift */,
+				94A3711D296ECA0900D4EF76 /* VideoListVC.swift */,
+				94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -210,6 +226,8 @@
 				94DD51132949FAB200DB0287 /* ScanView.storyboard */,
 				94DD51172949FC0700DB0287 /* SerialView.storyboard */,
 				949E8E082965BFBA0015FD1C /* MapView.storyboard */,
+				94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */,
+				94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -218,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				949E8E042965B73A0015FD1C /* StringExtension.swift */,
+				94FAA58B296E67C3007BD387 /* ColorExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -243,6 +262,8 @@
 			children = (
 				94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */,
 				94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */,
+				94A37125296ED88E00D4EF76 /* VideoListTableViewCell.swift */,
+				94A37126296ED88E00D4EF76 /* VideoListTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -367,6 +388,9 @@
 				94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */,
 				947863A429471A48003EC94F /* Main.storyboard in Resources */,
 				9478262629645FA100051115 /* GoogleService-Info.plist in Resources */,
+				94A37124296ECB6D00D4EF76 /* VideoDetailView.storyboard in Resources */,
+				94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */,
+				94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,14 +419,18 @@
 				949E8E072965B9300015FD1C /* MapVC.swift in Sources */,
 				94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */,
 				947863A129471A48003EC94F /* ViewController.swift in Sources */,
+				94A37122296ECB5E00D4EF76 /* VideoDetailVC.swift in Sources */,
 				94DD51122949FAA400DB0287 /* ScanVC.swift in Sources */,
 				9478262F29646A2E00051115 /* InfoModel.swift in Sources */,
+				94A3711E296ECA0900D4EF76 /* VideoListVC.swift in Sources */,
 				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
 				948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
 				949E8E052965B73A0015FD1C /* StringExtension.swift in Sources */,
+				94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
+				94FAA58C296E67C3007BD387 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
