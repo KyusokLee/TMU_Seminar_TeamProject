@@ -7,25 +7,25 @@
 
 import UIKit
 import FirebaseFirestore
-import FirebaseStorage
-// 動画の再生のためのimport
-import AVFoundation
 
 // Firebaseのデータを読む
 // Raspiの遠隔操作ができるように
+// storyboardでNavigationController実装
 
 
 class ViewController: UIViewController {
     
-    // Storageの指定
-    let storage = Storage.storage().reference()
+    @IBOutlet weak var presentVideoListButton: UIButton! {
+        didSet {
+            presentVideoListButton.setTitle("Storageから動画リストを読み込む", for: .normal)
+        }
+    }
     
     @IBOutlet weak var bluetoothButton: UIButton! {
         didSet {
             bluetoothButton.setTitle("Bluetooth 探索", for: .normal)
         }
     }
-    
     
     @IBOutlet weak var presentMapButton: UIButton! {
         didSet {
@@ -88,9 +88,30 @@ class ViewController: UIViewController {
         }
     }
     
+    var longitudeInfo: Double = 0.0
+    var latitudeInfo: Double = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setNavigationController()
+    }
+    
+    func setNavigationController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(rgb: 0x64B5F6)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        self.navigationItem.backButtonTitle = "Back"
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.navigationController?.navigationBar.standardAppearance = appearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationController?.navigationBar.compactAppearance = appearance
+        self.navigationController?.navigationBar.compactScrollEdgeAppearance = appearance
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.title = "Home View"
     }
     
     @IBAction func bluetoothButtonAction(_ sender: Any) {
@@ -103,12 +124,38 @@ class ViewController: UIViewController {
         print("apple map display!")
         
         let appleMapVC = UIStoryboard(name: "MapView", bundle:nil).instantiateViewController(withIdentifier: "MapVC") as! MapVC
-                
+        
+        
+        // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
+        if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
+            
+            appleMapVC.destinationLongitude = longitudeInfo
+            appleMapVC.destinationLatitude = latitudeInfo
+        } else {
+            // alert 表示する
+            print("No presented data with location data!")
+            self.present(presentAlertView(), animated: true)
+            
+            return
+        }
+        
         appleMapVC.modalPresentationStyle = .currentContext
         
         self.present(appleMapVC, animated: true) {
             print("complete to display GPS of Raspi")
         }
+    }
+    
+    func presentAlertView() -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: "確認できる位置情報がありません。データベースからデータを受け取った後、試してください。", preferredStyle: .alert)
+        
+        let alertAction = UIAlertAction(title: "確認", style: .default) { _ in
+            print("No location data")
+        }
+        
+        alert.addAction(alertAction)
+        
+        return alert
     }
     
     
@@ -128,22 +175,10 @@ class ViewController: UIViewController {
         }
     }
     
-    func downloadData() {
-        // Storageの指定
-        
-    }
-    
-    //Firestoreからvideoをダウンロードする
-    public func downloadURL(for path: String, completion: @escaping (Result<URL, Error>) -> Void) {
-        let reference = storage.child(path)
-        
-        reference.downloadURL(completion: { url, error in
-            guard let url = url, error == nil else {
-                completion(.failure(StorageError.cancelled))
-                return
-            }
-            completion(.success(url))
-        })
+    // navigation controllerを pushでpresentさせる
+    @IBAction func presentVideoListBtnAction(_ sender: Any) {
+        let videoListVC = UIStoryboard(name: "VideoListView", bundle:nil).instantiateViewController(withIdentifier: "VideoListVC") as! VideoListVC
+        self.navigationController?.pushViewController(videoListVC, animated: true)
     }
     
     func getData() {
@@ -172,6 +207,9 @@ class ViewController: UIViewController {
                     self.longitudeLabel.text = "経度: " + infoData.longitude!
                     self.latitudeLabel.text = "緯度: " + infoData.latitude!
                     self.ipLabel.text = "IPアドレス: " + infoData.ip!
+                    
+                    self.longitudeInfo = Double(infoData.longitude!)!
+                    self.latitudeInfo = Double(infoData.latitude!)!
                 
                     self.dateLabel.isHidden = false
                     self.timeLabel.isHidden = false
