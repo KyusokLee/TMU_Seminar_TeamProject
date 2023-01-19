@@ -57,6 +57,4 @@ extension SerialVC: BluetoothSerialDelegate {
         // 返信で返ってきたメッセージをラベルに表示
         serialMessageLabel.text = message
     }
-    
-    
 }
