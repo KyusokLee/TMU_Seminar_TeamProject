@@ -27,6 +27,7 @@
 		949E8E052965B73A0015FD1C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E042965B73A0015FD1C /* StringExtension.swift */; };
 		949E8E072965B9300015FD1C /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E062965B9300015FD1C /* MapVC.swift */; };
 		949E8E092965BFBA0015FD1C /* MapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949E8E082965BFBA0015FD1C /* MapView.storyboard */; };
+		949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8EE329784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift */; };
 		94A3711E296ECA0900D4EF76 /* VideoListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A3711D296ECA0900D4EF76 /* VideoListVC.swift */; };
 		94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */; };
 		94A37122296ECB5E00D4EF76 /* VideoDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */; };
@@ -81,6 +82,7 @@
 		949E8E042965B73A0015FD1C /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		949E8E062965B9300015FD1C /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		949E8E082965BFBA0015FD1C /* MapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapView.storyboard; sourceTree = "<group>"; };
+		949E8EE329784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordicate2D+Utils.swift"; sourceTree = "<group>"; };
 		94A3711D296ECA0900D4EF76 /* VideoListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListVC.swift; sourceTree = "<group>"; };
 		94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoListView.storyboard; sourceTree = "<group>"; };
 		94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailVC.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			children = (
 				949E8E042965B73A0015FD1C /* StringExtension.swift */,
 				94FAA58B296E67C3007BD387 /* ColorExtension.swift */,
+				949E8EE329784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
 				949E8E052965B73A0015FD1C /* StringExtension.swift in Sources */,
 				94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */,
+				949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 				94FAA58C296E67C3007BD387 /* ColorExtension.swift in Sources */,
 			);

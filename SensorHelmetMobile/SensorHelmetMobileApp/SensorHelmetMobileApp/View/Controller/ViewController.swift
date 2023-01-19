@@ -90,6 +90,8 @@ class ViewController: UIViewController {
     
     var longitudeInfo: Double = 0.0
     var latitudeInfo: Double = 0.0
+    var shelterLongitude: Double = 0.0
+    var shelterLatitude: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,12 +127,12 @@ class ViewController: UIViewController {
         
         let appleMapVC = UIStoryboard(name: "MapView", bundle:nil).instantiateViewController(withIdentifier: "MapVC") as! MapVC
         
-        
         // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
         if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
-            
-            appleMapVC.destinationLongitude = longitudeInfo
-            appleMapVC.destinationLatitude = latitudeInfo
+            appleMapVC.destinationLocation.longitude = longitudeInfo
+            appleMapVC.destinationLocation.latitude = latitudeInfo
+            appleMapVC.shelterLocation.longitude = shelterLongitude
+            appleMapVC.shelterLocation.latitude = shelterLatitude
         } else {
             // alert 表示する
             print("No presented data with location data!")
@@ -199,6 +201,7 @@ class ViewController: UIViewController {
                     let data = document.data()
                     let jsonData = try JSONSerialization.data(withJSONObject: data)
                     let infoData = try decoder.decode(InfoModel.self, from: jsonData)
+                    print(infoData)
                     infoDatas.append(infoData)
                     self.dateLabel.text = "日付: " + infoData.date!
                     self.timeLabel.text = "時間: " + infoData.time!
@@ -207,9 +210,11 @@ class ViewController: UIViewController {
                     self.longitudeLabel.text = "経度: " + infoData.longitude!
                     self.latitudeLabel.text = "緯度: " + infoData.latitude!
                     self.ipLabel.text = "IPアドレス: " + infoData.ip!
-                    
+                    // 以下の処理で渡す
                     self.longitudeInfo = Double(infoData.longitude!)!
                     self.latitudeInfo = Double(infoData.latitude!)!
+                    self.shelterLongitude = Double(infoData.shelterLongitude!)!
+                    self.shelterLatitude = Double(infoData.shelterLatitude!)!
                 
                     self.dateLabel.isHidden = false
                     self.timeLabel.isHidden = false

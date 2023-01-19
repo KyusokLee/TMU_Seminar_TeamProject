@@ -15,4 +15,18 @@ struct InfoModel: Codable {
     var longitude: String?
     var latitude: String?
     var ip: String?
+    var shelterLongitude: String?
+    var shelterLatitude: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case date
+        case time
+        case temp
+        case humid
+        case longitude
+        case latitude
+        case ip
+        case shelterLongitude = "destinationLong"
+        case shelterLatitude = "destinationLati"
+    }
 }
