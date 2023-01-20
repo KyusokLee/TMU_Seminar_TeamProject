@@ -402,9 +402,13 @@ extension MapVC: MKMapViewDelegate {
     }
     
 //    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        if let annotaion
-//
-//
+//        if annotation.title == "避難所" {
+//            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "")
+//            annotationView.backgroundColor = UIColor.systemGreen
+//            return annotationView
+//        } else {
+//            return MKAnnotationView()
+//        }
 //    }
 }
 

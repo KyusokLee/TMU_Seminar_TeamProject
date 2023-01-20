@@ -21,14 +21,21 @@ class VideoListVC: UIViewController {
     var videoList: [String] = []
     // urlごとのファイルを格納する配列
     var videoUrlList: [String] = []
-    
     // 画面をDragをすると、Cellが際反映されるように
     let refreshControl = UIRefreshControl()
     
     //⚠️ファイルリストの読み込みを行う間に、ユーザの認識touchを受け取らないように
-    var isLoading = false
-    var isFinished = false
-    weak var loadingView: UIView?
+//    var isLoading = true
+//    var isLoadFinished = false
+    
+    // custom loadingViewを定義
+    private let loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        // 初期設定として、loadingをtrueに
+        view.isLoading = true
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +47,10 @@ class VideoListVC: UIViewController {
         videoListTableView.dataSource = self
         
         initRefresh()
+        
+        self.view.addSubview(loadingView)
+        setLoadingViewConstraints()
+        // viewに入るとdataを読み込むように
         getAllFileListProgress()
     }
     
@@ -56,14 +67,22 @@ class VideoListVC: UIViewController {
     @objc func refreshTable(refresh: UIRefreshControl) {
         print("更新　スタート！")
         
+        self.loadingView.isLoading = true
         getAllFileListProgress()
-        isLoading = false
-        isFinished = false
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.videoListTableView.reloadData()
             refresh.endRefreshing()
         }
+    }
+    
+    func setLoadingViewConstraints() {
+        NSLayoutConstraint.activate([
+            self.loadingView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.loadingView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            self.loadingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.loadingView.topAnchor.constraint(equalTo: self.view.topAnchor)
+        ])
     }
     
     func registerCell() {
@@ -88,87 +107,23 @@ class VideoListVC: UIViewController {
     }
     
     func getAllFileListProgress() {
-        if !isLoading {
-            isLoading = true
-            showLoadingView(load: isLoading)
-            
+        if loadingView.isLoading {
             DispatchQueue.main.async {
                 self.getListFromStorage { fileList, urlList in
                     self.videoList = fileList
                     self.videoUrlList = urlList
+                    self.loadingView.isLoading = false
                     self.videoListTableView.reloadData()
                 }
             }
             
-            if isFinished && !isLoading {
-                return
-            }
-        } else {
-            return
-        }
-    }
-    
-    // getAllFileList()でファイルリストの読み込みが全部終わるまで、loadingViewを表示する
-    func showLoadingView(load getList: Bool) {
-        guard getList else {
-            return
-        }
-        
-        print("showLoadingView!")
-        
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        
-        if let hasLoadingView = self.loadingView {
-            window?.addSubview(hasLoadingView)
-        } else {
-            let loadingView = UIView(frame: UIScreen.main.bounds)
-            loadingView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-            
-            let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-            activityIndicator.center = loadingView.center
-            activityIndicator.color = UIColor.white
-            activityIndicator.style = UIActivityIndicatorView.Style.large
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.startAnimating()
-            
-            loadingView.addSubview(activityIndicator)
-            
-            let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
-            titleLabel.center = CGPoint(x: activityIndicator.frame.origin.x + activityIndicator.frame.size.width / 2, y: activityIndicator.frame.origin.y + 90)
-            titleLabel.textColor = UIColor.white
-            titleLabel.textAlignment = .center
-            titleLabel.text = "ただいま、リストを読み込んでいます..."
-            loadingView.addSubview(titleLabel)
-            print("リスト読み込み中")
-            
-            window?.addSubview(loadingView)
-            self.loadingView = loadingView
-        }
-    }
-        
-    func hideLoadView(_ loadView: UIView?, load getList: Bool) {
-        print("hide load!")
-        guard !getList else {
-            return
-        }
-        
-        print("do Hide load!")
-        
-        if let hasLoadView = loadView {
-            DispatchQueue.main.async {
-                hasLoadView.removeFromSuperview()
-            }
-            
-            print(videoList.count)
         } else {
             return
         }
     }
     
     func getListFromStorage(completion: @escaping StorageCompletion) {
-        guard !isFinished else {
+        guard self.loadingView.isLoading else {
             return
         }
         
@@ -190,10 +145,6 @@ class VideoListVC: UIViewController {
                 completion(fileList, urlList)
             }
         }
-        
-        isFinished = true
-        isLoading = false
-        hideLoadView(loadingView, load: isLoading)
     }
 
 }
@@ -210,7 +161,6 @@ extension VideoListVC: UITableViewDelegate, UITableViewDataSource {
         
         // videoListにStringが入る
         cell.configure(fileName: videoList[indexPath.row])
-        
         return cell
     }
     
@@ -221,9 +171,49 @@ extension VideoListVC: UITableViewDelegate, UITableViewDataSource {
         videoDetailVC.fileName = videoList[indexPath.row]
         videoDetailVC.urlString = videoUrlList[indexPath.row]
         print(videoDetailVC.urlString)
-        
         self.navigationController?.pushViewController(videoDetailVC, animated: true)
     }
-    
-    
 }
+
+
+// ✍️Windowsを用いたloadingViewの実装
+//    // getAllFileList()でファイルリストの読み込みが全部終わるまで、loadingViewを表示する
+//    func showLoadingView(load getList: Bool) {
+//        // loadがtrueのときのみ、以下の処理を行う
+//        guard getList else {
+//            return
+//        }
+//
+//        print("showLoadingView!")
+//
+//        let scenes = UIApplication.shared.connectedScenes
+//        let windowScene = scenes.first as? UIWindowScene
+//        let window = windowScene?.windows.first
+//
+//        if let hasLoadingView = self.loadingView {
+//            window?.addSubview(hasLoadingView)
+//        } else {
+//            let loadingView = UIView(frame: UIScreen.main.bounds)
+//            loadingView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+//
+//            let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+//            activityIndicator.center = loadingView.center
+//            activityIndicator.color = UIColor.white
+//            activityIndicator.style = UIActivityIndicatorView.Style.large
+//            activityIndicator.hidesWhenStopped = true
+//            activityIndicator.startAnimating()
+//
+//            loadingView.addSubview(activityIndicator)
+//
+//            let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+//            titleLabel.center = CGPoint(x: activityIndicator.frame.origin.x + activityIndicator.frame.size.width / 2, y: activityIndicator.frame.origin.y + 90)
+//            titleLabel.textColor = UIColor.white
+//            titleLabel.textAlignment = .center
+//            titleLabel.text = "ただいま、リストを読み込んでいます..."
+//            loadingView.addSubview(titleLabel)
+//            print("リスト読み込み中")
+//
+//            window?.addSubview(loadingView)
+//            self.loadingView = loadingView
+//        }
+//    }
