@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94073C87297C25D0006BE381 /* HelmetSuccessPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */; };
+		94073C89297C25E0006BE381 /* HelmetPopupView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */; };
+		94073C8B297C26BC006BE381 /* done_check_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94073C8A297C26BC006BE381 /* done_check_icon.png */; };
 		9478262629645FA100051115 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9478262529645FA100051115 /* GoogleService-Info.plist */; };
 		94782629296462E700051115 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 94782628296462E700051115 /* FirebaseAnalytics */; };
 		9478262B296462E700051115 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9478262A296462E700051115 /* FirebaseFirestore */; };
@@ -65,6 +68,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelmetSuccessPopupVC.swift; sourceTree = "<group>"; };
+		94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelmetPopupView.storyboard; sourceTree = "<group>"; };
+		94073C8A297C26BC006BE381 /* done_check_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done_check_icon.png; sourceTree = "<group>"; };
 		9478262529645FA100051115 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9478262E29646A2E00051115 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
 		947826302964744100051115 /* TCPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPNetwork.swift; sourceTree = "<group>"; };
@@ -227,6 +233,7 @@
 				949E8E062965B9300015FD1C /* MapVC.swift */,
 				94A3711D296ECA0900D4EF76 /* VideoListVC.swift */,
 				94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */,
+				94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -241,6 +248,7 @@
 				949E8E082965BFBA0015FD1C /* MapView.storyboard */,
 				94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */,
 				94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */,
+				94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -260,6 +268,7 @@
 			children = (
 				94D84A45297AE5360037AC39 /* helmetBasic.png */,
 				94D84A47297AE7290037AC39 /* shelterBasic.png */,
+				94073C8A297C26BC006BE381 /* done_check_icon.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -413,9 +422,11 @@
 				94D84A46297AE5370037AC39 /* helmetBasic.png in Resources */,
 				9478262629645FA100051115 /* GoogleService-Info.plist in Resources */,
 				94A37124296ECB6D00D4EF76 /* VideoDetailView.storyboard in Resources */,
+				94073C8B297C26BC006BE381 /* done_check_icon.png in Resources */,
 				94D84A48297AE7290037AC39 /* shelterBasic.png in Resources */,
 				94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */,
 				94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */,
+				94073C89297C25E0006BE381 /* HelmetPopupView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +461,7 @@
 				94A3711E296ECA0900D4EF76 /* VideoListVC.swift in Sources */,
 				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
 				94D84A4A297AE7F60037AC39 /* CustomAnnotationView.swift in Sources */,
+				94073C87297C25D0006BE381 /* HelmetSuccessPopupVC.swift in Sources */,
 				948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,

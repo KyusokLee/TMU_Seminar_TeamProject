@@ -8,13 +8,18 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreLocationUI
 
 // Apple Mapを用いた経路探索と現在位置の取得
 // TODO: Helmetの場所にある程度近づけると、Helmetのannotationを消し、避難所のannotationを立てる
 // MARK: - ⚠️maps short session requested but session sharing is not enabledエラーを修正中
 // MARK: - ✍️実装中: 緯度と経度を用いたreverseGeocodeLocationで、住所名を持ってくる
 
-// TODO: 最初から、helmetがある目的地までのとこを表示
+// TODO: 1. 最初から、helmetがある目的地までのとこを表示
+// TODO: 2. ヘルメットを装着していない状態なら、避難所までの経路は表示されないように
+// TODO: 3 - 1. ヘルメット解除する場合を想定して、destinationLocationをcurrentLocationに変える作業をする
+// TODO: 3 - 2. これに関しては、ずっと位置情報をupdateするのではなく、解除ボタンを押したときだけ、destinationLocationをfetchする作業をする
+// TODO: 3 - 3. どうせ、ヘルメットを装着しているのであれば、Firestoreに格納される経度と緯度は、現在地にfetchされるはず
 
 class MapVC: UIViewController {
     private var mapView: MKMapView = MKMapView()
@@ -41,12 +46,17 @@ class MapVC: UIViewController {
     var didTapCancelNavigateButton: Bool = false
     // helmetを装着したか
     var didGetHelmet: Bool = false
+    // helmetを解除したか
+    var didTakeOffHelmet: Bool = false
     // 初期の設定を表示したかどうか
     var didShowFirstAnnotaionAndRegion: Bool = false
+    // annotation pin番後別にrouteの色を変えたい
+    var annotationViewPinNumber = 0
     
     // リアルタイムな現在位置情報をmanageするための変数
     lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
+
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.delegate = self
         
@@ -138,7 +148,7 @@ class MapVC: UIViewController {
         let label = UILabel()
         label.text = ""
         label.font = .systemFont(ofSize: 17, weight: .medium)
-        label.textColor = UIColor(rgb: 0x4CAF50)
+        label.textColor = UIColor(rgb: 0xF57C00)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -169,9 +179,54 @@ class MapVC: UIViewController {
         config.titleAlignment = .center
         
         button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(nil, action: #selector(navigateRouteButtonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(nil, action: #selector(helmetButtonAction), for: .touchUpInside)
         button.configuration = config
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    lazy var takeOffHelmetButton: UIButton = {
+        let button = UIButton()
+        var config = UIButton.Configuration.filled()
+        config.buttonSize = .large
+        config.baseBackgroundColor = UIColor.white
+        config.baseForegroundColor = UIColor.systemGray2
+        config.imagePlacement = NSDirectionalRectEdge.leading
+        
+        config.image = UIImage(systemName: "power.circle.fill",
+                               withConfiguration: UIImage.SymbolConfiguration(scale: .large))?.withTintColor(UIColor.systemRed.withAlphaComponent(0.7), renderingMode: .alwaysOriginal)
+        config.imagePadding = 10
+        config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 10, trailing: 10)
+        
+        config.background.strokeColor = UIColor.systemRed.withAlphaComponent(0.7)
+        config.background.strokeWidth = 3
+        
+        config.cornerStyle = .medium
+        config.attributedTitle = AttributedString("ヘルメット解除", attributes: AttributeContainer([
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium)]))
+        config.titleAlignment = .center
+        
+        button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(nil, action: #selector(takeOffHelmetButtonAction), for: .touchUpInside)
+        button.configuration = config
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    //現在の位置を中央にする
+    let locationButton: CLLocationButton = {
+        let button = CLLocationButton()
+        let buttonRect = CGRect(x: 0, y: 0, width: 50, height: 50)
+        
+        button.icon = .arrowOutline
+        button.tintColor = UIColor.systemBlue
+        button.backgroundColor = UIColor.white
+        button.frame = buttonRect
+        button.cornerRadius = button.frame.width / 2
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(nil, action: #selector(moveToCurrentLocation), for: .touchUpInside)
         
         return button
     }()
@@ -188,6 +243,7 @@ class MapVC: UIViewController {
         view.addSubview(expectedTimeLabel)
         view.addSubview(helmetNoticeLabel)
         view.addSubview(getHelmetButton)
+        view.addSubview(takeOffHelmetButton)
         setDismissBtnConstraints()
         setNavigateRouteBtnConstraints()
         setCancelNavigateBtnConstraints()
@@ -196,66 +252,67 @@ class MapVC: UIViewController {
         setExpectedTimeLabelConstraints()
         setHelmetNoticeLabelConstraints()
         setGetHelmetButtonConstraints()
-        self.getHelmetButton.isHidden = true
-        removeGetHelmetButtonConstraints()
-        
-        // mapViewにtapGestureを登録する必要があるのかな
+        setTakeOffHelmetButtonConstraints()
+        self.getHelmetButton.isHidden = false
+        self.takeOffHelmetButton.isHidden = true
+//        removeGetHelmetButtonConstraints()
+
         
         mapView.frame = view.bounds
         mapView.showsUserLocation = true
+        // mapViewにCustomAnnotationViewを登録
+        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
+        mapView.addSubview(locationButton)
+        setLocationButtonConstraints()
+        // mapView.bringSubviewToFront(locationButton)
         mapView.setUserTrackingMode(.follow, animated: true)
         mapView.delegate = self
         view.addSubview(mapView)
         // mapViewの上にButtonを表示させる方法 (AppleのHIGに望ましくない)
         // view.bringSubviewToFront(dismissButton)
         setMapViewConstraints()
-        
-        // 現在位置の取得
-        // getCurrentLocation(manager: locationManager)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.locationManager.stopUpdatingLocation()
     }
     
-//    // mapViewにtapGestureを登録する
-//    func setMapTapGesture() {
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapTapGestureAction))
-//        mapView.addGestureRecognizer(tapGesture)
-//    }
-//
-//    @objc func mapTapGestureAction() {
-//        print("tap map")
-//    }
-    
     // 最初の地域設定
-    func setRegionAndAnnotation(center: CLLocationCoordinate2D, target: CLLocationCoordinate2D) {
+    func setCenterRegion(center: CLLocationCoordinate2D, target: CLLocationCoordinate2D) {
         // Region(地域)を設定
         let coordinate = CLLocationCoordinate2DMake((center.latitude + destinationLocation.latitude) / 2, (center.longitude + destinationLocation.longitude) / 2)
         // Mapで表示した地域のHeightとwidthを設定
         let span = MKCoordinateSpan(latitudeDelta: 0.35, longitudeDelta: 0.35)
         let region = MKCoordinateRegion(center: coordinate, span: span)
+        
         mapView.setRegion(region, animated: true)
     }
     
     func getDistance(from curLocate: CLLocationCoordinate2D, to targetLocate: CLLocationCoordinate2D) {
         let rawDistance = curLocate.distance(to: targetLocate)
         
-        // TODO: 🔥5m以内であれば、Helmetの装着したかを表示し、ボタンを押したら、避難所への経路を表示
-        if rawDistance < 5 {
+        // TODO: 🔥100m以内であれば、Helmetの装着したかを表示し、ボタンを押したら、避難所への経路を表示
+        if rawDistance < 100 {
             let roundedDistance = (rawDistance / 10).rounded() * 10
-            self.distanceLabel.text = "目的地までの距離: \(Int(roundedDistance))"
+            self.distanceLabel.text = "目的地までの距離: \(Int(roundedDistance))m"
+            self.helmetNoticeLabel.text = "近くにヘルメットがあります"
             
             if getHelmetButton.isHidden {
                 self.getHelmetButton.isHidden = false
-                setGetHelmetButtonConstraints()
             }
         } else {
             self.distanceLabel.text = curLocate.distanceText(to: targetLocate)
             
+            if didGetHelmet {
+                self.helmetNoticeLabel.text = "ヘルメット装着中"
+                self.helmetNoticeLabel.textColor = UIColor(rgb: 0x4CAF50)
+            } else {
+                self.helmetNoticeLabel.text = ""
+                self.helmetNoticeLabel.textColor = UIColor(rgb: 0xF57C00)
+            }
+            
             if !getHelmetButton.isHidden {
                 self.getHelmetButton.isHidden = true
-                removeGetHelmetButtonConstraints()
             }
         }
         
@@ -277,8 +334,19 @@ class MapVC: UIViewController {
                 if let todohuken = targetPlacemark.administrativeArea {
                     placeName += todohuken
                 }
+                
                 if let shikutyoson = targetPlacemark.locality {
                     placeName += shikutyoson
+                }
+                
+                if let hasAlsoChome = targetPlacemark.thoroughfare {
+                    placeName += hasAlsoChome
+                } else if let hasNoChome = targetPlacemark.subLocality {
+                    placeName += hasNoChome
+                }
+                
+                if let hasBanchi = targetPlacemark.subThoroughfare {
+                    placeName += hasBanchi
                 }
                 
                 completion(placeName)
@@ -313,7 +381,10 @@ class MapVC: UIViewController {
             if self!.didTapCancelNavigateButton {
                 direction.cancel()
             }
-            self?.mapView.addOverlay(route.polyline, level: .aboveRoads)
+            
+            DispatchQueue.main.async {
+                self?.mapView.addOverlay(route.polyline, level: .aboveRoads)
+            }
         }
     }
     
@@ -341,10 +412,14 @@ class MapVC: UIViewController {
         
         let overlays = mapView.overlays
         
-        // overlayを全部消す
-        if !overlays.isEmpty {
-            DispatchQueue.main.async {
-                self.mapView.removeOverlays(overlays)
+        if didTapNavigateButton || didGetHelmet {
+            // pass
+        } else {
+            // overlayを全部消す
+            if !overlays.isEmpty {
+                DispatchQueue.main.async {
+                    self.mapView.removeOverlays(overlays)
+                }
             }
         }
         
@@ -380,27 +455,13 @@ class MapVC: UIViewController {
     }
     
     // Custom Pinを立てる
-    func setAnnotation(latitudeValue: CLLocationDegrees, longitudeValue: CLLocationDegrees, delta span :Double, title strTitle: String, subtitle strSubTitle:String) {
-        mapView.removeAnnotations(mapView.annotations)
+    func setAnnotation(pinTag: Int, latitudeValue: CLLocationDegrees, longitudeValue: CLLocationDegrees, delta span :Double) {
+        let pin = CustomAnnotation(pinImageTag: pinTag, coordinate: CLLocationCoordinate2D(latitude: latitudeValue, longitude: longitudeValue))
         
-        let annotation = MKPointAnnotation()
-        let annotation2 = MKPointAnnotation()
-        var annotations = [annotation]
-        
-        annotation.coordinate = CLLocationCoordinate2DMake(latitudeValue, longitudeValue)
-        annotation.title = strTitle
-        annotation.subtitle = strSubTitle
-        
-        annotation2.coordinate = shelterLocation
-        annotation2.title = "避難所"
-        annotation2.subtitle = ""
-//        var view = MKMarkerAnnotationView()
-//        view.annotation = annotation2
-//        view.markerTintColor = UIColor.systemGreen
-        
-        annotations.append(annotation)
-        annotations.append(annotation2)
-        mapView.addAnnotations(annotations)
+        DispatchQueue.main.async {
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            self.mapView.addAnnotation(pin)
+        }
     }
     
     
@@ -425,6 +486,11 @@ class MapVC: UIViewController {
         mapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         mapView.bottomAnchor.constraint(equalTo: self.navigateRouteButton.topAnchor, constant: -10).isActive = true
+    }
+    
+    func setLocationButtonConstraints() {
+        self.locationButton.bottomAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: -30).isActive = true
+        self.locationButton.rightAnchor.constraint(equalTo: self.mapView.rightAnchor, constant: -6).isActive = true
     }
     
     func setDismissBtnConstraints() {
@@ -464,10 +530,9 @@ class MapVC: UIViewController {
     }
     
     func setHelmetNoticeLabelConstraints() {
+        self.helmetNoticeLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.helmetNoticeLabel.topAnchor.constraint(equalTo: self.expectedTimeLabel.bottomAnchor, constant: 5).isActive = true
         self.helmetNoticeLabel.bottomAnchor.constraint(equalTo: self.getHelmetButton.topAnchor, constant: -5).isActive = true
-        self.helmetNoticeLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
-        self.helmetNoticeLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
     }
     
     func setGetHelmetButtonConstraints() {
@@ -477,8 +542,11 @@ class MapVC: UIViewController {
         self.getHelmetButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -80).isActive = true
     }
     
-    func removeGetHelmetButtonConstraints() {
-        self.getHelmetButton.bottomAnchor.constraint(equalTo: self.getHelmetButton.topAnchor).isActive = true
+    func setTakeOffHelmetButtonConstraints() {
+        self.takeOffHelmetButton.topAnchor.constraint(equalTo: self.helmetNoticeLabel.bottomAnchor, constant: 5).isActive = true
+        self.takeOffHelmetButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+        self.takeOffHelmetButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 80).isActive = true
+        self.takeOffHelmetButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -80).isActive = true
     }
     
     // 所要時間をString型に変換するメソッド
@@ -515,6 +583,7 @@ class MapVC: UIViewController {
         } else {
             targetLocationCoordinate = shelterLocation
         }
+        setCenterRegion(center: currentLocation, target: targetLocationCoordinate)
         
         // Direction計算
         calculateDirection(curLocate: currentLocation, targetLocate: targetLocationCoordinate)
@@ -542,8 +611,97 @@ class MapVC: UIViewController {
     
     @objc func helmetButtonAction() {
         didGetHelmet = true
+        print("Helmet button tap!!")
         // 避難所への経路に入れ替える
+        let requestPopVC = HelmetSuccessPopupVC.instantiate(with: didGetHelmet)
+        
+        requestPopVC.modalPresentationStyle = .overCurrentContext
+        requestPopVC.modalTransitionStyle = .crossDissolve
+        self.present(requestPopVC, animated: true) {
+            // 設定した時間後、処理を行う
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                if requestPopVC.presentViewState {
+                    self.dismiss(animated: true) {
+                        // ここで、request thank you Pageを表示したあと、設置リクエストボタンの設定を帰る
+                        print("Success Okay!")
+                        self.getHelmetButton.isHidden = true
+                        // MARK: targetLocationを避難所のとこに変える
+                        self.targetLocationCoordinate = self.shelterLocation
+                        
+                        let shelter = CLLocation(latitude: self.shelterLocation.latitude, longitude: self.shelterLocation.longitude)
+                        self.setAnnotation(pinTag: self.annotationViewPinNumber, latitudeValue: self.shelterLocation.latitude, longitudeValue: self.shelterLocation.longitude, delta: 0.01)
+                        
+                        self.getPlaceName(target: shelter) { placename in
+                            self.addressLabel.text = "住所: \(placename ?? "")"
+                            // Placeを取得してから、fontをheavyに変える作業をここで行う。また、textColorをblackに
+                            self.addressLabel.textColor = UIColor.black
+                            self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
+                        }
+                        
+                        self.getDistance(from: self.currentLocation, to: self.shelterLocation)
+                        self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.shelterLocation)
+                        self.takeOffHelmetButton.isHidden = false
+                        self.setCenterRegion(center: self.currentLocation, target: self.shelterLocation)
+                    }
+                }
+            }
+        }
     }
+    
+    @objc func takeOffHelmetButtonAction() {
+        if didGetHelmet {
+            didGetHelmet = false
+        }
+        
+        print("take off helmet!")
+        let requestPopVC = HelmetSuccessPopupVC.instantiate(with: didGetHelmet)
+        
+        requestPopVC.configure(with: didGetHelmet)
+        requestPopVC.modalPresentationStyle = .overCurrentContext
+        requestPopVC.modalTransitionStyle = .crossDissolve
+        self.present(requestPopVC, animated: true) {
+            // 設定した時間後、処理を行う
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                if requestPopVC.presentViewState {
+                    self.dismiss(animated: true) {
+                        // ここで、request thank you Pageを表示したあと、設置リクエストボタンの設定を帰る
+                        print("Success Okay!")
+                        self.getHelmetButton.isHidden = false
+                        // MARK: targetLocationを避難所のとこに変える
+                        self.targetLocationCoordinate = self.currentLocation
+                        
+                        // 現在のuserの位置が、ヘルメットを解除した位置になる
+                        let helmetLocation = CLLocation(latitude: self.currentLocation.latitude, longitude: self.currentLocation.longitude)
+                        self.setAnnotation(pinTag: self.annotationViewPinNumber, latitudeValue: self.targetLocationCoordinate.latitude, longitudeValue: self.targetLocationCoordinate.longitude, delta: 0.01)
+                        
+                        self.getPlaceName(target: helmetLocation) { placename in
+                            self.addressLabel.text = "住所: \(placename ?? "")"
+                            // Placeを取得してから、fontをheavyに変える作業をここで行う。また、textColorをblackに
+                            self.addressLabel.textColor = UIColor.black
+                            self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
+                        }
+                        
+                        self.getDistance(from: self.currentLocation, to: self.targetLocationCoordinate)
+                        self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate)
+                        self.takeOffHelmetButton.isHidden = true
+                        self.setCenterRegion(center: self.currentLocation, target: self.targetLocationCoordinate)
+                    }
+                }
+            }
+        }
+    }
+    
+    // 現在の位置を真ん中に表示
+    @objc func moveToCurrentLocation() {
+        print("Move to Current location")
+        let region = MKCoordinateRegion(center: currentLocation, span: MKCoordinateSpan(latitudeDelta:0.01, longitudeDelta:0.01))
+        self.mapView.setRegion(region, animated: true)
+    }
+    
+    // gestureはいらない
+//    @objc func showAnnotationDetailView(gestureRecognizer: UITapGestureRecognizer) {
+//        print("show annotation detail")
+//    }
     
 }
 
@@ -555,9 +713,16 @@ extension MapVC: MKMapViewDelegate {
         }
         
         let routeRenderer = MKPolylineRenderer(polyline: routePolyline)
-        routeRenderer.strokeColor = UIColor(red:1.00, green:0.35, blue:0.30, alpha:1.0)
-        routeRenderer.lineWidth = 5.0
-        routeRenderer.alpha = 1.0
+        
+        if annotationViewPinNumber == 0 {
+            routeRenderer.strokeColor = UIColor(red:1.00, green:0.35, blue:0.30, alpha:1.0)
+            routeRenderer.lineWidth = 5.0
+            routeRenderer.alpha = 1.0
+        } else {
+            routeRenderer.strokeColor = UIColor.systemGreen
+            routeRenderer.lineWidth = 5.0
+            routeRenderer.alpha = 1.0
+        }
         
         return routeRenderer
     }
@@ -567,6 +732,8 @@ extension MapVC: MKMapViewDelegate {
         // CLLocationとCLLocationCoodinate2Dは、異なるもの
         if let hasCoordinate = view.annotation?.coordinate {
             print("Tap Annotation")
+            self.mapView.selectAnnotation(view.annotation!, animated: true)
+            
             let location = CLLocation(latitude: hasCoordinate.latitude, longitude: hasCoordinate.longitude)
             
             DispatchQueue.main.async {
@@ -577,14 +744,22 @@ extension MapVC: MKMapViewDelegate {
                     self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
                 }
                 
+                if self.didGetHelmet {
+                    self.getHelmetButton.isHidden = true
+                }
+                
                 self.getDistance(from: self.currentLocation, to: hasCoordinate)
                 self.calculateDirection(curLocate: self.currentLocation, targetLocate: hasCoordinate)
             }
         }
     }
     
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("call out")
+    }
+    
     // annotationViewのtapを解除したとき、呼び出されるメソッド
-    // MARK: - ⚠️注意: 他のannotaionをクリックしても、didDeselectされた後、selectされるようになる
+    // MARK: - 注意: 他のannotaionをクリックしても、didDeselectされた後、selectされるようになる
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         if let hasCoordinate = view.annotation?.coordinate {
             print(hasCoordinate)
@@ -605,16 +780,104 @@ extension MapVC: MKMapViewDelegate {
         }
     }
     
-    
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        if annotation.title == "避難所" {
-//            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "")
-//            annotationView.backgroundColor = UIColor.systemGreen
-//            return annotationView
+    // MARK: - Custom Annotation Viewを定義するために実装
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        if annotation is MKUserLocation { return nil }
+        
+        guard let hasAnnotation = annotation as? CustomAnnotation else {
+            return nil
+        }
+        
+        var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: hasAnnotation, reuseIdentifier: CustomAnnotationView.identifier)
+            annotationView?.canShowCallout = true
+            annotationView?.contentMode = .scaleAspectFit
+            annotationView?.layoutIfNeeded()
+        } else {
+            annotationView?.annotation = hasAnnotation
+            annotationView?.canShowCallout = true
+            annotationView?.layoutIfNeeded()
+        }
+        
+//        // backGroundView
+//        if let hasBackgroundView = annotationView?.subviews.first {
+//
 //        } else {
-//            return MKAnnotationView()
+//
 //        }
-//    }
+        let backGroundView = UIView()
+        backGroundView.frame = CGRect(x: -2, y: -1, width: 40, height: 40)
+        
+        let pinImage: UIImage!
+        let size = CGSize(width: 35, height: 35)
+        var tapTitle = ""
+        UIGraphicsBeginImageContext(size)
+            
+        switch hasAnnotation.pinImageTag {
+        case 0:
+            tapTitle = "ヘルメット"
+//            backGroundView.backgroundColor = UIColor.white
+//            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
+//            backGroundView.layer.borderColor = UIColor(rgb: 0xF57C00).cgColor
+//            backGroundView.layer.borderWidth = 1.5
+            pinImage = UIImage(named: "helmetBasic")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor(rgb: 0xF57C00))
+        case 1:
+            tapTitle = "避難所"
+//            backGroundView.backgroundColor = UIColor.systemGreen
+//            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
+//            backGroundView.layer.borderColor = UIColor.systemGreen.cgColor
+//            backGroundView.layer.borderWidth = 1.5
+            pinImage = UIImage(named: "shelterBasic")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor.systemGreen)
+        default:
+            // それ以外は、設定なし
+            pinImage = UIImage()
+        }
+        
+        // ボタンなどを設けなかったから、いらない
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showAnnotationDetailView(gestureRecognizer: )))
+//        annotationView?.addGestureRecognizer(tapGesture)
+                 
+        //ラベルの作成
+        let label = UILabel()
+        label.text = tapTitle
+        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.textColor = UIColor.black
+        label.isUserInteractionEnabled = true
+        annotationView?.detailCalloutAccessoryView = label
+        annotationView?.isUserInteractionEnabled = true
+        
+        pinImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        annotationView?.image = resizedImage
+        
+        if hasAnnotation.pinImageTag == 0 {
+            backGroundView.backgroundColor = UIColor.white
+            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
+            backGroundView.layer.borderColor = UIColor(rgb: 0xF57C00).cgColor
+            backGroundView.layer.borderWidth = 1.5
+//            annotationView?.backgroundColor = UIColor.white
+//            annotationView?.layer.cornerRadius = backGroundView.frame.height / 2
+//            annotationView?.layer.borderColor = UIColor(rgb: 0xF57C00).cgColor
+//            annotationView?.layer.borderWidth = 1.5
+        } else {
+//            annotationView?.backgroundColor = UIColor.systemGreen
+//            annotationView?.layer.cornerRadius = backGroundView.frame.height / 2
+//            annotationView?.layer.borderColor = UIColor.systemGreen.cgColor
+//            annotationView?.layer.borderWidth = 1.5
+            
+            backGroundView.backgroundColor = UIColor.systemGreen
+            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
+            backGroundView.layer.borderColor = UIColor.systemGreen.cgColor
+            backGroundView.layer.borderWidth = 1.5
+        }
+        
+        annotationView?.addSubview(backGroundView)
+        annotationView?.sendSubviewToBack(backGroundView)
+        
+        return annotationView
+    }
 }
 
 extension MapVC: CLLocationManagerDelegate {
@@ -629,25 +892,29 @@ extension MapVC: CLLocationManagerDelegate {
             // 現在位置更新
             currentLocation.longitude = coordinate.longitude
             currentLocation.latitude = coordinate.latitude
-            // CLLocationの設定
-            let userLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            // MARK: - 現在位置のCLLocationの設定
+            // let userLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            lazy var pinNum: Int? = 0
+            if didGetHelmet {
+                pinNum = 1
+                annotationViewPinNumber = 1
+                targetLocationCoordinate = shelterLocation
+            } else {
+                pinNum = 0
+                annotationViewPinNumber = 0
+                targetLocationCoordinate = destinationLocation
+            }
             
             // 最初に表示させるとき
             if !didShowFirstAnnotaionAndRegion {
                 didShowFirstAnnotaionAndRegion = true
-    
-                if didGetHelmet {
-                    targetLocationCoordinate = shelterLocation
-                } else {
-                    targetLocationCoordinate = destinationLocation
-                }
-                
+
                 //CLLocationDegreeからCLLocationに
                 let targetLocation = CLLocation(latitude: targetLocationCoordinate.latitude, longitude: targetLocationCoordinate.longitude)
-                
-                setRegionAndAnnotation(center: coordinate, target: targetLocationCoordinate)
-                setAnnotation(latitudeValue: targetLocationCoordinate.latitude, longitudeValue: targetLocationCoordinate.longitude, delta: 0.1, title: "目的地", subtitle: "")
-                
+
+                setCenterRegion(center: coordinate, target: targetLocationCoordinate)
+                setAnnotation(pinTag: pinNum!, latitudeValue: targetLocationCoordinate.latitude, longitudeValue: targetLocationCoordinate.longitude, delta: 0.1)
+
                 DispatchQueue.main.async {
                     self.getPlaceName(target: targetLocation) { placeName in
                         self.addressLabel.text = "住所: \(placeName ?? "")"
@@ -655,7 +922,7 @@ extension MapVC: CLLocationManagerDelegate {
                         self.addressLabel.textColor = UIColor.black
                         self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
                     }
-                    
+
                     self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate)
                     self.getDistance(from: self.currentLocation, to: self.targetLocationCoordinate)
                 }
@@ -712,3 +979,14 @@ extension MapVC: CLLocationManagerDelegate {
 //            self.mapView.removeOverlay(lineDraw)
 //        }
 //    }
+
+
+//let calloutView = R.nib.placeCalloutView.firstView(owner: nil)!
+//if let annotatioin = view.annotation as? PlaceAnnotation {
+//    calloutView.label.text = annotatioin.name
+//    calloutView.imageView.image = annotatioin.image
+//}
+//// make inset because the callout's bottom focuses on the center of annotation
+//let inset = PlaceAnnotationView.height / 2
+//calloutView.center = CGPoint(x: view.bounds.size.width / 2,
+//                             y: (-calloutView.bounds.size.height / 2) - inset)
