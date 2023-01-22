@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-// UIColorをhexタイプで設定できるように
+// UIColorをHexColorタイプで設定できるように
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int, a: Int = 0xFF) {
         self.init(red: CGFloat(red) / 255.0,

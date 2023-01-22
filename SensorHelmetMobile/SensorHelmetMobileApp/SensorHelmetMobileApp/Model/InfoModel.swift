@@ -17,6 +17,8 @@ struct InfoModel: Codable {
     var ip: String?
     var shelterLongitude: String?
     var shelterLatitude: String?
+    var practiceLogitude: String?
+    var practiceLatitude: String?
     
     enum CodingKeys: String, CodingKey {
         case date
@@ -28,5 +30,7 @@ struct InfoModel: Codable {
         case ip
         case shelterLongitude = "destinationLong"
         case shelterLatitude = "destinationLati"
+        case practiceLogitude = "pracLongi"
+        case practiceLatitude = "pracLati"
     }
 }

@@ -92,6 +92,9 @@ class ViewController: UIViewController {
     var latitudeInfo: Double = 0.0
     var shelterLongitude: Double = 0.0
     var shelterLatitude: Double = 0.0
+    // MARK: - ⚠️演習のための位置情報
+    var pracLongitudeInfo: Double = 0.0
+    var pracLatitudeInfo: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,8 +132,13 @@ class ViewController: UIViewController {
         
         // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
         if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
-            appleMapVC.destinationLocation.longitude = longitudeInfo
-            appleMapVC.destinationLocation.latitude = latitudeInfo
+            //🔥元々のやつ
+//            appleMapVC.destinationLocation.longitude = longitudeInfo
+//            appleMapVC.destinationLocation.latitude = latitudeInfo
+            // MARK: - ⚠️練習のためのもの
+            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
+            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
+            
             appleMapVC.shelterLocation.longitude = shelterLongitude
             appleMapVC.shelterLocation.latitude = shelterLatitude
         } else {
@@ -215,6 +223,10 @@ class ViewController: UIViewController {
                     self.latitudeInfo = Double(infoData.latitude!)!
                     self.shelterLongitude = Double(infoData.shelterLongitude!)!
                     self.shelterLatitude = Double(infoData.shelterLatitude!)!
+                    
+                    // MARK: - ⚠️演習のためのもの
+                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
+                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
                 
                     self.dateLabel.isHidden = false
                     self.timeLabel.isHidden = false
