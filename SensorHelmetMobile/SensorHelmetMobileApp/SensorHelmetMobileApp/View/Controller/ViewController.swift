@@ -15,76 +15,152 @@ import FirebaseFirestore
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var raspberryPiImageView: UIImageView! {
+        didSet {
+            raspberryPiImageView.contentMode = .scaleAspectFit
+        }
+    }
+    
     @IBOutlet weak var presentVideoListButton: UIButton! {
         didSet {
-            presentVideoListButton.setTitle("Storageから動画リストを読み込む", for: .normal)
+            var config = UIButton.Configuration.filled()
+            config.buttonSize = .medium
+            config.baseBackgroundColor = UIColor.systemRed.withAlphaComponent(0.85)
+            config.baseForegroundColor = UIColor.white
+            config.imagePlacement = NSDirectionalRectEdge.leading
+            // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
+            config.image = UIImage(systemName: "list.and.film",
+                                   withConfiguration: UIImage.SymbolConfiguration(scale: .large))
+            config.imagePadding = 10
+            config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
+            config.cornerStyle = .medium
+            config.titleAlignment = .center
+            config.attributedTitle = AttributedString("動画リストを取得", attributes: AttributeContainer([
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]))
+            presentVideoListButton.layer.cornerRadius = 8
+            presentVideoListButton.configuration = config
         }
     }
     
     @IBOutlet weak var bluetoothButton: UIButton! {
         didSet {
-            bluetoothButton.setTitle("Bluetooth 探索", for: .normal)
+            var config = UIButton.Configuration.filled()
+            config.buttonSize = .medium
+            config.baseBackgroundColor = UIColor.systemBlue
+            config.baseForegroundColor = UIColor.white
+            config.imagePlacement = NSDirectionalRectEdge.leading
+            // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
+            config.image = UIImage(systemName: "antenna.radiowaves.left.and.right.circle",
+                                   withConfiguration: UIImage.SymbolConfiguration(scale: .large))
+            config.imagePadding = 10
+            config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
+            config.cornerStyle = .medium
+            config.titleAlignment = .center
+            config.attributedTitle = AttributedString("Bluetooth 探索", attributes: AttributeContainer([
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]))
+            bluetoothButton.layer.cornerRadius = 8
+            bluetoothButton.configuration = config
         }
     }
     
     @IBOutlet weak var presentMapButton: UIButton! {
         didSet {
-            presentMapButton.setTitle("Apple MapでGPS表示", for: .normal)
+            var config = UIButton.Configuration.filled()
+            config.buttonSize = .medium
+            config.baseBackgroundColor = UIColor(rgb: 0x4CAF50)
+            config.baseForegroundColor = UIColor.white
+            config.imagePlacement = NSDirectionalRectEdge.leading
+            // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
+            config.image = UIImage(systemName: "location.magnifyingglass",
+                                   withConfiguration: UIImage.SymbolConfiguration(scale: .large))
+            config.imagePadding = 10
+            config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
+            config.cornerStyle = .medium
+            config.titleAlignment = .center
+            config.attributedTitle = AttributedString("地図で経路を表示", attributes: AttributeContainer([
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]))
+            presentMapButton.layer.cornerRadius = 8
+            presentMapButton.configuration = config
         }
     }
     
     @IBOutlet weak var readDataButton: UIButton! {
         didSet {
-            readDataButton.setTitle("FireStoreからデータを読み込む", for: .normal)
+            var config = UIButton.Configuration.filled()
+            config.buttonSize = .medium
+            config.baseBackgroundColor = UIColor(rgb: 0xFF9800).withAlphaComponent(0.8)
+            config.baseForegroundColor = UIColor.white
+            config.imagePlacement = NSDirectionalRectEdge.leading
+            // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
+            config.image = UIImage(systemName: "rectangle.and.text.magnifyingglass",
+                                   withConfiguration: UIImage.SymbolConfiguration(scale: .large))
+            config.imagePadding = 10
+            config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
+            config.cornerStyle = .medium
+            config.titleAlignment = .center
+            config.attributedTitle = AttributedString("センサーデータを取得", attributes: AttributeContainer([
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]))
+            readDataButton.layer.cornerRadius = 8
+            readDataButton.configuration = config
         }
     }
     
     @IBOutlet weak var curDateLabel: UILabel! {
         didSet {
+            curDateLabel.font = .systemFont(ofSize: 17, weight: .medium)
+            curDateLabel.layer.borderColor = UIColor.systemGray3.cgColor
+            curDateLabel.layer.borderWidth = 2
+            curDateLabel.layer.cornerRadius = 8
             curDateLabel.isHidden = true
         }
     }
     
-    
     @IBOutlet weak var dateLabel: UILabel! {
         didSet {
             dateLabel.isHidden = true
+            dateLabel.font = .systemFont(ofSize: 17, weight: .medium)
         }
     }
     
     @IBOutlet weak var timeLabel: UILabel! {
         didSet {
             timeLabel.isHidden = true
+            timeLabel.font = .systemFont(ofSize: 17, weight: .medium)
         }
     }
     
     @IBOutlet weak var tempLabel: UILabel!{
         didSet {
             tempLabel.isHidden = true
+            tempLabel.font = .systemFont(ofSize: 17, weight: .medium)
         }
     }
     
     @IBOutlet weak var humidLabel: UILabel! {
         didSet {
             humidLabel.isHidden = true
+            humidLabel.font = .systemFont(ofSize: 17, weight: .medium)
         }
     }
     
     @IBOutlet weak var longitudeLabel: UILabel! {
         didSet {
             longitudeLabel.isHidden = true
+            longitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
         }
     }
     
     @IBOutlet weak var latitudeLabel: UILabel! {
         didSet {
             latitudeLabel.isHidden = true
+            latitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
         }
     }
     
     @IBOutlet weak var ipLabel: UILabel! {
         didSet {
             ipLabel.isHidden = true
+            ipLabel.font = .systemFont(ofSize: 17, weight: .medium)
         }
     }
     
@@ -100,6 +176,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         setNavigationController()
+        self.bluetoothButton.isUserInteractionEnabled = false
+        setImageView()
+    }
+    
+    func setImageView() {
+        if let hasImage = redrawImage() {
+            DispatchQueue.main.async {
+                self.raspberryPiImageView.image = hasImage
+            }
+        }
+    }
+    
+    func redrawImage() -> UIImage? {
+        let customImage = UIImage(named: "RaspberryPiOfficialLogo")
+        let newImageRect = CGRect(x: 0, y: 0, width: 200, height: 200)
+        UIGraphicsBeginImageContext(CGSize(width: 200, height: 200))
+        customImage?.draw(in: newImageRect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
     
     func setNavigationController() {
@@ -133,11 +230,11 @@ class ViewController: UIViewController {
         // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
         if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
             //🔥元々のやつ
-//            appleMapVC.destinationLocation.longitude = longitudeInfo
-//            appleMapVC.destinationLocation.latitude = latitudeInfo
-            // MARK: - ⚠️練習のためのもの
-            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
-            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
+            appleMapVC.destinationLocation.longitude = longitudeInfo
+            appleMapVC.destinationLocation.latitude = latitudeInfo
+//            // MARK: - ⚠️練習のためのもの
+//            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
+//            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
             
             appleMapVC.shelterLocation.longitude = shelterLongitude
             appleMapVC.shelterLocation.latitude = shelterLatitude

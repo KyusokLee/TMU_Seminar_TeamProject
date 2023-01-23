@@ -53,6 +53,11 @@ class MapVC: UIViewController {
     // annotation pin番後別にrouteの色を変えたい
     var annotationViewPinNumber = 0
     
+    // 前の位置記録を保存
+    var previousCoordinate: CLLocationCoordinate2D?
+    // 移動先の位置記録を保存
+    var followCoordinate: CLLocationCoordinate2D?
+    
     // リアルタイムな現在位置情報をmanageするための変数
     lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
@@ -73,47 +78,49 @@ class MapVC: UIViewController {
     }()
     
     // 経路までのnavigatorのButtonを表示
-    let navigateRouteButton: UIButton = {
+    let showRouteButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.buttonSize = .medium
         config.baseBackgroundColor = UIColor.systemBlue
         config.baseForegroundColor = UIColor.white
-        config.imagePlacement = NSDirectionalRectEdge.top
+        config.imagePlacement = NSDirectionalRectEdge.leading
         // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
-        config.image = UIImage(systemName: "arrow.triangle.turn.up.right.circle.fill",
+        config.image = UIImage(systemName: "arrow.uturn.left.circle.fill",
                                withConfiguration: UIImage.SymbolConfiguration(scale: .large))
         config.imagePadding = 10
         config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
         config.cornerStyle = .medium
-        config.title = "経路案内"
-        button.addTarget(nil, action: #selector(navigateRouteButtonAction), for: .touchUpInside)
+        config.titleAlignment = .center
+        config.attributedTitle = AttributedString("経路に戻る", attributes: AttributeContainer([
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]))
+        button.addTarget(nil, action: #selector(showRouteButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.configuration = config
         return button
     }()
-    
-    // 経路探索を中止するButtonを表示
-    let cancelNavitageRouteButton: UIButton = {
-        let button = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.buttonSize = .medium
-        config.baseBackgroundColor = UIColor(rgb: 0xDC6464).withAlphaComponent(0.8)
-        config.baseForegroundColor = UIColor.white
-        config.imagePlacement = NSDirectionalRectEdge.top
-        // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
-        config.image = UIImage(systemName: "stop.circle.fill",
-                               withConfiguration: UIImage.SymbolConfiguration(scale: .large))
-        config.imagePadding = 10
-        config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
-        config.cornerStyle = .medium
-        config.title = "案内中止"
-        button.addTarget(nil, action: #selector(cancelNavigateRouteButtonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.configuration = config
-        button.isEnabled = false
-        return button
-    }()
+//
+//    // 経路探索を中止するButtonを表示
+//    let cancelNavitageRouteButton: UIButton = {
+//        let button = UIButton()
+//        var config = UIButton.Configuration.filled()
+//        config.buttonSize = .medium
+//        config.baseBackgroundColor = UIColor(rgb: 0xDC6464).withAlphaComponent(0.8)
+//        config.baseForegroundColor = UIColor.white
+//        config.imagePlacement = NSDirectionalRectEdge.top
+//        // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
+//        config.image = UIImage(systemName: "stop.circle.fill",
+//                               withConfiguration: UIImage.SymbolConfiguration(scale: .large))
+//        config.imagePadding = 10
+//        config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
+//        config.cornerStyle = .medium
+//        config.title = "案内中止"
+//        button.addTarget(nil, action: #selector(cancelNavigateRouteButtonAction), for: .touchUpInside)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.configuration = config
+//        button.isEnabled = false
+//        return button
+//    }()
     
     //MARK: - distanceLabelの上にクリックした住所を表示したい
     let addressLabel: UILabel = {
@@ -236,8 +243,8 @@ class MapVC: UIViewController {
         
         getLocationUsagePermission()
         view.addSubview(dismissButton)
-        view.addSubview(navigateRouteButton)
-        view.addSubview(cancelNavitageRouteButton)
+        view.addSubview(showRouteButton)
+//        view.addSubview(cancelNavitageRouteButton)
         view.addSubview(addressLabel)
         view.addSubview(distanceLabel)
         view.addSubview(expectedTimeLabel)
@@ -245,15 +252,15 @@ class MapVC: UIViewController {
         view.addSubview(getHelmetButton)
         view.addSubview(takeOffHelmetButton)
         setDismissBtnConstraints()
-        setNavigateRouteBtnConstraints()
-        setCancelNavigateBtnConstraints()
+        setShowRouteBtnConstraints()
+//        setCancelNavigateBtnConstraints()
         setAddressLabelConstraints()
         setDistanceLabelConstraints()
         setExpectedTimeLabelConstraints()
         setHelmetNoticeLabelConstraints()
         setGetHelmetButtonConstraints()
         setTakeOffHelmetButtonConstraints()
-        self.getHelmetButton.isHidden = false
+        self.getHelmetButton.isHidden = true
         self.takeOffHelmetButton.isHidden = true
 //        removeGetHelmetButtonConstraints()
 
@@ -267,6 +274,7 @@ class MapVC: UIViewController {
         // mapView.bringSubviewToFront(locationButton)
         mapView.setUserTrackingMode(.follow, animated: true)
         mapView.delegate = self
+        mapView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mapView)
         // mapViewの上にButtonを表示させる方法 (AppleのHIGに望ましくない)
         // view.bringSubviewToFront(dismissButton)
@@ -280,9 +288,27 @@ class MapVC: UIViewController {
     // 最初の地域設定
     func setCenterRegion(center: CLLocationCoordinate2D, target: CLLocationCoordinate2D) {
         // Region(地域)を設定
-        let coordinate = CLLocationCoordinate2DMake((center.latitude + destinationLocation.latitude) / 2, (center.longitude + destinationLocation.longitude) / 2)
+        let coordinate = CLLocationCoordinate2DMake((center.latitude + target.latitude) / 2, (center.longitude + target.longitude) / 2)
         // Mapで表示した地域のHeightとwidthを設定
-        let span = MKCoordinateSpan(latitudeDelta: 0.35, longitudeDelta: 0.35)
+        
+        var latitudeDegree: CLLocationDegrees?
+        var longitudeDegree: CLLocationDegrees?
+        
+        if center.distance(to: target) > 100 && center.distance(to: target) <= 10000 {
+            latitudeDegree = 0.1
+            longitudeDegree = 0.1
+        } else if center.distance(to: target) <= 100 {
+            latitudeDegree = 0.007
+            longitudeDegree = 0.007
+        } else if center.distance(to: target) >= 35000 {
+            latitudeDegree = 0.45
+            longitudeDegree = 0.45
+        } else {
+            latitudeDegree = 0.35
+            longitudeDegree = 0.35
+        }
+        
+        let span = MKCoordinateSpan(latitudeDelta: latitudeDegree!, longitudeDelta: longitudeDegree!)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         
         mapView.setRegion(region, animated: true)
@@ -290,11 +316,12 @@ class MapVC: UIViewController {
     
     func getDistance(from curLocate: CLLocationCoordinate2D, to targetLocate: CLLocationCoordinate2D) {
         let rawDistance = curLocate.distance(to: targetLocate)
+        print("distance: \(rawDistance)")
         
         // TODO: 🔥100m以内であれば、Helmetの装着したかを表示し、ボタンを押したら、避難所への経路を表示
-        if rawDistance < 100 {
-            let roundedDistance = (rawDistance / 10).rounded() * 10
-            self.distanceLabel.text = "目的地までの距離: \(Int(roundedDistance))m"
+        if rawDistance <= 100 {
+            let distance = String(format: "%.1f", rawDistance)
+            self.distanceLabel.text = "目的地までの距離: \(distance)m"
             self.helmetNoticeLabel.text = "近くにヘルメットがあります"
             
             if getHelmetButton.isHidden {
@@ -454,6 +481,27 @@ class MapVC: UIViewController {
         }
     }
     
+    // 前の移動経路を保存して、線をつなぐ
+    func connectOverlayWithPreviousCoordinate(coordinate: CLLocationCoordinate2D) {
+        if let previousCoordinate = self.previousCoordinate {
+            var points: [CLLocationCoordinate2D] = []
+            let previousPoint = CLLocationCoordinate2DMake(previousCoordinate.latitude, previousCoordinate.longitude)
+            let currentPoint: CLLocationCoordinate2D = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude)
+            
+            points.append(previousPoint)
+            points.append(currentPoint)
+            let lineDraw = MKPolyline(coordinates: points, count:points.count)
+            
+            if self.mapView.overlays.contains(where: {$0 as! NSObject == lineDraw}) {
+                self.mapView.removeOverlay(lineDraw)
+            } else {
+                self.mapView.addOverlay(lineDraw)
+            }
+        }
+        
+        self.previousCoordinate = coordinate
+    }
+    
     // Custom Pinを立てる
     func setAnnotation(pinTag: Int, latitudeValue: CLLocationDegrees, longitudeValue: CLLocationDegrees, delta span :Double) {
         let pin = CustomAnnotation(pinImageTag: pinTag, coordinate: CLLocationCoordinate2D(latitude: latitudeValue, longitude: longitudeValue))
@@ -481,11 +529,10 @@ class MapVC: UIViewController {
     }
     
     func setMapViewConstraints() {
-        mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.topAnchor.constraint(equalTo: self.dismissButton.bottomAnchor, constant: 10).isActive =  true
         mapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        mapView.bottomAnchor.constraint(equalTo: self.navigateRouteButton.topAnchor, constant: -10).isActive = true
+        mapView.bottomAnchor.constraint(equalTo: self.showRouteButton.topAnchor, constant: -10).isActive = true
     }
     
     func setLocationButtonConstraints() {
@@ -498,18 +545,18 @@ class MapVC: UIViewController {
         self.dismissButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30).isActive = true
     }
     
-    func setNavigateRouteBtnConstraints() {
-        self.navigateRouteButton.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
-        self.navigateRouteButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 80).isActive = true
+    func setShowRouteBtnConstraints() {
+        self.showRouteButton.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
+        self.showRouteButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 120).isActive = true
+        self.showRouteButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -120).isActive = true
     }
-    
-    func setCancelNavigateBtnConstraints() {
-        self.cancelNavitageRouteButton.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
-        self.cancelNavitageRouteButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -80).isActive = true
-    }
+
+//    func setCancelNavigateBtnConstraints() {
+//        self.cancelNavitageRouteButton.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
+//        self.cancelNavitageRouteButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -80).isActive = true
+//    }
     
     func setAddressLabelConstraints() {
-        self.addressLabel.topAnchor.constraint(equalTo: self.navigateRouteButton.bottomAnchor, constant: 10).isActive = true
         self.addressLabel.bottomAnchor.constraint(equalTo: self.distanceLabel.topAnchor, constant: -5).isActive = true
         self.addressLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         self.addressLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
@@ -569,49 +616,55 @@ class MapVC: UIViewController {
         self.dismiss(animated: true)
     }
     
-    @objc func navigateRouteButtonAction() {
-        didTapNavigateButton = true
-        // navigate buttonを押すと、案内中止Buttonを活性化し、このボタンは、非活性化にする
-        navigateRouteButton.isEnabled = false
-        navigateRouteButton.configuration?.showsActivityIndicator = true
-        navigateRouteButton.configuration?.title = "経路案内中"
-        cancelNavitageRouteButton.isEnabled = true
-
-        // 経路表示（overlay calculate）を実施
-        if !didGetHelmet {
-            targetLocationCoordinate = destinationLocation
-        } else {
-            targetLocationCoordinate = shelterLocation
-        }
-        setCenterRegion(center: currentLocation, target: targetLocationCoordinate)
+    @objc func showRouteButtonAction() {
+//        didTapNavigateButton = true
+//        // navigate buttonを押すと、案内中止Buttonを活性化し、このボタンは、非活性化にする
+//        navigateRouteButton.isEnabled = false
+//        navigateRouteButton.configuration?.showsActivityIndicator = true
+        //cancelNavitageRouteButton.isEnabled = true
+//        showRouteButton.configuration?.title = "経路確認中"
+//        cancelNavitageRouteButton.isEnabled = true
         
-        // Direction計算
-        calculateDirection(curLocate: currentLocation, targetLocate: targetLocationCoordinate)
+        if didGetHelmet {
+            targetLocationCoordinate = shelterLocation
+        } else {
+            targetLocationCoordinate = destinationLocation
+        }
+        
+        setCenterRegion(center: currentLocation, target: targetLocationCoordinate)
     }
     
-    // リアルタイムな経路探索を中止する
-    @objc func cancelNavigateRouteButtonAction() {
-        didTapCancelNavigateButton = true
-        didTapNavigateButton = false
-        cancelNavitageRouteButton.isEnabled = false
-        navigateRouteButton.configuration?.showsActivityIndicator = false
-        navigateRouteButton.configuration?.title = "経路案内"
-        navigateRouteButton.isEnabled = true
-        
-        var targetDestination: CLLocationCoordinate2D?
-        // 経路表示（overlay calculate）を実施
-        if !didGetHelmet {
-            targetDestination = destinationLocation
-        } else {
-            targetDestination = shelterLocation
-        }
-        
-        calculateDirection(curLocate: currentLocation, targetLocate: targetDestination!)
-    }
+//    // リアルタイムな経路探索を中止する
+//    @objc func cancelNavigateRouteButtonAction() {
+//        didTapCancelNavigateButton = true
+//        didTapNavigateButton = false
+//        cancelNavitageRouteButton.isEnabled = false
+//        navigateRouteButton.configuration?.showsActivityIndicator = false
+//        navigateRouteButton.configuration?.title = "経路案内"
+//        navigateRouteButton.isEnabled = true
+//
+//        var targetDestination: CLLocationCoordinate2D?
+//        // 経路表示（overlay calculate）を実施
+//        if !didGetHelmet {
+//            targetDestination = destinationLocation
+//        } else {
+//            targetDestination = shelterLocation
+//        }
+//
+//        calculateDirection(curLocate: currentLocation, targetLocate: targetDestination!)
+//    }
     
     @objc func helmetButtonAction() {
         didGetHelmet = true
+        didTakeOffHelmet = false
         print("Helmet button tap!!")
+        let overlays = mapView.overlays
+        if !overlays.isEmpty {
+            DispatchQueue.main.async {
+                self.mapView.removeOverlays(overlays)
+            }
+        }
+        
         // 避難所への経路に入れ替える
         let requestPopVC = HelmetSuccessPopupVC.instantiate(with: didGetHelmet)
         
@@ -652,6 +705,7 @@ class MapVC: UIViewController {
         if didGetHelmet {
             didGetHelmet = false
         }
+        didTakeOffHelmet = true
         
         print("take off helmet!")
         let requestPopVC = HelmetSuccessPopupVC.instantiate(with: didGetHelmet)
@@ -718,9 +772,13 @@ extension MapVC: MKMapViewDelegate {
             routeRenderer.strokeColor = UIColor(red:1.00, green:0.35, blue:0.30, alpha:1.0)
             routeRenderer.lineWidth = 5.0
             routeRenderer.alpha = 1.0
-        } else {
+        } else if annotationViewPinNumber == 1 {
             routeRenderer.strokeColor = UIColor.systemGreen
             routeRenderer.lineWidth = 5.0
+            routeRenderer.alpha = 1.0
+        } else {
+            routeRenderer.strokeColor = UIColor.blue
+            routeRenderer.lineWidth = 3.0
             routeRenderer.alpha = 1.0
         }
         
@@ -732,25 +790,26 @@ extension MapVC: MKMapViewDelegate {
         // CLLocationとCLLocationCoodinate2Dは、異なるもの
         if let hasCoordinate = view.annotation?.coordinate {
             print("Tap Annotation")
-            self.mapView.selectAnnotation(view.annotation!, animated: true)
-            
-            let location = CLLocation(latitude: hasCoordinate.latitude, longitude: hasCoordinate.longitude)
-            
-            DispatchQueue.main.async {
-                self.getPlaceName(target: location) { placeName in
-                    self.addressLabel.text = "住所: \(placeName ?? "")"
-                    // Placeを取得してから、fontをheavyに変える作業をここで行う。また、textColorをblackに
-                    self.addressLabel.textColor = UIColor.black
-                    self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
-                }
-                
-                if self.didGetHelmet {
-                    self.getHelmetButton.isHidden = true
-                }
-                
-                self.getDistance(from: self.currentLocation, to: hasCoordinate)
-                self.calculateDirection(curLocate: self.currentLocation, targetLocate: hasCoordinate)
-            }
+            print(hasCoordinate)
+//            self.mapView.selectAnnotation(view.annotation!, animated: true)
+//
+//            let location = CLLocation(latitude: hasCoordinate.latitude, longitude: hasCoordinate.longitude)
+//
+//            DispatchQueue.main.async {
+//                self.getPlaceName(target: location) { placeName in
+//                    self.addressLabel.text = "住所: \(placeName ?? "")"
+//                    // Placeを取得してから、fontをheavyに変える作業をここで行う。また、textColorをblackに
+//                    self.addressLabel.textColor = UIColor.black
+//                    self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
+//                }
+//
+//                if self.didGetHelmet {
+//                    self.getHelmetButton.isHidden = true
+//                }
+//
+//                self.getDistance(from: self.currentLocation, to: hasCoordinate)
+//                self.calculateDirection(curLocate: self.currentLocation, targetLocate: hasCoordinate)
+//            }
         }
     }
     
@@ -764,17 +823,17 @@ extension MapVC: MKMapViewDelegate {
         if let hasCoordinate = view.annotation?.coordinate {
             print(hasCoordinate)
             
-            DispatchQueue.main.async {
-                self.addressLabel.text = "住所を表示"
-                self.addressLabel.textColor = UIColor.systemGray3
-                self.addressLabel.font = .systemFont(ofSize: 17, weight: .medium)
-                self.distanceLabel.text = "距離を表示"
-                self.distanceLabel.textColor = UIColor.systemGray3
-                self.distanceLabel.font = .systemFont(ofSize: 17, weight: .medium)
-                self.expectedTimeLabel.text = "所要時間を表示"
-                self.expectedTimeLabel.textColor = UIColor.systemGray3
-                self.expectedTimeLabel.font = .systemFont(ofSize: 17, weight: .medium)
-            }
+//            DispatchQueue.main.async {
+//                self.addressLabel.text = "住所を表示"
+//                self.addressLabel.textColor = UIColor.systemGray3
+//                self.addressLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//                self.distanceLabel.text = "距離を表示"
+//                self.distanceLabel.textColor = UIColor.systemGray3
+//                self.distanceLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//                self.expectedTimeLabel.text = "所要時間を表示"
+//                self.expectedTimeLabel.textColor = UIColor.systemGray3
+//                self.expectedTimeLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//            }
             
             return
         }
@@ -801,12 +860,6 @@ extension MapVC: MKMapViewDelegate {
             annotationView?.layoutIfNeeded()
         }
         
-//        // backGroundView
-//        if let hasBackgroundView = annotationView?.subviews.first {
-//
-//        } else {
-//
-//        }
         let backGroundView = UIView()
         backGroundView.frame = CGRect(x: -2, y: -1, width: 40, height: 40)
         
@@ -880,6 +933,7 @@ extension MapVC: MKMapViewDelegate {
     }
 }
 
+// MARK: - CLLocationManager
 extension MapVC: CLLocationManagerDelegate {
     // ユーザの位置情報を正しく持ってきた場合
     // 位置情報が更新されるたびに、呼び出されるメソッド
@@ -902,7 +956,11 @@ extension MapVC: CLLocationManagerDelegate {
             } else {
                 pinNum = 0
                 annotationViewPinNumber = 0
-                targetLocationCoordinate = destinationLocation
+                if didTakeOffHelmet {
+                    targetLocationCoordinate = currentLocation
+                } else {
+                    targetLocationCoordinate = destinationLocation
+                }
             }
             
             // 最初に表示させるとき
@@ -927,12 +985,23 @@ extension MapVC: CLLocationManagerDelegate {
                     self.getDistance(from: self.currentLocation, to: self.targetLocationCoordinate)
                 }
             } else {
-                // Annotationと地域を最初に表示さたならば、direction calculateを行う
-//                if didGetHelmet {
-//                    calculateDirection(curLocate: currentLocation, targetLocate: shelterLocation)
-//                } else {
-//                    calculateDirection(curLocate: currentLocation, targetLocate: destinationLocation)
-//                }
+                // Annotationと地域を最初に表示したならば、direction calculateを行う
+                //CLLocationDegreeからCLLocationに
+                let targetLocation = CLLocation(latitude: targetLocationCoordinate.latitude, longitude: targetLocationCoordinate.longitude)
+                DispatchQueue.main.async {
+                    if self.addressLabel.text == nil {
+                        self.getPlaceName(target: targetLocation) { placeName in
+                            self.addressLabel.text = "住所: \(placeName ?? "")"
+                            // Placeを取得してから、fontをheavyに変える作業をここで行う。また、textColorをblackに
+                            self.addressLabel.textColor = UIColor.black
+                            self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
+                        }
+                    }
+                    
+                    self.getDistance(from: self.currentLocation, to: self.targetLocationCoordinate)
+                    self.connectOverlayWithPreviousCoordinate(coordinate: coordinate)
+//                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate)
+                }
             }
         }
     }

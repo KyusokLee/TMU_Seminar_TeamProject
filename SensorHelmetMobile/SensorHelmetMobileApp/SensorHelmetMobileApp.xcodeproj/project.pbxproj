@@ -37,6 +37,8 @@
 		94A37124296ECB6D00D4EF76 /* VideoDetailView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */; };
 		94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A37125296ED88E00D4EF76 /* VideoListTableViewCell.swift */; };
 		94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A37126296ED88E00D4EF76 /* VideoListTableViewCell.xib */; };
+		94B4BF9E297DACDF00B55117 /* CustomPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B4BF9D297DACDF00B55117 /* CustomPaddingLabel.swift */; };
+		94B4BFA0297DB0D200B55117 /* RaspberryPiOfficialLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */; };
 		94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D84A42297AD8130037AC39 /* LoadingView.swift */; };
 		94D84A46297AE5370037AC39 /* helmetBasic.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D84A45297AE5360037AC39 /* helmetBasic.png */; };
 		94D84A48297AE7290037AC39 /* shelterBasic.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D84A47297AE7290037AC39 /* shelterBasic.png */; };
@@ -99,6 +101,8 @@
 		94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoDetailView.storyboard; sourceTree = "<group>"; };
 		94A37125296ED88E00D4EF76 /* VideoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListTableViewCell.swift; sourceTree = "<group>"; };
 		94A37126296ED88E00D4EF76 /* VideoListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListTableViewCell.xib; sourceTree = "<group>"; };
+		94B4BF9D297DACDF00B55117 /* CustomPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaddingLabel.swift; sourceTree = "<group>"; };
+		94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RaspberryPiOfficialLogo.png; sourceTree = "<group>"; };
 		94D84A42297AD8130037AC39 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		94D84A45297AE5360037AC39 /* helmetBasic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helmetBasic.png; sourceTree = "<group>"; };
 		94D84A47297AE7290037AC39 /* shelterBasic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelterBasic.png; sourceTree = "<group>"; };
@@ -206,6 +210,7 @@
 		947863CD29471A66003EC94F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				94B4BF9D297DACDF00B55117 /* CustomPaddingLabel.swift */,
 				94D84A49297AE7F60037AC39 /* CustomAnnotationView.swift */,
 				94D84A42297AD8130037AC39 /* LoadingView.swift */,
 				94DD5119294A009300DB0287 /* Cells */,
@@ -269,6 +274,7 @@
 				94D84A45297AE5360037AC39 /* helmetBasic.png */,
 				94D84A47297AE7290037AC39 /* shelterBasic.png */,
 				94073C8A297C26BC006BE381 /* done_check_icon.png */,
+				94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */,
 				94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */,
 				94073C89297C25E0006BE381 /* HelmetPopupView.storyboard in Resources */,
+				94B4BFA0297DB0D200B55117 /* RaspberryPiOfficialLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +478,7 @@
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 				94FAA58C296E67C3007BD387 /* ColorExtension.swift in Sources */,
 				94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */,
+				94B4BF9E297DACDF00B55117 /* CustomPaddingLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

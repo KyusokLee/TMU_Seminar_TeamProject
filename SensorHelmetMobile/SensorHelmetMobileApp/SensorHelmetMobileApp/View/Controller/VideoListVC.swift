@@ -67,7 +67,6 @@ class VideoListVC: UIViewController {
     @objc func refreshTable(refresh: UIRefreshControl) {
         print("更新　スタート！")
         
-        self.loadingView.isLoading = true
         getAllFileListProgress()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
