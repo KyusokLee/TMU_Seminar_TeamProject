@@ -62,19 +62,23 @@ class CustomAnnotationView: MKAnnotationView {
     
     private func setupUI() {
         backgroundColor = .clear
+        layer.cornerRadius = frame.size.height / 2
     }
 }
 
 class CustomAnnotation: NSObject, MKAnnotation {
     let pinImageTag: Int?
     let coordinate: CLLocationCoordinate2D
+    //let backgroundColor: UIColor?
     
     init(
         pinImageTag: Int?,
         coordinate: CLLocationCoordinate2D
+        //backgroundColor: UIColor?
     ) {
         self.pinImageTag = pinImageTag
         self.coordinate = coordinate
+        //self.backgroundColor = backgroundColor
         
         super.init()
     }
