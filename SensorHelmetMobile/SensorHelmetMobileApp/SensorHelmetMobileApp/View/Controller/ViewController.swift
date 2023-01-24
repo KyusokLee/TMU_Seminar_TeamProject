@@ -107,7 +107,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var curDateLabel: UILabel! {
         didSet {
-            curDateLabel.font = .systemFont(ofSize: 17, weight: .medium)
+            curDateLabel.font = .systemFont(ofSize: 15, weight: .medium)
+            curDateLabel.textColor = UIColor.black.withAlphaComponent(0.85)
+            curDateLabel.textAlignment = .center
             curDateLabel.layer.borderColor = UIColor.systemGray3.cgColor
             curDateLabel.layer.borderWidth = 2
             curDateLabel.layer.cornerRadius = 8
@@ -230,11 +232,11 @@ class ViewController: UIViewController {
         // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
         if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
             //🔥元々のやつ
-            appleMapVC.destinationLocation.longitude = longitudeInfo
-            appleMapVC.destinationLocation.latitude = latitudeInfo
+//            appleMapVC.destinationLocation.longitude = longitudeInfo
+//            appleMapVC.destinationLocation.latitude = latitudeInfo
 //            // MARK: - ⚠️練習のためのもの
-//            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
-//            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
+            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
+            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
             
             appleMapVC.shelterLocation.longitude = shelterLongitude
             appleMapVC.shelterLocation.latitude = shelterLatitude
@@ -277,7 +279,7 @@ class ViewController: UIViewController {
             self.latitudeLabel.isHidden = true
             self.ipLabel.isHidden = true
             
-            self.curDateLabel.text = "ボタンクリック時間: " + "yyyy-MM-dd HH:mm:ss".stringFromDate()
+            self.curDateLabel.text = "データ取得時間: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
             self.getData()
         }
     }
