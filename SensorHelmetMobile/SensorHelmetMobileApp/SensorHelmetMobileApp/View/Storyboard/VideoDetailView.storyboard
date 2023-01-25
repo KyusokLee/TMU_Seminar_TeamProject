@@ -29,20 +29,28 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUJ-lM-Xpw">
-                                <rect key="frame" x="80" y="475" width="75" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUJ-lM-Xpw">
+                                <rect key="frame" x="80" y="475" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="hHn-eP-cbA"/>
+                                    <constraint firstAttribute="height" constant="40" id="s9J-MV-UtP"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
                                 <connections>
-                                    <action selector="playButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="7Ah-7Y-mSh"/>
+                                    <action selector="playButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="nxP-AR-XTL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPI-xN-gah">
-                                <rect key="frame" x="238" y="475" width="75" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPI-xN-gah">
+                                <rect key="frame" x="273" y="475" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="Bdg-05-YHp"/>
+                                    <constraint firstAttribute="height" constant="40" id="ybG-dC-pgB"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
                                 <connections>
-                                    <action selector="pauseButtonAcition:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="aLK-kP-EMv"/>
+                                    <action selector="pauseButtonAcition:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="f6G-82-Ilb"/>
                                 </connections>
                             </button>
                         </subviews>
