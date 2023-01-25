@@ -54,6 +54,8 @@ class MapVC: UIViewController {
     var annotationViewPinNumber = 0
     // routeのoverlayを変えたかどうか
     var willChangeOverlay: Bool = false
+    // targetDestinationをcurrentのとこに既に設定したかどうかのBool
+    var didResetHelmetLocation: Bool = false
     
     // 前の位置記録を保存
     var previousCoordinate: CLLocationCoordinate2D?
@@ -756,7 +758,13 @@ class MapVC: UIViewController {
         if didGetHelmet {
             didGetHelmet = false
         }
+        
         didTakeOffHelmet = true
+        
+        if didResetHelmetLocation {
+            didResetHelmetLocation = false
+        }
+        
         let overlays = self.mapView.overlays
 
         DispatchQueue.main.async {
@@ -780,7 +788,7 @@ class MapVC: UIViewController {
                         print("Success Okay!")
                         self.getHelmetButton.isHidden = false
                         // MARK: targetLocationを避難所のとこに変える
-                        self.targetLocationCoordinate = self.destinationLocation
+                        self.targetLocationCoordinate = self.currentLocation
                         
                         // 現在のuserの位置が、ヘルメットを解除した位置になる
                         let helmetLocation = CLLocation(latitude: self.targetLocationCoordinate.latitude, longitude: self.targetLocationCoordinate.longitude)
@@ -1054,7 +1062,10 @@ extension MapVC: CLLocationManagerDelegate {
                 pinNum = 0
                 annotationViewPinNumber = 0
                 if didTakeOffHelmet {
-                    targetLocationCoordinate = destinationLocation
+                    if !didResetHelmetLocation {
+                        targetLocationCoordinate = currentLocation
+                        didResetHelmetLocation = true
+                    }
                 } else {
                     targetLocationCoordinate = destinationLocation
                 }

@@ -232,11 +232,11 @@ class ViewController: UIViewController {
         // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
         if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
             //🔥元々のやつ
-//            appleMapVC.destinationLocation.longitude = longitudeInfo
-//            appleMapVC.destinationLocation.latitude = latitudeInfo
-//            // MARK: - ⚠️練習のためのもの
-            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
-            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
+            appleMapVC.destinationLocation.longitude = longitudeInfo
+            appleMapVC.destinationLocation.latitude = latitudeInfo
+////            // MARK: - ⚠️練習のためのもの
+//            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
+//            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
             
             appleMapVC.shelterLocation.longitude = shelterLongitude
             appleMapVC.shelterLocation.latitude = shelterLatitude
