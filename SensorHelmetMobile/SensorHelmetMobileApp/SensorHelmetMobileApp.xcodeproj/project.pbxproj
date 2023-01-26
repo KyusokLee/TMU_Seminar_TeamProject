@@ -144,6 +144,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		940C1B5D2982B6B2006D370D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				940C1B5E2982B6C8006D370D /* Images */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		940C1B5E2982B6C8006D370D /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				94D84A45297AE5360037AC39 /* helmetBasic.png */,
+				94D84A47297AE7290037AC39 /* shelterBasic.png */,
+				94073C8A297C26BC006BE381 /* done_check_icon.png */,
+				94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		9478639029471A48003EC94F = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +186,7 @@
 		9478639B29471A48003EC94F /* SensorHelmetMobileApp */ = {
 			isa = PBXGroup;
 			children = (
+				940C1B5D2982B6B2006D370D /* Sources */,
 				94D84A44297AE50D0037AC39 /* Resources */,
 				949E8E032965B7250015FD1C /* Extension */,
 				9478639C29471A48003EC94F /* AppDelegate.swift */,
@@ -271,10 +291,6 @@
 		94D84A44297AE50D0037AC39 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				94D84A45297AE5360037AC39 /* helmetBasic.png */,
-				94D84A47297AE7290037AC39 /* shelterBasic.png */,
-				94073C8A297C26BC006BE381 /* done_check_icon.png */,
-				94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
