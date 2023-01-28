@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>ユーザの現在位置を受け取ります。</string>
+	<string>ユーザの現在位置を使います。</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>ユーザの現在位置を受け取ります。</string>
+	<string>ユーザの現在位置を使います。</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>デバイスがBluetoothを使います。</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
