@@ -27,7 +27,7 @@
 		947863C029471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */; };
 		947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863D129471C3B003EC94F /* BluetoothSerial.swift */; };
 		948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */; };
-		949E8E052965B73A0015FD1C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E042965B73A0015FD1C /* StringExtension.swift */; };
+		949E8E052965B73A0015FD1C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E042965B73A0015FD1C /* String+Utils.swift */; };
 		949E8E072965B9300015FD1C /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E062965B9300015FD1C /* MapVC.swift */; };
 		949E8E092965BFBA0015FD1C /* MapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949E8E082965BFBA0015FD1C /* MapView.storyboard */; };
 		949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8EE329784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift */; };
@@ -37,6 +37,7 @@
 		94A37124296ECB6D00D4EF76 /* VideoDetailView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */; };
 		94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A37125296ED88E00D4EF76 /* VideoListTableViewCell.swift */; };
 		94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A37126296ED88E00D4EF76 /* VideoListTableViewCell.xib */; };
+		94B0B989298543F6000BBE8D /* BorderColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0B988298543F6000BBE8D /* BorderColor.swift */; };
 		94B4BF9E297DACDF00B55117 /* CustomPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B4BF9D297DACDF00B55117 /* CustomPaddingLabel.swift */; };
 		94B4BFA0297DB0D200B55117 /* RaspberryPiOfficialLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */; };
 		94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D84A42297AD8130037AC39 /* LoadingView.swift */; };
@@ -49,7 +50,7 @@
 		94DD51182949FC0700DB0287 /* SerialView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94DD51172949FC0700DB0287 /* SerialView.storyboard */; };
 		94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */; };
 		94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */; };
-		94FAA58C296E67C3007BD387 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAA58B296E67C3007BD387 /* ColorExtension.swift */; };
+		94FAA58C296E67C3007BD387 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAA58B296E67C3007BD387 /* UIColor+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,7 +92,7 @@
 		947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		947863D129471C3B003EC94F /* BluetoothSerial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerial.swift; sourceTree = "<group>"; };
 		948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIClient.swift; sourceTree = "<group>"; };
-		949E8E042965B73A0015FD1C /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		949E8E042965B73A0015FD1C /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		949E8E062965B9300015FD1C /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		949E8E082965BFBA0015FD1C /* MapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapView.storyboard; sourceTree = "<group>"; };
 		949E8EE329784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordicate2D+Utils.swift"; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoDetailView.storyboard; sourceTree = "<group>"; };
 		94A37125296ED88E00D4EF76 /* VideoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListTableViewCell.swift; sourceTree = "<group>"; };
 		94A37126296ED88E00D4EF76 /* VideoListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListTableViewCell.xib; sourceTree = "<group>"; };
+		94B0B988298543F6000BBE8D /* BorderColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderColor.swift; sourceTree = "<group>"; };
 		94B4BF9D297DACDF00B55117 /* CustomPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaddingLabel.swift; sourceTree = "<group>"; };
 		94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RaspberryPiOfficialLogo.png; sourceTree = "<group>"; };
 		94D84A42297AD8130037AC39 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -113,7 +115,7 @@
 		94DD51172949FC0700DB0287 /* SerialView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SerialView.storyboard; sourceTree = "<group>"; };
 		94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTableViewCell.swift; sourceTree = "<group>"; };
 		94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanTableViewCell.xib; sourceTree = "<group>"; };
-		94FAA58B296E67C3007BD387 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		94FAA58B296E67C3007BD387 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +149,14 @@
 		940C1B5D2982B6B2006D370D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				940C1B5E2982B6C8006D370D /* Images */,
+				9478639C29471A48003EC94F /* AppDelegate.swift */,
+				9478639E29471A48003EC94F /* SceneDelegate.swift */,
+				949E8E032965B7250015FD1C /* Extensions */,
+				947863D029471A9C003EC94F /* Storyboards */,
+				947863CF29471A80003EC94F /* Controllers */,
+				947863CC29471A5B003EC94F /* Models */,
+				947863CD29471A66003EC94F /* Views */,
+				947863CE29471A73003EC94F /* Presenters */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -186,17 +195,10 @@
 		9478639B29471A48003EC94F /* SensorHelmetMobileApp */ = {
 			isa = PBXGroup;
 			children = (
-				940C1B5D2982B6B2006D370D /* Sources */,
-				94D84A44297AE50D0037AC39 /* Resources */,
-				949E8E032965B7250015FD1C /* Extension */,
-				9478639C29471A48003EC94F /* AppDelegate.swift */,
-				9478639E29471A48003EC94F /* SceneDelegate.swift */,
-				947863CE29471A73003EC94F /* Presenter */,
-				947863CD29471A66003EC94F /* View */,
-				947863CC29471A5B003EC94F /* Model */,
-				947863A529471A49003EC94F /* Assets.xcassets */,
-				9478262529645FA100051115 /* GoogleService-Info.plist */,
 				947863AA29471A49003EC94F /* Info.plist */,
+				9478262529645FA100051115 /* GoogleService-Info.plist */,
+				94D84A44297AE50D0037AC39 /* Resources */,
+				940C1B5D2982B6B2006D370D /* Sources */,
 			);
 			path = SensorHelmetMobileApp;
 			sourceTree = "<group>";
@@ -218,38 +220,37 @@
 			path = SensorHelmetMobileAppUITests;
 			sourceTree = "<group>";
 		};
-		947863CC29471A5B003EC94F /* Model */ = {
+		947863CC29471A5B003EC94F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				94B0B987298543E5000BBE8D /* Enums */,
 				948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */,
 				9478262E29646A2E00051115 /* InfoModel.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		947863CD29471A66003EC94F /* View */ = {
+		947863CD29471A66003EC94F /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				94B4BF9D297DACDF00B55117 /* CustomPaddingLabel.swift */,
 				94D84A49297AE7F60037AC39 /* CustomAnnotationView.swift */,
 				94D84A42297AD8130037AC39 /* LoadingView.swift */,
 				94DD5119294A009300DB0287 /* Cells */,
-				947863D029471A9C003EC94F /* Storyboard */,
-				947863CF29471A80003EC94F /* Controller */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		947863CE29471A73003EC94F /* Presenter */ = {
+		947863CE29471A73003EC94F /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
 				947863D129471C3B003EC94F /* BluetoothSerial.swift */,
 				947826302964744100051115 /* TCPNetwork.swift */,
 			);
-			path = Presenter;
+			path = Presenters;
 			sourceTree = "<group>";
 		};
-		947863CF29471A80003EC94F /* Controller */ = {
+		947863CF29471A80003EC94F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				947863A029471A48003EC94F /* ViewController.swift */,
@@ -260,10 +261,10 @@
 				94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */,
 				94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		947863D029471A9C003EC94F /* Storyboard */ = {
+		947863D029471A9C003EC94F /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
 				947863A729471A49003EC94F /* LaunchScreen.storyboard */,
@@ -275,22 +276,32 @@
 				94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */,
 				94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */,
 			);
-			path = Storyboard;
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		949E8E032965B7250015FD1C /* Extension */ = {
+		949E8E032965B7250015FD1C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				949E8E042965B73A0015FD1C /* StringExtension.swift */,
-				94FAA58B296E67C3007BD387 /* ColorExtension.swift */,
+				949E8E042965B73A0015FD1C /* String+Utils.swift */,
+				94FAA58B296E67C3007BD387 /* UIColor+Utils.swift */,
 				949E8EE329784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift */,
 			);
-			path = Extension;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		94B0B987298543E5000BBE8D /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				94B0B988298543F6000BBE8D /* BorderColor.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		94D84A44297AE50D0037AC39 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				947863A529471A49003EC94F /* Assets.xcassets */,
+				940C1B5E2982B6C8006D370D /* Images */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -298,20 +309,12 @@
 		94DD5119294A009300DB0287 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				94DD511B294A00C500DB0287 /* View */,
-				94DD511A294A009900DB0287 /* Scene */,
+				94DD511B294A00C500DB0287 /* Cell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		94DD511A294A009900DB0287 /* Scene */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Scene;
-			sourceTree = "<group>";
-		};
-		94DD511B294A00C500DB0287 /* View */ = {
+		94DD511B294A00C500DB0287 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */,
@@ -319,7 +322,7 @@
 				94A37125296ED88E00D4EF76 /* VideoListTableViewCell.swift */,
 				94A37126296ED88E00D4EF76 /* VideoListTableViewCell.xib */,
 			);
-			path = View;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -487,12 +490,13 @@
 				94073C87297C25D0006BE381 /* HelmetSuccessPopupVC.swift in Sources */,
 				948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
+				94B0B989298543F6000BBE8D /* BorderColor.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
-				949E8E052965B73A0015FD1C /* StringExtension.swift in Sources */,
+				949E8E052965B73A0015FD1C /* String+Utils.swift in Sources */,
 				94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */,
 				949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
-				94FAA58C296E67C3007BD387 /* ColorExtension.swift in Sources */,
+				94FAA58C296E67C3007BD387 /* UIColor+Utils.swift in Sources */,
 				94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */,
 				94B4BF9E297DACDF00B55117 /* CustomPaddingLabel.swift in Sources */,
 			);

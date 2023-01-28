@@ -23,6 +23,12 @@ import CoreLocationUI
 
 class MapVC: UIViewController {
     private var mapView: MKMapView = MKMapView()
+    private var timer: Timer?
+    
+    deinit {
+      self.timer?.invalidate()
+      self.timer = nil
+    }
     
     // Firestoreから受け取る
     // MARK: 現在の位置情報を受け取るための変数を定義
@@ -170,7 +176,8 @@ class MapVC: UIViewController {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.buttonSize = .large
-        config.baseBackgroundColor = UIColor(rgb: 0x06C755).withAlphaComponent(0.5)
+        config.baseBackgroundColor = UIColor.clear
+//        config.baseBackgroundColor = UIColor(rgb: 0x06C755).withAlphaComponent(0.5)
         config.baseForegroundColor = UIColor.white
         config.imagePlacement = NSDirectionalRectEdge.leading
         
@@ -185,15 +192,19 @@ class MapVC: UIViewController {
         config.image = newImage!
         config.imagePadding = 10
         config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 10, trailing: 10)
-        config.cornerStyle = .medium
+        // config.cornerStyle = .medium
         config.attributedTitle = AttributedString("ヘルメットを装着", attributes: AttributeContainer([
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium)]))
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor(rgb: 0x06C755).withAlphaComponent(0.85)]))
         //NSAttributedString.Key.foregroundColor: UIColor.whiteをまたすると、もっと白くなってしまう
         config.titleAlignment = .center
-        
+        //config.cornerStyle = .medium
         button.imageView?.contentMode = .scaleAspectFill
         button.addTarget(nil, action: #selector(helmetButtonAction), for: .touchUpInside)
+        // GradientsのBorderを与える
+        config.background.cornerRadius = GradientConstants.cornerRadius
+
         button.configuration = config
+        //button.layer.cornerRadius = GradientConstants.cornerRadius
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -291,6 +302,51 @@ class MapVC: UIViewController {
         self.locationManager.stopUpdatingLocation()
     }
     
+    // Buttonのborderをanimateさせる
+    func animateBorderGradation() {
+        // 1. BorderLineだけに色を入れるため、CAShapeLayerインスタンスを生成
+        let shape = CAShapeLayer()
+        shape.path = UIBezierPath(
+            roundedRect: self.getHelmetButton.bounds.insetBy(dx: GradientConstants.cornerWidth, dy: GradientConstants.cornerWidth),
+            cornerRadius: self.getHelmetButton.configuration?.background.cornerRadius ?? 0.8
+        ).cgPath
+        
+        shape.lineWidth = GradientConstants.cornerWidth
+        shape.cornerRadius = GradientConstants.cornerRadius
+        shape.strokeColor = UIColor.white.cgColor
+        shape.fillColor = UIColor.clear.cgColor
+        
+        // 2. conic グラデーション効果を与えるため、CAGradientLayerインスタンスを生成した上に、maskにCAShapeLayerを代入
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: self.getHelmetButton.bounds.width, height: self.getHelmetButton.bounds.height)
+        gradient.type = .conic
+        gradient.colors = BorderColor.gradientColors.map(\.cgColor) as [Any]
+        gradient.locations = GradientConstants.gradientLocation
+        gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.mask = shape
+        gradient.cornerRadius = GradientConstants.cornerRadius
+        self.getHelmetButton.layer.addSublayer(gradient)
+      
+        // 3. 毎0.2秒ごとに、まるでCirculat queueのように色を変えながら動くように実装
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { _ in
+            gradient.removeAnimation(forKey: "myAnimation")
+            let previous = BorderColor.gradientColors.map(\.cgColor)
+            let last = BorderColor.gradientColors.removeLast()
+            BorderColor.gradientColors.insert(last, at: 0)
+            let lastColors = BorderColor.gradientColors.map(\.cgColor)
+            let colorsAnimation = CABasicAnimation(keyPath: "colors")
+            colorsAnimation.fromValue = previous
+            colorsAnimation.toValue = lastColors
+            colorsAnimation.repeatCount = 1
+            colorsAnimation.duration = 0.2
+            colorsAnimation.isRemovedOnCompletion = false
+            colorsAnimation.fillMode = .both
+            gradient.add(colorsAnimation, forKey: "myAnimation")
+        }
+    }
+    
     // 最初の地域設定
     func setCenterRegion(center: CLLocationCoordinate2D, target: CLLocationCoordinate2D) {
         // Region(地域)を設定
@@ -332,6 +388,9 @@ class MapVC: UIViewController {
             
             if getHelmetButton.isHidden {
                 self.getHelmetButton.isHidden = false
+                DispatchQueue.main.async {
+                    self.animateBorderGradation()
+                }
             }
         } else {
             self.distanceLabel.text = curLocate.distanceText(to: targetLocate)
