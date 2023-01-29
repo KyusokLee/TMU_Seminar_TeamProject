@@ -190,6 +190,29 @@ class ViewController: UIViewController {
         }
     }
     
+    func disasterOccur() {
+        guard let path = Bundle.main.path(forResource: "mock", ofType: "json") else {
+            return
+        }
+        guard let jsonString = try? String(contentsOfFile: path) else {
+            return
+        }
+
+        let decoder = JSONDecoder()
+        let data = jsonString.data(using: .utf8)
+        if let data = data,
+           let disaster = try? decoder.decode([DisasterModel].self, from: data) {
+            print(disaster.first?.disasterType ?? "")
+        }
+//        // MARK: - cf) Encode
+//        let dataModel = DisasterModel(name: "sample", addressInfo: .init(contry: "contry", city: "city"), image: "03")
+//        let encoder = JSONEncoder()
+//        if let jsonData = try? encoder.encode(dataModel),
+//           let jsonString = String(data: jsonData, encoding: .utf8) {
+//            print(jsonString)
+//        }
+    }
+    
     func redrawImage() -> UIImage? {
         let customImage = UIImage(named: "RaspberryPiOfficialLogo")
         let newImageRect = CGRect(x: 0, y: 0, width: 200, height: 200)
@@ -234,7 +257,7 @@ class ViewController: UIViewController {
             //🔥元々のやつ
             appleMapVC.destinationLocation.longitude = longitudeInfo
             appleMapVC.destinationLocation.latitude = latitudeInfo
-////            // MARK: - ⚠️練習のためのもの
+//            // MARK: - ⚠️練習のためのもの
 //            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
 //            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
             
