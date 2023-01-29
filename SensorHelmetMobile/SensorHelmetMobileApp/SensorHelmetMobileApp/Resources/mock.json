@@ -1,0 +1,22 @@
+/* 
+  mock.json
+  SensorHelmetMobileApp
+
+  Created by Kyus'lee on 2023/01/29.
+  
+*/
+
+[
+    {
+        "disasterType": "地震",
+        "addressInfo": {
+            "city": "東京都日野市",
+            "localName": "豊田駅"
+        },
+        "time": "2022年2月2日",
+        "description": "震度5の地震が発生",
+        "disasterLongitude": "35.65952",
+        "disasterLatitude": "139.3815",
+        "image": "earthquake1"
+    }
+]
