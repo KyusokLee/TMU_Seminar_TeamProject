@@ -7,10 +7,12 @@
 
 import UIKit
 import FirebaseFirestore
+import UserNotifications
 
 // Firebaseのデータを読む
 // Raspiの遠隔操作ができるように
 // storyboardでNavigationController実装
+// TODO: Local Push Alarmを通して、災害が起きたというのをalarmで送りたい!
 
 
 class ViewController: UIViewController {
@@ -173,6 +175,13 @@ class ViewController: UIViewController {
     // MARK: - ⚠️演習のための位置情報
     var pracLongitudeInfo: Double = 0.0
     var pracLatitudeInfo: Double = 0.0
+    // 配列型のModelにしたため、firstで受け取る予定
+    // 1つだけ受け取るつもり
+    var disaster: DisasterModel?
+    var disasterLongitude: Double = 0.0
+    var disasterLatitude: Double = 0.0
+    
+    let notificationCenter = UNUserNotificationCenter.current()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,6 +189,9 @@ class ViewController: UIViewController {
         setNavigationController()
         self.bluetoothButton.isUserInteractionEnabled = false
         setImageView()
+        // alarmの権限を得る
+        requestNotificationAuthorization()
+        disasterOccurred()
     }
     
     func setImageView() {
@@ -190,7 +202,59 @@ class ViewController: UIViewController {
         }
     }
     
-    func disasterOccur() {
+    // Local Pushの権限のrequest
+    func requestNotificationAuthorization() {
+        let authOptions: UNAuthorizationOptions = [.alert, .sound, .badge]
+        notificationCenter.requestAuthorization(options: authOptions) { success, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            // alarm設定されたら、以下の処理を行う
+            print("Permission granted: \(success)")
+            
+        }
+    }
+    
+    // Local push alarmを送信するメソッド
+    func sendDisasterNotification(seconds: Double) {
+        notificationCenter.removeAllPendingNotificationRequests()
+
+        let content = UNMutableNotificationContent()
+        if let disasterType = disaster?.disasterType,
+           let city = disaster?.addressInfo?.city,
+           let localName = disaster?.addressInfo?.localName,
+           let description = disaster?.description {
+            content.title = "⚠️\(disasterType)が発生しました!"
+            content.body = "\(city)、\(localName)の付近で\n\(description)しました。"
+        }
+        
+        
+//        // repeatはfalseにしておく
+//        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.hour, .minute], from: <#Date#>), repeats: false)
+        
+        // Time InterValを用いた triggerを実装
+        // viewが表示されて15秒の後、表示されるように！
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
+
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
+
+        if UserDefaults.standard.bool(forKey: "DisasterAlarm") {
+            notificationCenter.add(request) { (error) in
+                if let error = error {
+                    // handle errors
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 任意のタイミングを設定して、任意の災害が起きたことを想定する
+    // 最初から災害のデータを持つように任意で設定　-> 今後、apiやserver alarm送信機能を導入したい
+    func disasterOccurred() {
         guard let path = Bundle.main.path(forResource: "mock", ofType: "json") else {
             return
         }
@@ -198,13 +262,28 @@ class ViewController: UIViewController {
             return
         }
 
+        // Decoding
         let decoder = JSONDecoder()
         let data = jsonString.data(using: .utf8)
         if let data = data,
            let disaster = try? decoder.decode([DisasterModel].self, from: data) {
             print(disaster.first?.disasterType ?? "")
+            // disasterにdecoding dataを入れる
+            if let disaster = disaster.first {
+                self.disaster = disaster
+                // 災害地の位置情報を入れる
+                self.disasterLongitude = Double(disaster.disasterLongitude!) ?? 0.0
+                self.disasterLatitude = Double(disaster.disasterLatitude!) ?? 0.0
+                print(self.disaster!)
+                // 20秒後、実装
+                self.sendDisasterNotification(seconds: 20)
+            }
         }
-//        // MARK: - cf) Encode
+        
+        print(self.disasterLongitude)
+        print(self.disasterLatitude)
+        
+//        // MARK: - Encodingに関するコード
 //        let dataModel = DisasterModel(name: "sample", addressInfo: .init(contry: "contry", city: "city"), image: "03")
 //        let encoder = JSONEncoder()
 //        if let jsonData = try? encoder.encode(dataModel),
@@ -263,6 +342,12 @@ class ViewController: UIViewController {
             
             appleMapVC.shelterLocation.longitude = shelterLongitude
             appleMapVC.shelterLocation.latitude = shelterLatitude
+            
+            if let disaster = self.disaster {
+                print(disaster)
+                appleMapVC.disasterLocation.longitude = disasterLongitude
+                appleMapVC.disasterLocation.latitude = disasterLatitude
+            }
         } else {
             // alert 表示する
             print("No presented data with location data!")

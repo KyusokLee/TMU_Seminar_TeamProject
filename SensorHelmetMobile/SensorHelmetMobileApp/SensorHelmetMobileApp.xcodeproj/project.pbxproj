@@ -306,8 +306,8 @@
 			isa = PBXGroup;
 			children = (
 				947863A529471A49003EC94F /* Assets.xcassets */,
-				940C1B5E2982B6C8006D370D /* Images */,
 				942F1A2D2986A73F0026FB6D /* mock.json */,
+				940C1B5E2982B6C8006D370D /* Images */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
