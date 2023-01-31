@@ -218,6 +218,7 @@ class ViewController: UIViewController {
     // Local push alarmを送信するメソッド
     func sendDisasterNotification(seconds: Double) {
         notificationCenter.removeAllPendingNotificationRequests()
+        print("Send Notification!")
 
         let content = UNMutableNotificationContent()
         if let disasterType = disaster?.disasterType,
@@ -241,33 +242,47 @@ class ViewController: UIViewController {
             content: content,
             trigger: trigger
         )
-
-        if UserDefaults.standard.bool(forKey: "DisasterAlarm") {
-            notificationCenter.add(request) { (error) in
-                if let error = error {
-                    // handle errors
-                    print(error.localizedDescription)
-                }
+        
+        print("send Alarm!")
+        notificationCenter.add(request) { (error) in
+            if let error = error {
+                // handle errors
+                print(error.localizedDescription)
             }
         }
+
+//        if UserDefaults.standard.bool(forKey: "DisasterAlarm") {
+//            print("send Alarm!")
+//            notificationCenter.add(request) { (error) in
+//                if let error = error {
+//                    // handle errors
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
     }
     
     // MARK: - 任意のタイミングを設定して、任意の災害が起きたことを想定する
     // 最初から災害のデータを持つように任意で設定　-> 今後、apiやserver alarm送信機能を導入したい
     func disasterOccurred() {
         guard let path = Bundle.main.path(forResource: "mock", ofType: "json") else {
-            return
+            fatalError("ファイルが見つからない")
         }
+        
+        print(path)
         guard let jsonString = try? String(contentsOfFile: path) else {
-            return
+            fatalError("String型に変換できない")
         }
+        print(jsonString)
 
         // Decoding
         let decoder = JSONDecoder()
         let data = jsonString.data(using: .utf8)
+       
+        // Mock.jsonにデータ以外のStringが入るとdecodeが正常に行われない
         if let data = data,
            let disaster = try? decoder.decode([DisasterModel].self, from: data) {
-            print(disaster.first?.disasterType ?? "")
+            print("災害: ", disaster.first?.disasterType ?? "")
             // disasterにdecoding dataを入れる
             if let disaster = disaster.first {
                 self.disaster = disaster
@@ -276,8 +291,10 @@ class ViewController: UIViewController {
                 self.disasterLatitude = Double(disaster.disasterLatitude!) ?? 0.0
                 print(self.disaster!)
                 // 20秒後、実装
-                self.sendDisasterNotification(seconds: 20)
+                self.sendDisasterNotification(seconds: 10)
             }
+        } else {
+            print("変換に失敗")
         }
         
         print(self.disasterLongitude)
@@ -343,10 +360,12 @@ class ViewController: UIViewController {
             appleMapVC.shelterLocation.longitude = shelterLongitude
             appleMapVC.shelterLocation.latitude = shelterLatitude
             
+            // MARK: - 災害の情報があれば
             if let disaster = self.disaster {
                 print(disaster)
                 appleMapVC.disasterLocation.longitude = disasterLongitude
                 appleMapVC.disasterLocation.latitude = disasterLatitude
+                appleMapVC.disaster = disaster
             }
         } else {
             // alert 表示する

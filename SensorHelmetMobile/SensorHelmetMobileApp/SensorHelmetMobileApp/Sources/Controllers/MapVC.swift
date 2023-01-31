@@ -64,6 +64,8 @@ class MapVC: UIViewController {
     var willChangeOverlay: Bool = false
     // targetDestinationをcurrentのとこに既に設定したかどうかのBool
     var didResetHelmetLocation: Bool = false
+    // Disasterのモデルを渡す
+    var disaster: DisasterModel?
     
     // 前の位置記録を保存
     var previousCoordinate: CLLocationCoordinate2D?
@@ -298,6 +300,7 @@ class MapVC: UIViewController {
         // mapViewの上にButtonを表示させる方法 (AppleのHIGに望ましくない)
         // view.bringSubviewToFront(dismissButton)
         setMapViewConstraints()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -592,11 +595,39 @@ class MapVC: UIViewController {
     
     // Custom Pinを立てる
     func setAnnotation(pinTag: Int, latitudeValue: CLLocationDegrees, longitudeValue: CLLocationDegrees, delta span :Double) {
+        
+        // var mapAnnotations = self.mapView.annotations
         let pin = CustomAnnotation(pinImageTag: pinTag, coordinate: CLLocationCoordinate2D(latitude: latitudeValue, longitude: longitudeValue))
+        // 災害があるなら
+        if let disaster = self.disaster {
+            let disasterPin = CustomAnnotation(pinImageTag: 2, coordinate: CLLocationCoordinate2D(latitude: Double(disaster.disasterLatitude!)!, longitude: Double(disaster.disasterLongitude!)!))
+            
+            print("disaster has!")
+            // Annotationの除去と追加を同時にすることで、目的地の更新が自然的となる
+            DispatchQueue.main.async {
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                self.mapView.addAnnotation(pin)
+                self.mapView.addAnnotation(disasterPin)
+            }
+        } else {
+            // Annotationの除去と追加を同時にすることで、目的地の更新が自然的となる
+            DispatchQueue.main.async {
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                self.mapView.addAnnotation(pin)
+            }
+        }
+    }
+    
+    //災害があるときのDisaster Annotation
+    func setDisasterAnnotation(pinTag: Int, latitudeValue: CLLocationDegrees, longitudeValue: CLLocationDegrees, delta span :Double) {
+        guard let disaster = self.disaster else {
+            return
+        }
+        
+        let disasterPin = CustomAnnotation(pinImageTag: 2, coordinate: CLLocationCoordinate2D(latitude: Double(disaster.disasterLatitude!)!, longitude: Double(disaster.disasterLongitude!)!))
         
         DispatchQueue.main.async {
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            self.mapView.addAnnotation(pin)
+            self.mapView.addAnnotation(disasterPin)
         }
     }
     
@@ -918,16 +949,14 @@ extension MapVC: MKMapViewDelegate {
         let routeRenderer = MKPolylineRenderer(polyline: routePolyline)
         
         if annotationViewPinNumber == 0 {
+            // ヘルメット場所
             routeRenderer.strokeColor = UIColor(red:1.00, green:0.35, blue:0.30, alpha:1.0)
             routeRenderer.lineWidth = 5.0
             routeRenderer.alpha = 1.0
         } else if annotationViewPinNumber == 1 {
+            // 避難所
             routeRenderer.strokeColor = UIColor.systemGreen
             routeRenderer.lineWidth = 5.0
-            routeRenderer.alpha = 1.0
-        } else {
-            routeRenderer.strokeColor = UIColor.blue
-            routeRenderer.lineWidth = 3.0
             routeRenderer.alpha = 1.0
         }
         
@@ -1045,6 +1074,16 @@ extension MapVC: MKMapViewDelegate {
             let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             annotationView?.image = resizedImage
+        case 2:
+            tapTitle = "\(disaster?.disasterType ?? "")発生地"
+            pinImage = UIImage(named: "helmetBasic")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor(rgb: 0xF57C00))
+           // pinImage = UIImage(named: "\(disaster?.image ?? "")")
+            size = CGSize(width: 40, height: 40)
+            UIGraphicsBeginImageContext(size)
+            pinImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            annotationView?.image = resizedImage
         default:
             // それ以外は、設定なし
             pinImage = UIImage()
@@ -1076,7 +1115,7 @@ extension MapVC: MKMapViewDelegate {
 //            annotationView?.layer.cornerRadius = backGroundView.frame.height / 2
             annotationView?.layer.borderColor = UIColor.systemYellow.cgColor
             annotationView?.layer.borderWidth = 1.5
-        } else {
+        } else if hasAnnotation.pinImageTag == 1 {
             annotationView?.backgroundColor = UIColor.clear
             annotationView?.backgroundColor = UIColor.white
             annotationView?.layer.borderColor = UIColor.clear.cgColor
@@ -1089,6 +1128,12 @@ extension MapVC: MKMapViewDelegate {
 //            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
 //            backGroundView.layer.borderColor = UIColor.systemGreen.cgColor
 //            backGroundView.layer.borderWidth = 1.5
+        } else {
+            // 災害地
+            annotationView?.backgroundColor = UIColor.clear
+            annotationView?.backgroundColor = UIColor.white
+            annotationView?.layer.borderColor = UIColor.clear.cgColor
+            annotationView?.layer.borderColor = UIColor.systemRed.cgColor
         }
         
 //        annotationView?.addSubview(backGroundView)
@@ -1139,6 +1184,12 @@ extension MapVC: CLLocationManagerDelegate {
                 let targetLocation = CLLocation(latitude: targetLocationCoordinate.latitude, longitude: targetLocationCoordinate.longitude)
                 setCenterRegion(center: coordinate, target: targetLocationCoordinate)
                 setAnnotation(pinTag: pinNum!, latitudeValue: targetLocationCoordinate.latitude, longitudeValue: targetLocationCoordinate.longitude, delta: 0.1)
+                
+//                //disasterはあるときのAnnotation
+//                if self.disaster != nil {
+//                    setDisasterAnnotation(pinTag: 3, latitudeValue: <#T##CLLocationDegrees#>, longitudeValue: <#T##CLLocationDegrees#>, delta: <#T##Double#>)
+//                }
+                
                 DispatchQueue.main.async {
                     self.getPlaceName(target: targetLocation) { placeName in
                         self.addressLabel.text = "住所: \(placeName ?? "")"
