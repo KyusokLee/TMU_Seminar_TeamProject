@@ -1102,10 +1102,6 @@ extension MapVC: MKMapViewDelegate {
         annotationView?.detailCalloutAccessoryView = label
         annotationView?.isUserInteractionEnabled = true
         
-//        pinImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-//        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-//        annotationView?.image = resizedImage
-        
         if hasAnnotation.pinImageTag == 0 {
 //            backGroundView.backgroundColor = UIColor.white
 //            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
@@ -1185,6 +1181,10 @@ extension MapVC: CLLocationManagerDelegate {
                 setCenterRegion(center: coordinate, target: targetLocationCoordinate)
                 setAnnotation(pinTag: pinNum!, latitudeValue: targetLocationCoordinate.latitude, longitudeValue: targetLocationCoordinate.longitude, delta: 0.1)
                 
+                
+                // pinTagを2にしなかったため、disaster annotationが追加されなかった
+                // 災害に関するannotationを別途に設定する
+                // TODO: -> 災害が発生し、消えることも効率的に管理するため   
 //                //disasterはあるときのAnnotation
 //                if self.disaster != nil {
 //                    setDisasterAnnotation(pinTag: 3, latitudeValue: <#T##CLLocationDegrees#>, longitudeValue: <#T##CLLocationDegrees#>, delta: <#T##Double#>)
