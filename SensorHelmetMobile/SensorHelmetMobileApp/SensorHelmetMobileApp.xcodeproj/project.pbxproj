@@ -28,7 +28,6 @@
 		947863BE29471A49003EC94F /* SensorHelmetMobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */; };
 		947863C029471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */; };
 		947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947863D129471C3B003EC94F /* BluetoothSerial.swift */; };
-		948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */; };
 		949E8E052965B73A0015FD1C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E042965B73A0015FD1C /* String+Utils.swift */; };
 		949E8E072965B9300015FD1C /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E8E062965B9300015FD1C /* MapVC.swift */; };
 		949E8E092965BFBA0015FD1C /* MapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949E8E082965BFBA0015FD1C /* MapView.storyboard */; };
@@ -95,7 +94,6 @@
 		947863BD29471A49003EC94F /* SensorHelmetMobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITests.swift; sourceTree = "<group>"; };
 		947863BF29471A49003EC94F /* SensorHelmetMobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorHelmetMobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		947863D129471C3B003EC94F /* BluetoothSerial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerial.swift; sourceTree = "<group>"; };
-		948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIClient.swift; sourceTree = "<group>"; };
 		949E8E042965B73A0015FD1C /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		949E8E062965B9300015FD1C /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		949E8E082965BFBA0015FD1C /* MapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapView.storyboard; sourceTree = "<group>"; };
@@ -228,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				94B0B987298543E5000BBE8D /* Enums */,
-				948FDFF929631E780057BEE7 /* FirebaseAPIClient.swift */,
 				9478262E29646A2E00051115 /* InfoModel.swift */,
 				942F1A2B2986A2CD0026FB6D /* DisasterModel.swift */,
 			);
@@ -496,7 +493,6 @@
 				94D84A4A297AE7F60037AC39 /* CustomAnnotationView.swift in Sources */,
 				94073C87297C25D0006BE381 /* HelmetSuccessPopupVC.swift in Sources */,
 				942F1A2C2986A2CD0026FB6D /* DisasterModel.swift in Sources */,
-				948FDFFA29631E780057BEE7 /* FirebaseAPIClient.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				94B0B989298543F6000BBE8D /* BorderColor.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,

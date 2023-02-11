@@ -180,7 +180,6 @@ class ViewController: UIViewController {
     var disaster: DisasterModel?
     var disasterLongitude: Double = 0.0
     var disasterLatitude: Double = 0.0
-    
     let notificationCenter = UNUserNotificationCenter.current()
     
     override func viewDidLoad() {
@@ -195,9 +194,9 @@ class ViewController: UIViewController {
     }
     
     func setImageView() {
-        if let hasImage = redrawImage() {
+        if let image = redrawImage() {
             DispatchQueue.main.async {
-                self.raspberryPiImageView.image = hasImage
+                self.raspberryPiImageView.image = image
             }
         }
     }
@@ -251,6 +250,7 @@ class ViewController: UIViewController {
             }
         }
 
+        // MARK: - UserDefaultsを用いたKeyの設定
 //        if UserDefaults.standard.bool(forKey: "DisasterAlarm") {
 //            print("send Alarm!")
 //            notificationCenter.add(request) { (error) in
@@ -268,12 +268,10 @@ class ViewController: UIViewController {
         guard let path = Bundle.main.path(forResource: "mock", ofType: "json") else {
             fatalError("ファイルが見つからない")
         }
-        
-        print(path)
+  
         guard let jsonString = try? String(contentsOfFile: path) else {
             fatalError("String型に変換できない")
         }
-        print(jsonString)
 
         // Decoding
         let decoder = JSONDecoder()
@@ -281,10 +279,10 @@ class ViewController: UIViewController {
        
         // Mock.jsonにデータ以外のStringが入るとdecodeが正常に行われない
         if let data = data,
-           let disaster = try? decoder.decode([DisasterModel].self, from: data) {
-            print("災害: ", disaster.first?.disasterType ?? "")
+           let disasters = try? decoder.decode([DisasterModel].self, from: data) {
+            print("災害: ", disasters.first?.disasterType ?? "")
             // disasterにdecoding dataを入れる
-            if let disaster = disaster.first {
+            if let disaster = disasters.first {
                 self.disaster = disaster
                 // 災害地の位置情報を入れる
                 self.disasterLongitude = Double(disaster.disasterLongitude!) ?? 0.0
@@ -300,7 +298,8 @@ class ViewController: UIViewController {
         print(self.disasterLongitude)
         print(self.disasterLatitude)
         
-//        // MARK: - Encodingに関するコード
+        // MARK: - Encodingに関するコード
+        // 今回は、使わない
 //        let dataModel = DisasterModel(name: "sample", addressInfo: .init(contry: "contry", city: "city"), image: "03")
 //        let encoder = JSONEncoder()
 //        if let jsonData = try? encoder.encode(dataModel),
@@ -341,7 +340,6 @@ class ViewController: UIViewController {
         let serialVC = UIStoryboard.init(name: "SerialView", bundle: nil).instantiateViewController(withIdentifier: "SerialVC")
         self.present(serialVC, animated: true, completion: nil)
     }
-    
     
     @IBAction func presentMapButtonAction(_ sender: Any) {
         print("apple map display!")
@@ -384,11 +382,9 @@ class ViewController: UIViewController {
     
     func presentAlertView() -> UIAlertController {
         let alert = UIAlertController(title: nil, message: "確認できる位置情報がありません。データベースからデータを受け取った後、試してください。", preferredStyle: .alert)
-        
         let alertAction = UIAlertAction(title: "確認", style: .default) { _ in
             print("No location data")
         }
-        
         alert.addAction(alertAction)
         
         return alert
@@ -405,7 +401,6 @@ class ViewController: UIViewController {
             self.longitudeLabel.isHidden = true
             self.latitudeLabel.isHidden = true
             self.ipLabel.isHidden = true
-            
             self.curDateLabel.text = "データ取得時間: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
             self.getData()
         }

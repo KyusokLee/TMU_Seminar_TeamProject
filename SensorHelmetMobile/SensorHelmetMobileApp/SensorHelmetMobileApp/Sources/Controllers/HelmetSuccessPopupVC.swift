@@ -17,19 +17,16 @@ class HelmetSuccessPopupVC: UIViewController {
             popupView.layer.shadowOpacity = 0.7
         }
     }
-    
     @IBOutlet weak var getHelmetSuccessImageView: UIImageView! {
         didSet {
             getHelmetSuccessImageView.contentMode = .scaleAspectFit
         }
     }
-    
     @IBOutlet weak var successTitleLabel: UILabel! {
         didSet {
             successTitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         }
     }
-    
     // viewをpresentしたらstateは、常にtrueである
     var presentViewState = true
     
@@ -40,7 +37,6 @@ class HelmetSuccessPopupVC: UIViewController {
     static func instantiate(with helmetState: Bool) -> HelmetSuccessPopupVC {
         // controllerの指定
         let controller = UIStoryboard(name: "HelmetPopupView", bundle: nil).instantiateViewController(withIdentifier: "HelmetSuccessPopupVC") as! HelmetSuccessPopupVC
-        
         controller.loadViewIfNeeded()
         controller.configure(with: helmetState)
         
@@ -48,7 +44,7 @@ class HelmetSuccessPopupVC: UIViewController {
     }
     
     // 余白の画面をクリックしたらviewをdismissするように
-    // Try 方法1. override touchsBeganメソッドで画面をdimiss
+    // override touchsBeganメソッドで画面をdimiss
     // Result: popup viewをクリックしても、dismiss viewになった
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.dismiss(animated: true) {
@@ -61,11 +57,9 @@ class HelmetSuccessPopupVC: UIViewController {
     func configure(with helmetState: Bool) {
         if helmetState {
             getHelmetSuccessImageView.image = redrawImage()
-//            getHelmetSuccessImageView.contentMode = .scaleAspectFit
             successTitleLabel.text = "ヘルメット装着に成功しました"
         } else {
             getHelmetSuccessImageView.image = UIImage(named: "done_check_icon")
-//            getHelmetSuccessImageView.contentMode = .scaleAspectFit
             successTitleLabel.text = "ヘルメット装着を解除しました"
         }
     }

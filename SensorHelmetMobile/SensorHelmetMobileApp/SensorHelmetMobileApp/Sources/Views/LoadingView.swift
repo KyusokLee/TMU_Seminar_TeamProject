@@ -47,7 +47,6 @@ final class LoadingView: UIView {
         self.addSubview(self.backgroundView)
         self.addSubview(self.activityIndicatorView)
         self.addSubview(self.titleLabel)
-        
         // LoadingViewのbackgroundViewのconstraints設定
         NSLayoutConstraint.activate([
             self.backgroundView.leftAnchor.constraint(equalTo: self.leftAnchor),
