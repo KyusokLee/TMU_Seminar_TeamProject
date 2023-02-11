@@ -4,6 +4,12 @@
 
 本プロジェクトは朝香ラボのゼミ研究であり、ラズベリーパイとiOSモバイルアプリ、そして、Firebaseを用いて災害地と避難所の共有を目的としたプロジェクトである。
 
+## 💻 개발자 소개
+
+|Kyusok|Takumi|
+|:-:|:-:|
+|<img src="https://avatars.githubusercontent.com/u/89962765?v=4" width="200">|<img src="https://avatars.githubusercontent.com/u/117294735?v=4" width="200">|
+
 ## プロジェクト仕様
 ### ラズベリーパイ
 
