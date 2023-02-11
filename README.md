@@ -11,3 +11,6 @@
 * 技術スタック
   * Swift/UIKit
   * Firebase(FireStore, Storage機能)
+
+* 外部ライブライの管理ツール
+  * SPMを利用
