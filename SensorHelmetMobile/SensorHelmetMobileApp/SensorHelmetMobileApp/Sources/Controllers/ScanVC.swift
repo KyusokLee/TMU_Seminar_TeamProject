@@ -10,9 +10,7 @@ import CoreBluetooth
 
 class ScanVC: UIViewController {
     
-    
     @IBOutlet weak var tableView: UITableView!
-    
     // 現在検索された周辺機器リスト
     var peripheralList : [(peripheral : CBPeripheral, RSSI : Float)] = []
 
@@ -39,9 +37,6 @@ class ScanVC: UIViewController {
         tableView.register(UINib(nibName: "ScanTableViewCell", bundle: nil), forCellReuseIdentifier: "ScanTableViewCell")
     }
     
-
-
-
 }
 
 extension ScanVC: UITableViewDataSource, UITableViewDelegate {
@@ -67,10 +62,7 @@ extension ScanVC: UITableViewDataSource, UITableViewDelegate {
         let selectedPeripheral = peripheralList[indexPath.row].peripheral
         serial.connectToPeripheral(selectedPeripheral)
     }
-    
-    
-    
-    
+
 }
 
 extension ScanVC: BluetoothSerialDelegate {

@@ -6,13 +6,11 @@
 //
 
 import UIKit
-// 動画の再生のためのimport
 import AVFoundation
 import AVKit
 import FirebaseStorage
 
 //動画を最終的に再生するViewController
-
 class VideoDetailVC: UIViewController {
     
     @IBOutlet weak var videoContainer: UIView!
@@ -31,7 +29,6 @@ class VideoDetailVC: UIViewController {
             playButton.setImage(image, for: .normal)
             playButton.tintColor = UIColor.systemBlue.withAlphaComponent(0.85)
             playButton.backgroundColor = UIColor.white
-//            playButton.setTitle("Play", for: .normal)
         }
     }
     
@@ -135,16 +132,6 @@ class VideoDetailVC: UIViewController {
 //        }
 //    }
     
-    // videoファイルを動画として再生
-    func getVideo() {
-    // gs://
-    }
-    
-    func downloadData() {
-        // Storageの指定
-        
-    }
-    
     // スライドしたところに合わせて、再生される動画も調整
     // currentTimeで0.001秒間隔で生成されるCMTimeをずっと読み込む
     // durationで、動画の総再生時間を取得
@@ -213,13 +200,13 @@ class VideoDetailVC: UIViewController {
     
     func makePlayerAndPlay(url: URL?) {
         // ただのURLだと、Optionalであるため、安全なOptional Unwrappingである　if let Optional Bindingを用いる
-        if let hasURL = url {
+        if let url = url {
 //            let filePath = Bundle.main.path(forResource: nil, ofType: "mp4")!
 //
 //
 //            // 📚playerオブジェクト生成
 //            self.player = AVPlayer(url: URL(filePath: filePath))
-            self.player = AVPlayer(url: hasURL)
+            self.player = AVPlayer(url: url)
             // AVPlayerLayer: playerの大きさなどのPlayerに関する枠を管理するオブジェクト
             // これをすることで、playerがようやく大きさという特性を与えることができる
             let playerLayer = AVPlayerLayer(player: player)

@@ -436,19 +436,19 @@ class MapVC: UIViewController {
                     placeName += shikutyoson
                 }
                 
-                if let hasAlsoChome = targetPlacemark.thoroughfare {
-                    placeName += hasAlsoChome
-                } else if let hasNoChome = targetPlacemark.subLocality {
-                    placeName += hasNoChome
+                if let withChome = targetPlacemark.thoroughfare {
+                    placeName += withChome
+                } else if let withOutChome = targetPlacemark.subLocality {
+                    placeName += withOutChome
                 }
                 
-                if let hasBanchi = targetPlacemark.subThoroughfare {
-                    placeName += hasBanchi
+                if let banchi = targetPlacemark.subThoroughfare {
+                    placeName += banchi
                 }
                 
                 completion(placeName)
-            } else if let hasError = error {
-                print(hasError.localizedDescription)
+            } else if let error = error {
+                print(error.localizedDescription)
                 completion(nil)
             } else {
                 completion(nil)
@@ -967,9 +967,9 @@ extension MapVC: MKMapViewDelegate {
     // annotaionViewをtapしたとき、呼び出されるメソッド
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // CLLocationとCLLocationCoodinate2Dは、異なるもの
-        if let hasCoordinate = view.annotation?.coordinate {
+        if let coordinate = view.annotation?.coordinate {
             print("Tap Annotation")
-            print(hasCoordinate)
+            print(coordinate)
 //            self.mapView.selectAnnotation(view.annotation!, animated: true)
 //
 //            let location = CLLocation(latitude: hasCoordinate.latitude, longitude: hasCoordinate.longitude)
@@ -1021,20 +1021,19 @@ extension MapVC: MKMapViewDelegate {
     // MARK: - Custom Annotation Viewを定義するために実装
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 //        if annotation is MKUserLocation { return nil }
-        
-        guard let hasAnnotation = annotation as? CustomAnnotation else {
+        guard let annotation = annotation as? CustomAnnotation else {
             return nil
         }
         
         var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier)
         
         if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: hasAnnotation, reuseIdentifier: CustomAnnotationView.identifier)
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: CustomAnnotationView.identifier)
             annotationView?.canShowCallout = true
             annotationView?.contentMode = .scaleAspectFit
             annotationView?.layoutIfNeeded()
         } else {
-            annotationView?.annotation = hasAnnotation
+            annotationView?.annotation = annotation
             annotationView?.canShowCallout = true
             annotationView?.layoutIfNeeded()
         }
@@ -1046,13 +1045,9 @@ extension MapVC: MKMapViewDelegate {
         var size = CGSize()
         var tapTitle = ""
             
-        switch hasAnnotation.pinImageTag {
+        switch annotation.pinImageTag {
         case 0:
             tapTitle = "ヘルメット"
-//            backGroundView.backgroundColor = UIColor.white
-//            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
-//            backGroundView.layer.borderColor = UIColor(rgb: 0xF57C00).cgColor
-//            backGroundView.layer.borderWidth = 1.5
             pinImage = UIImage(named: "helmetBasic")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor(rgb: 0xF57C00))
             size = CGSize(width: 35, height: 35)
             UIGraphicsBeginImageContext(size)
@@ -1063,10 +1058,6 @@ extension MapVC: MKMapViewDelegate {
             annotationView?.image = resizedImage
         case 1:
             tapTitle = "避難所"
-//            backGroundView.backgroundColor = UIColor.systemGreen
-//            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
-//            backGroundView.layer.borderColor = UIColor.systemGreen.cgColor
-//            backGroundView.layer.borderWidth = 1.5
             pinImage = UIImage(systemName: "figure.walk.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor.systemGreen)
             size = CGSize(width: 40, height: 40)
             UIGraphicsBeginImageContext(size)
@@ -1102,28 +1093,16 @@ extension MapVC: MKMapViewDelegate {
         annotationView?.detailCalloutAccessoryView = label
         annotationView?.isUserInteractionEnabled = true
         
-        if hasAnnotation.pinImageTag == 0 {
-//            backGroundView.backgroundColor = UIColor.white
-//            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
-//            backGroundView.layer.borderColor = UIColor.systemYellow.cgColor
-//            backGroundView.layer.borderWidth = 1.5
+        if annotation.pinImageTag == 0 {
             annotationView?.backgroundColor = UIColor.white
 //            annotationView?.layer.cornerRadius = backGroundView.frame.height / 2
             annotationView?.layer.borderColor = UIColor.systemYellow.cgColor
             annotationView?.layer.borderWidth = 1.5
-        } else if hasAnnotation.pinImageTag == 1 {
+        } else if annotation.pinImageTag == 1 {
             annotationView?.backgroundColor = UIColor.clear
             annotationView?.backgroundColor = UIColor.white
             annotationView?.layer.borderColor = UIColor.clear.cgColor
             annotationView?.layer.borderColor = UIColor.systemGreen.cgColor
-//            annotationView?.layer.cornerRadius = backGroundView.frame.height / 2
-//            annotationView?.layer.borderColor = UIColor.systemGreen.cgColor
-//            annotationView?.layer.borderWidth = 1.5
-            
-//            backGroundView.backgroundColor = UIColor.systemGreen
-//            backGroundView.layer.cornerRadius = backGroundView.frame.height / 2
-//            backGroundView.layer.borderColor = UIColor.systemGreen.cgColor
-//            backGroundView.layer.borderWidth = 1.5
         } else {
             // 災害地
             annotationView?.backgroundColor = UIColor.clear
