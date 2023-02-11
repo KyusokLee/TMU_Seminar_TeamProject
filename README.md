@@ -5,9 +5,9 @@
 本プロジェクトは朝香ラボのゼミ研究であり、ラズベリーパイとiOSモバイルアプリ、そして、Firebaseを用いて災害地と避難所の共有を目的としたプロジェクトである。
 
 ## プロジェクト仕様
-- ラズベリーパイ
+### ラズベリーパイ
 
-- iOSモバイルアプリ
-## 技術スタック
-* Swift/UIKit
-* Firebase(FireStore, Storage機能)
+### iOSモバイルアプリ
+* 技術スタック
+  * Swift/UIKit
+  * Firebase(FireStore, Storage機能)
