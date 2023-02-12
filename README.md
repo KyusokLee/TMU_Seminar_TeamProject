@@ -18,5 +18,5 @@
   * Swift/UIKit
   * Firebase(FireStore, Storage機能)
 
-* 外部ライブライの管理ツール
+* 外部ライブラリの管理ツール
   * SPMを利用
