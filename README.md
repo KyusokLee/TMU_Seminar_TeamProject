@@ -1,5 +1,7 @@
 # TMU 朝香ラボのゼミ研究_IoT防災ヘルメットの実装
 
+<img src="https://user-images.githubusercontent.com/89962765/227458410-631e8762-2d23-452a-9664-006371b29e2f.png" width="150" height="150"/>
+
 ## 💻 開発者紹介
 
 |Kyusok|Takumi|
