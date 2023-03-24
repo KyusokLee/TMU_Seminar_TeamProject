@@ -6,6 +6,28 @@
 |:-:|:-:|
 |<img src="https://avatars.githubusercontent.com/u/89962765?v=4" width="200">|<img src="https://avatars.githubusercontent.com/u/117294735?v=4" width="200">|
 
+
+### 🎥デモ動画
+- Raspberry Piを用いて収集した現地情報を提供し、ヘルメットの現在位置をMapで表示
+
+![SensorHelmet_demo_takeSensorData_and_presentLocation](https://user-images.githubusercontent.com/89962765/227456583-0cb47d3f-cfc3-427e-85b2-5f9af4ef8698.gif)
+
+- ヘルメットの位置に近づいたら(100m)、装着可能にする
+
+![SensorHelmet_demo_takeHelmetAndPresentPlaceToEscape](https://user-images.githubusercontent.com/89962765/227457552-a540821b-e2c0-465f-b08e-189fa149479a.gif)
+
+- ヘルメットに装着したカメラモジュールから保存した映像データを閲覧
+
+
+
+
+- 災害発生時、通知を送り、ユーザさんの迅速な対応をサポートする
+
+
+
+
+
+
 ## 📮 概要
 
 本プロジェクトは朝香ラボのゼミ研究であり、ラズベリーパイとiOSモバイルアプリ、そして、Firebaseを用いて災害地と避難所の共有を目的としたプロジェクトである
