@@ -30,7 +30,8 @@ https://youtu.be/i7PPeif4L5I
 
 ![SensorHelmet_demo_notRealAlarmPush](https://user-images.githubusercontent.com/89962765/227791551-c95c11a4-c853-41e3-b0c6-92aef2f56f42.gif)
 
-
+### 詳しい説明
+https://drive.google.com/file/d/13ZMqws3i4RDEYnEcOVuTjQp7dZV1R66M/view?usp=share_link
 
 
 
