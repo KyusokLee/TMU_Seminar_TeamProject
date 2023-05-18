@@ -10,6 +10,10 @@
 
 
 ### 🎥デモ動画
+- YouTube 上(限定公開)で，機能を簡潔にまとめた動画を視聴可能
+https://youtu.be/i7PPeif4L5I
+
+#### ~ 細かい機能の説明 ~
 - Raspberry Piを用いて収集した現地情報を提供し、ヘルメットの現在位置をMapで表示
 
 ![SensorHelmet_demo_takeSensorData_and_presentLocation](https://user-images.githubusercontent.com/89962765/227456583-0cb47d3f-cfc3-427e-85b2-5f9af4ef8698.gif)
@@ -22,7 +26,7 @@
 
 ![SensorHelmet_demo_watchVideoList_certainVideo](https://user-images.githubusercontent.com/89962765/227791354-328d15c8-9f11-44bd-bec6-e0dca8588dff.gif)
 
-- 災害発生時、通知を送り、ユーザさんの迅速な対応をサポートする
+- 災害発生時、通知を送り、ユーザの迅速な対応をサポートする
 
 ![SensorHelmet_demo_notRealAlarmPush](https://user-images.githubusercontent.com/89962765/227791551-c95c11a4-c853-41e3-b0c6-92aef2f56f42.gif)
 
@@ -53,7 +57,10 @@
 
 ## 📚 プロジェクト仕様
 ### ラズベリーパイ
-
+* 使用センサ類
+  * 温湿度センサ (DHT11)
+  * GPSセンサモジュール (NEO-6M GPSモジュール(NEO-6M-0-001))
+  * web カメラ (EMEET C960)
 ### iOSモバイルアプリ
 * 技術スタック
   * Swift/UIKit
