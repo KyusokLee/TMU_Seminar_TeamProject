@@ -11,7 +11,7 @@
 
 ### 🎥デモ動画
 - YouTube 上(限定公開)で，機能を簡潔にまとめた動画を視聴可能
-https://youtu.be/i7PPeif4L5I
+  https://youtu.be/Jgu0WJBPKX8
 
 #### ~ 細かい機能の説明 ~
 - Raspberry Piを用いて収集した現地情報を提供し、ヘルメットの現在位置をMapで表示
