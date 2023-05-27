@@ -1,3 +1,6 @@
 [submodule "SensorHelmetRasPi/IoThelmet_for_private_code"]
 	path = SensorHelmetRasPi/IoThelmet_for_private_code
 	url = https://github.com/TakumiSenaha/IoThelmet_for_private_code
+[submodule "SensorHelmetRasPi/G-Map-for-IoT-Sensor-Helmet"]
+	path = SensorHelmetRasPi/G-Map-for-IoT-Sensor-Helmet
+	url = https://github.com/TakumiSenaha/G-Map-for-IoT-Sensor-Helmet.git
