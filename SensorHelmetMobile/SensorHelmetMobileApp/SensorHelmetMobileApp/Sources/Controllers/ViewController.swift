@@ -14,7 +14,6 @@ import UserNotifications
 // storyboardでNavigationController実装
 // TODO: Local Push Alarmを通して、災害が起きたというのをalarmで送りたい!
 
-
 class ViewController: UIViewController {
     
     @IBOutlet weak var raspberryPiImageView: UIImageView! {
