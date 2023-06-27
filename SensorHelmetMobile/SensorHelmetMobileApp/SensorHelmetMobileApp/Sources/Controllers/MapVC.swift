@@ -996,28 +996,6 @@ extension MapVC: MKMapViewDelegate {
         print("call out")
     }
     
-//    // annotationViewのtapを解除したとき、呼び出されるメソッド
-//    // MARK: - 注意: 他のannotaionをクリックしても、didDeselectされた後、selectされるようになる
-//    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-//        if let hasCoordinate = view.annotation?.coordinate {
-//            print(hasCoordinate)
-//
-////            DispatchQueue.main.async {
-////                self.addressLabel.text = "住所を表示"
-////                self.addressLabel.textColor = UIColor.systemGray3
-////                self.addressLabel.font = .systemFont(ofSize: 17, weight: .medium)
-////                self.distanceLabel.text = "距離を表示"
-////                self.distanceLabel.textColor = UIColor.systemGray3
-////                self.distanceLabel.font = .systemFont(ofSize: 17, weight: .medium)
-////                self.expectedTimeLabel.text = "所要時間を表示"
-////                self.expectedTimeLabel.textColor = UIColor.systemGray3
-////                self.expectedTimeLabel.font = .systemFont(ofSize: 17, weight: .medium)
-////            }
-//
-//            return
-//        }
-//    }
-    
     // MARK: - Custom Annotation Viewを定義するために実装
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 //        if annotation is MKUserLocation { return nil }
@@ -1037,10 +1015,7 @@ extension MapVC: MKMapViewDelegate {
             annotationView?.canShowCallout = true
             annotationView?.layoutIfNeeded()
         }
-        
-//        let backGroundView = UIView()
-//        backGroundView.frame = CGRect(x: -2, y: -1, width: 40, height: 40)
-        
+                
         let pinImage: UIImage!
         var size = CGSize()
         var tapTitle = ""
