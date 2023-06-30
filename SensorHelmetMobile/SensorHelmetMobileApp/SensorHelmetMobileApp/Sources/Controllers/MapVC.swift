@@ -931,12 +931,6 @@ class MapVC: UIViewController {
         let region = MKCoordinateRegion(center: currentLocation, span: MKCoordinateSpan(latitudeDelta:0.01, longitudeDelta:0.01))
         self.mapView.setRegion(region, animated: true)
     }
-    
-    // gestureはいらない
-//    @objc func showAnnotationDetailView(gestureRecognizer: UITapGestureRecognizer) {
-//        print("show annotation detail")
-//    }
-    
 }
 
 extension MapVC: MKMapViewDelegate {
@@ -970,25 +964,6 @@ extension MapVC: MKMapViewDelegate {
         if let coordinate = view.annotation?.coordinate {
             print("Tap Annotation")
             print(coordinate)
-//            self.mapView.selectAnnotation(view.annotation!, animated: true)
-//
-//            let location = CLLocation(latitude: hasCoordinate.latitude, longitude: hasCoordinate.longitude)
-//
-//            DispatchQueue.main.async {
-//                self.getPlaceName(target: location) { placeName in
-//                    self.addressLabel.text = "住所: \(placeName ?? "")"
-//                    // Placeを取得してから、fontをheavyに変える作業をここで行う。また、textColorをblackに
-//                    self.addressLabel.textColor = UIColor.black
-//                    self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
-//                }
-//
-//                if self.didGetHelmet {
-//                    self.getHelmetButton.isHidden = true
-//                }
-//
-//                self.getDistance(from: self.currentLocation, to: hasCoordinate)
-//                self.calculateDirection(curLocate: self.currentLocation, targetLocate: hasCoordinate)
-//            }
         }
     }
     
@@ -1054,10 +1029,6 @@ extension MapVC: MKMapViewDelegate {
             // それ以外は、設定なし
             pinImage = UIImage()
         }
-        
-        // ボタンなどを設けなかったから、いらない
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showAnnotationDetailView(gestureRecognizer: )))
-//        annotationView?.addGestureRecognizer(tapGesture)
                  
         //ラベルの作成
         let label = UILabel()
@@ -1085,9 +1056,6 @@ extension MapVC: MKMapViewDelegate {
             annotationView?.layer.borderColor = UIColor.clear.cgColor
             annotationView?.layer.borderColor = UIColor.systemRed.cgColor
         }
-        
-//        annotationView?.addSubview(backGroundView)
-//        annotationView?.sendSubviewToBack(backGroundView)
         annotationView?.layoutIfNeeded()
         
         return annotationView
