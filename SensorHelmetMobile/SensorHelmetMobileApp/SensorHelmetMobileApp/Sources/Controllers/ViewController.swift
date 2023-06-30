@@ -13,6 +13,7 @@ import UserNotifications
 // Raspiの遠隔操作ができるように
 // storyboardでNavigationController実装
 // TODO: Local Push Alarmを通して、災害が起きたというのをalarmで送りたい!
+// TODO: - メモリのdeinitの部分を解決する必要がある
 
 class ViewController: UIViewController {
     
