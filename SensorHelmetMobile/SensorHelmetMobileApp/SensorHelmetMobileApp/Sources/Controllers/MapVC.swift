@@ -37,7 +37,6 @@ class MapVC: UIViewController {
     var shelterLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     // 災害地の位置
     var disasterLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
-    
     // target
     var targetLocationCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     var locations: [CLLocation] = []
@@ -75,17 +74,18 @@ class MapVC: UIViewController {
     // リアルタイムな現在位置情報をmanageするための変数
     lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
-
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.delegate = self
-        
         return manager
     }()
     
     let dismissButton: UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
-        let image = UIImage(systemName: "multiply", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
+        let image = UIImage(
+            systemName: "multiply",
+            withConfiguration: imageConfig
+        )?.withRenderingMode(.alwaysOriginal)
         button.setImage(image, for: .normal)
         button.tintColor = .systemGray3
         button.addTarget(nil, action: #selector(dismissButtonAction), for: .touchUpInside)
@@ -115,28 +115,6 @@ class MapVC: UIViewController {
         button.configuration = config
         return button
     }()
-//
-//    // 経路探索を中止するButtonを表示
-//    let cancelNavitageRouteButton: UIButton = {
-//        let button = UIButton()
-//        var config = UIButton.Configuration.filled()
-//        config.buttonSize = .medium
-//        config.baseBackgroundColor = UIColor(rgb: 0xDC6464).withAlphaComponent(0.8)
-//        config.baseForegroundColor = UIColor.white
-//        config.imagePlacement = NSDirectionalRectEdge.top
-//        // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
-//        config.image = UIImage(systemName: "stop.circle.fill",
-//                               withConfiguration: UIImage.SymbolConfiguration(scale: .large))
-//        config.imagePadding = 10
-//        config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
-//        config.cornerStyle = .medium
-//        config.title = "案内中止"
-//        button.addTarget(nil, action: #selector(cancelNavigateRouteButtonAction), for: .touchUpInside)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.configuration = config
-//        button.isEnabled = false
-//        return button
-//    }()
     
     //MARK: - distanceLabelの上にクリックした住所を表示したい
     let addressLabel: UILabel = {
@@ -184,7 +162,6 @@ class MapVC: UIViewController {
 //        config.baseBackgroundColor = UIColor(rgb: 0x06C755).withAlphaComponent(0.5)
         config.baseForegroundColor = UIColor.white
         config.imagePlacement = NSDirectionalRectEdge.leading
-        
         // Imageを再設定して、buttonに適用する
         let customImage = UIImage(named: "helmetBasic.png")
         let newImageRect = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -196,7 +173,6 @@ class MapVC: UIViewController {
         config.image = newImage!
         config.imagePadding = 10
         config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 10, trailing: 10)
-        // config.cornerStyle = .medium
         config.attributedTitle = AttributedString("ヘルメットを装着", attributes: AttributeContainer([
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor(rgb: 0x06C755).withAlphaComponent(0.85)]))
         //NSAttributedString.Key.foregroundColor: UIColor.whiteをまたすると、もっと白くなってしまう
@@ -206,7 +182,6 @@ class MapVC: UIViewController {
         button.addTarget(nil, action: #selector(helmetButtonAction), for: .touchUpInside)
         // GradientsのBorderを与える
         config.background.cornerRadius = GradientConstants.cornerRadius
-
         button.configuration = config
         //button.layer.cornerRadius = GradientConstants.cornerRadius
         button.translatesAutoresizingMaskIntoConstraints = false
