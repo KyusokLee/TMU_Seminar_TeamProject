@@ -21,7 +21,11 @@ import CoreLocationUI
 // TODO: 3 - 2. これに関しては、ずっと位置情報をupdateするのではなく、解除ボタンを押したときだけ、destinationLocationをfetchする作業をする
 // TODO: 3 - 3. どうせ、ヘルメットを装着しているのであれば、Firestoreに格納される経度と緯度は、現在地にfetchされるはず
 
-class MapVC: UIViewController {
+// TODO: 4. ヘルメットユーザ間、または、ヘルメットユーザと官公庁の間の情報共有のために、情報発信できる入力フォマットも作成する
+// TODO: 4 - 1. 仕様としては、入力したものはfirebaseのfirestoreのデータベース上に情報を格納すること
+
+// MARK: Variables and Life Cycle
+final class MapVC: UIViewController {
     private var mapView: MKMapView = MKMapView()
     private var timer: Timer?
     
@@ -259,8 +263,6 @@ class MapVC: UIViewController {
         self.getHelmetButton.isHidden = true
         self.takeOffHelmetButton.isHidden = true
 //        removeGetHelmetButtonConstraints()
-
-        
         mapView.frame = view.bounds
         mapView.showsUserLocation = true
         // mapViewにCustomAnnotationViewを登録
@@ -906,6 +908,12 @@ class MapVC: UIViewController {
         let region = MKCoordinateRegion(center: currentLocation, span: MKCoordinateSpan(latitudeDelta:0.01, longitudeDelta:0.01))
         self.mapView.setRegion(region, animated: true)
     }
+}
+
+// MARK: - Logic and Function
+// ここにコードを再分配すること
+private extension MapVC {
+    
 }
 
 extension MapVC: MKMapViewDelegate {
