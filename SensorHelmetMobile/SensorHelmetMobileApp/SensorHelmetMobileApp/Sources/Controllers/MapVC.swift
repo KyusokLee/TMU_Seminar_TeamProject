@@ -173,7 +173,6 @@ final class MapVC: UIViewController {
         customImage?.draw(in: newImageRect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor(rgb: 0xF57C00))
         UIGraphicsEndImageContext()
-        
         config.image = newImage!
         config.imagePadding = 10
         config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 10, trailing: 10)
@@ -200,24 +199,19 @@ final class MapVC: UIViewController {
         config.baseBackgroundColor = UIColor.white
         config.baseForegroundColor = UIColor.systemGray2
         config.imagePlacement = NSDirectionalRectEdge.leading
-        
         config.image = UIImage(systemName: "power.circle.fill",
                                withConfiguration: UIImage.SymbolConfiguration(scale: .large))?.withTintColor(UIColor.systemRed.withAlphaComponent(0.7), renderingMode: .alwaysOriginal)
         config.imagePadding = 10
         config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 10, trailing: 10)
-        
         config.background.strokeColor = UIColor.systemRed.withAlphaComponent(0.7)
         config.background.strokeWidth = 3
-        
         config.cornerStyle = .medium
         config.attributedTitle = AttributedString("ヘルメット解除", attributes: AttributeContainer([
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium)]))
         config.titleAlignment = .center
-        
         button.imageView?.contentMode = .scaleAspectFill
         button.addTarget(nil, action: #selector(takeOffHelmetButtonAction), for: .touchUpInside)
         button.configuration = config
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -226,7 +220,6 @@ final class MapVC: UIViewController {
     let locationButton: CLLocationButton = {
         let button = CLLocationButton()
         let buttonRect = CGRect(x: 0, y: 0, width: 50, height: 50)
-        
         button.icon = .arrowOutline
         button.tintColor = UIColor.systemBlue
         button.backgroundColor = UIColor.white
@@ -283,7 +276,11 @@ final class MapVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         self.locationManager.stopUpdatingLocation()
     }
-    
+}
+
+// MARK: - Logic and Function
+// ここにコードを再分配すること
+private extension MapVC {
     // Buttonのborderをanimateさせる
     func animateBorderGradation() {
         // 1. BorderLineだけに色を入れるため、CAShapeLayerインスタンスを生成
@@ -908,12 +905,6 @@ final class MapVC: UIViewController {
         let region = MKCoordinateRegion(center: currentLocation, span: MKCoordinateSpan(latitudeDelta:0.01, longitudeDelta:0.01))
         self.mapView.setRegion(region, animated: true)
     }
-}
-
-// MARK: - Logic and Function
-// ここにコードを再分配すること
-private extension MapVC {
-    
 }
 
 extension MapVC: MKMapViewDelegate {
