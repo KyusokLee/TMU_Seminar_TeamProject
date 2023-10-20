@@ -522,14 +522,20 @@ private extension MapVC {
     
     // TODO: リアルタイムな移動経路の計算
     // 現在位置からtarget位置までの経路表示
-    func calculateDirection(curLocate: CLLocationCoordinate2D, targetLocate: CLLocationCoordinate2D) {
+    func calculateDirection(curLocate: CLLocationCoordinate2D, targetLocate: CLLocationCoordinate2D, transportIndex: Int) {
         // 現在位置から目的地までの方向を計算する
         let sourcePlacemark = MKPlacemark(coordinate: curLocate, addressDictionary: nil)
         let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
         let destinationPlacemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: targetLocate.latitude, longitude: targetLocate.longitude), addressDictionary: nil)
         let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
         let directionsRequest = MKDirections.Request()
-        directionsRequest.transportType = .walking
+        if transportIndex == 0 {
+            directionsRequest.transportType = .walking
+        } else if transportIndex == 1 {
+            directionsRequest.transportType = .automobile
+        } else if transportIndex == 2 {
+            directionsRequest.transportType = .transit
+        }
         // 出発地
         directionsRequest.source = sourceMapItem
         // 目的地
@@ -790,6 +796,8 @@ private extension MapVC {
     
     // MARK: - Segmented ControllerのimageをAction化する
     @objc func didChangeValue(segment: UISegmentedControl) {
+        // 移動手段を変えるたびに予想時間とルートを再計算する必要があるので、calculateDirectionを呼び出す作業にした
+        calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate, transportIndex: segment.selectedSegmentIndex)
         if segment.selectedSegmentIndex == 0 {
             print("walk")
         } else if segment.selectedSegmentIndex == 1 {
@@ -838,7 +846,7 @@ private extension MapVC {
                         }
                         
                         self.getDistance(from: self.currentLocation, to: self.shelterLocation)
-                        self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.shelterLocation)
+                        self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.shelterLocation, transportIndex: self.transportationSegmentedController.selectedSegmentIndex)
                         self.takeOffHelmetButton.isHidden = false
                         self.setCenterRegion(center: self.currentLocation, target: self.shelterLocation)
                     }
@@ -860,7 +868,7 @@ private extension MapVC {
                     }
                     
                     self.getDistance(from: self.currentLocation, to: self.shelterLocation)
-                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.shelterLocation)
+                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.shelterLocation, transportIndex: self.transportationSegmentedController.selectedSegmentIndex)
                     self.takeOffHelmetButton.isHidden = false
                     self.setCenterRegion(center: self.currentLocation, target: self.shelterLocation)
                 }
@@ -916,7 +924,7 @@ private extension MapVC {
                         }
                         
                         self.getDistance(from: self.currentLocation, to: self.targetLocationCoordinate)
-                        self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate)
+                        self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate, transportIndex: self.transportationSegmentedController.selectedSegmentIndex)
                         self.takeOffHelmetButton.isHidden = true
                         self.setCenterRegion(center: self.currentLocation, target: self.targetLocationCoordinate)
                     }
@@ -939,7 +947,7 @@ private extension MapVC {
                     }
                     
                     self.getDistance(from: self.currentLocation, to: self.targetLocationCoordinate)
-                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate)
+                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate, transportIndex: self.transportationSegmentedController.selectedSegmentIndex)
                     self.takeOffHelmetButton.isHidden = true
                     self.setCenterRegion(center: self.currentLocation, target: self.targetLocationCoordinate)
                 }
@@ -1142,7 +1150,7 @@ extension MapVC: CLLocationManagerDelegate {
                         self.addressLabel.font = .systemFont(ofSize: 17, weight: .heavy)
                     }
 
-                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate)
+                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate, transportIndex: self.transportationSegmentedController.selectedSegmentIndex)
                     self.getDistance(from: self.currentLocation, to: self.targetLocationCoordinate)
                 }
             } else {
@@ -1163,7 +1171,7 @@ extension MapVC: CLLocationManagerDelegate {
 //                    self.calculateTime(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate)
                     // self.connectOverlayWithPreviousCoordinate(coordinate: coordinate)
 
-                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate)
+                    self.calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate, transportIndex: self.transportationSegmentedController.selectedSegmentIndex)
                 }
             }
         }
