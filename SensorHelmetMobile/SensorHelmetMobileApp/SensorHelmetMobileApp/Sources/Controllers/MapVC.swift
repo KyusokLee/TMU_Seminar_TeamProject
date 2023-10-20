@@ -438,6 +438,8 @@ private extension MapVC {
         let destinationPlacemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: destinationLocation.latitude, longitude: destinationLocation.longitude), addressDictionary: nil)
         let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
         let directionsRequest = MKDirections.Request()
+        // 移動手段の設定
+        // default: 徒歩
         directionsRequest.transportType = .walking
         directionsRequest.source = sourceMapItem
         directionsRequest.destination = destinationMapItem
