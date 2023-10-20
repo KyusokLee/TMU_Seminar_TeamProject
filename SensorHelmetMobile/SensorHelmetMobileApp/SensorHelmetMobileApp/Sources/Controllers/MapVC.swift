@@ -97,12 +97,21 @@ final class MapVC: UIViewController {
         return button
     }()
     
-    // Segment Controllerを実装(車, 徒歩, 電車等の移動)
-    let trasportationSegmentedController: UISegmentedControl = {
-        let segmentedController = UISegmentedControl()
-        
-        
-        
+    // Segment Controllerを実装(徒歩, 車, 電車等の移動)
+    let transportationSegmentedController: UISegmentedControl = {
+        let walkImage = UIImage(systemName: "figure.walk")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
+        let carImage = UIImage(systemName: "car.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
+        let publicTransImage = UIImage(systemName: "tram.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
+        let items: [UIImage] = [walkImage!, carImage!, publicTransImage!]
+        let segmentedController = UISegmentedControl(items: items)
+//        segmentedController.setImage(walkImage, forSegmentAt: 0)
+//        segmentedController.setImage(carImage, forSegmentAt: 1)
+//        segmentedController.setImage(publicTransImage, forSegmentAt: 2)
+        // MARK: - それぞれのImageをTapしたときのActionはSegmentedControllerのAddTargetで行う
+        segmentedController.addTarget(nil, action: #selector(didChangeValue(segment:)), for: .valueChanged)
+        // default Indexの設定
+        segmentedController.selectedSegmentIndex = 0
+        segmentedController.translatesAutoresizingMaskIntoConstraints = false
         return segmentedController
     }()
     
@@ -249,8 +258,8 @@ final class MapVC: UIViewController {
         
         getLocationUsagePermission()
         view.addSubview(dismissButton)
-//        view.addSubview(showRouteButton)
 //        view.addSubview(cancelNavitageRouteButton)
+        view.addSubview(transportationSegmentedController)
         view.addSubview(addressLabel)
         view.addSubview(distanceLabel)
         view.addSubview(expectedTimeLabel)
@@ -259,6 +268,8 @@ final class MapVC: UIViewController {
         view.addSubview(takeOffHelmetButton)
         setDismissBtnConstraints()
 //        setCancelNavigateBtnConstraints()
+        setSegmentedControllerConstraints()
+        //self.didChangeValue(segment: self.transportationSegmentedController)
         setAddressLabelConstraints()
         setDistanceLabelConstraints()
         setExpectedTimeLabelConstraints()
@@ -642,7 +653,7 @@ private extension MapVC {
         mapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         // MARK: - MapViewのbottomAnchorのconstraintsをsegmentedControllerに合わせるつもり
-        mapView.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
+        mapView.bottomAnchor.constraint(equalTo: self.transportationSegmentedController.topAnchor, constant: -10).isActive = true
     }
     
     func setLocationButtonConstraints() {
@@ -662,6 +673,13 @@ private extension MapVC {
         self.showRouteButton.bottomAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: -15).isActive = true
         self.showRouteButton.leadingAnchor.constraint(equalTo: self.mapView.leadingAnchor, constant: 120).isActive = true
         self.showRouteButton.trailingAnchor.constraint(equalTo: self.mapView.trailingAnchor, constant: -120).isActive = true
+    }
+    
+    // MARK: - SegmentedControllerのConstraintsの設定
+    func setSegmentedControllerConstraints() {
+        self.transportationSegmentedController.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
+        self.transportationSegmentedController.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        self.transportationSegmentedController.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
     }
 
     // MARK: - 経路記録のためのボタンを実装したかった
@@ -769,6 +787,17 @@ private extension MapVC {
 //
 //        calculateDirection(curLocate: currentLocation, targetLocate: targetDestination!)
 //    }
+    
+    // MARK: - Segmented ControllerのimageをAction化する
+    @objc func didChangeValue(segment: UISegmentedControl) {
+        if segment.selectedSegmentIndex == 0 {
+            print("walk")
+        } else if segment.selectedSegmentIndex == 1 {
+            print("Car")
+        } else if segment.selectedSegmentIndex == 2 {
+            print("Public Trasportation")
+        }
+    }
     
     @objc func helmetButtonAction() {
         didGetHelmet = true
