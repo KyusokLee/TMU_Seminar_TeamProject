@@ -97,26 +97,39 @@ final class MapVC: UIViewController {
         return button
     }()
     
+    // Segment Controllerを実装(車, 徒歩, 電車等の移動)
+    let trasportationSegmentedController: UISegmentedControl = {
+        let segmentedController = UISegmentedControl()
+        
+        
+        
+        return segmentedController
+    }()
+    
     // 経路までのnavigatorのButtonを表示
     let showRouteButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.buttonSize = .medium
-        config.baseBackgroundColor = UIColor.systemBlue
-        config.baseForegroundColor = UIColor.white
+        config.baseBackgroundColor = UIColor.white
+        config.baseForegroundColor = UIColor.systemBlue
         config.imagePlacement = NSDirectionalRectEdge.leading
         // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
         config.image = UIImage(systemName: "arrow.uturn.left.circle.fill",
                                withConfiguration: UIImage.SymbolConfiguration(scale: .large))
         config.imagePadding = 10
         config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
-        config.cornerStyle = .medium
+        config.cornerStyle = .capsule
         config.titleAlignment = .center
         config.attributedTitle = AttributedString("経路に戻る", attributes: AttributeContainer([
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]))
         button.addTarget(nil, action: #selector(showRouteButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.configuration = config
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowRadius = 20
+        button.layer.shadowOffset = CGSize(width: 4, height: 10)
+        button.layer.shadowColor = UIColor.black.cgColor
         return button
     }()
     
@@ -236,7 +249,7 @@ final class MapVC: UIViewController {
         
         getLocationUsagePermission()
         view.addSubview(dismissButton)
-        view.addSubview(showRouteButton)
+//        view.addSubview(showRouteButton)
 //        view.addSubview(cancelNavitageRouteButton)
         view.addSubview(addressLabel)
         view.addSubview(distanceLabel)
@@ -245,7 +258,6 @@ final class MapVC: UIViewController {
         view.addSubview(getHelmetButton)
         view.addSubview(takeOffHelmetButton)
         setDismissBtnConstraints()
-        setShowRouteBtnConstraints()
 //        setCancelNavigateBtnConstraints()
         setAddressLabelConstraints()
         setDistanceLabelConstraints()
@@ -262,6 +274,8 @@ final class MapVC: UIViewController {
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
         mapView.addSubview(locationButton)
         setLocationButtonConstraints()
+        mapView.addSubview(showRouteButton)
+        setShowRouteBtnConstraints()
         // mapView.bringSubviewToFront(locationButton)
         mapView.setUserTrackingMode(.follow, animated: true)
         mapView.delegate = self
@@ -627,7 +641,8 @@ private extension MapVC {
         mapView.topAnchor.constraint(equalTo: self.dismissButton.bottomAnchor, constant: 10).isActive =  true
         mapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        mapView.bottomAnchor.constraint(equalTo: self.showRouteButton.topAnchor, constant: -10).isActive = true
+        // MARK: - MapViewのbottomAnchorのconstraintsをsegmentedControllerに合わせるつもり
+        mapView.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
     }
     
     func setLocationButtonConstraints() {
@@ -642,10 +657,11 @@ private extension MapVC {
         self.dismissButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
     }
     
+    // 経路に戻るボタンをMapViewの中に入れる予定
     func setShowRouteBtnConstraints() {
-        self.showRouteButton.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
-        self.showRouteButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 120).isActive = true
-        self.showRouteButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -120).isActive = true
+        self.showRouteButton.bottomAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: -15).isActive = true
+        self.showRouteButton.leadingAnchor.constraint(equalTo: self.mapView.leadingAnchor, constant: 120).isActive = true
+        self.showRouteButton.trailingAnchor.constraint(equalTo: self.mapView.trailingAnchor, constant: -120).isActive = true
     }
 
     // MARK: - 経路記録のためのボタンを実装したかった
@@ -654,6 +670,7 @@ private extension MapVC {
 //        self.cancelNavitageRouteButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -80).isActive = true
 //    }
     
+    // MARK: - addressLabelのConstraintsをSegmentedControllerに合わせる予定
     func setAddressLabelConstraints() {
         self.addressLabel.bottomAnchor.constraint(equalTo: self.distanceLabel.topAnchor, constant: -5).isActive = true
         self.addressLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
