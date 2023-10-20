@@ -113,12 +113,12 @@ final class MapVC: UIViewController {
         config.buttonSize = .medium
         config.baseBackgroundColor = UIColor.white
         config.baseForegroundColor = UIColor.systemBlue
-        config.imagePlacement = NSDirectionalRectEdge.leading
+        config.imagePlacement = NSDirectionalRectEdge.trailing
         // buttonのimageをwithConfigurationと同時に作らないと、buttonの中にimage部分の枠が含まれてしまう
         config.image = UIImage(systemName: "arrow.uturn.left.circle.fill",
                                withConfiguration: UIImage.SymbolConfiguration(scale: .large))
-        config.imagePadding = 10
-        config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        config.imagePadding = 3
+        config.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 3)
         config.cornerStyle = .capsule
         config.titleAlignment = .center
         config.attributedTitle = AttributedString("経路に戻る", attributes: AttributeContainer([
