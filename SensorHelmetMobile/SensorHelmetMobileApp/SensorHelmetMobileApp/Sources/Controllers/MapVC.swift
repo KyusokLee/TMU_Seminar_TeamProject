@@ -522,6 +522,7 @@ private extension MapVC {
     
     // TODO: リアルタイムな移動経路の計算
     // 現在位置からtarget位置までの経路表示
+    // 移動手段を変えるたびにこの間数を呼び出すので、前に描かれたoverlayのremoveの作業が必須
     func calculateDirection(curLocate: CLLocationCoordinate2D, targetLocate: CLLocationCoordinate2D, transportIndex: Int) {
         // 現在位置から目的地までの方向を計算する
         let sourcePlacemark = MKPlacemark(coordinate: curLocate, addressDictionary: nil)
@@ -529,11 +530,13 @@ private extension MapVC {
         let destinationPlacemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: targetLocate.latitude, longitude: targetLocate.longitude), addressDictionary: nil)
         let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
         let directionsRequest = MKDirections.Request()
+        // MARK: - 到着予想時間だけが変換される
         if transportIndex == 0 {
             directionsRequest.transportType = .walking
         } else if transportIndex == 1 {
             directionsRequest.transportType = .automobile
         } else if transportIndex == 2 {
+            //　電車やバスなどの交通手段は反映されなかった
             directionsRequest.transportType = .transit
         }
         // 出発地
@@ -543,17 +546,6 @@ private extension MapVC {
         // 出発地から目的地までのDirection Requestを送る
         let direction = MKDirections(request: directionsRequest)
         let overlays = mapView.overlays
-        
-//        if didGetHelmet {
-//            // pass
-//        } else {
-//            // 最初のviewを表示済みであれば
-//            if didShowFirstAnnotaionAndRegion {
-//
-//            } else {
-//
-//            }
-//        }
         
         // 計算中でなかったら、計算をstart
         direction.calculate { [weak self] response, error in
@@ -570,12 +562,19 @@ private extension MapVC {
                 self?.expectedTimeLabel.font = .systemFont(ofSize: 17, weight: .heavy)
                 
                 if let firstOverlay = overlays.first {
-                    self?.mapView.exchangeOverlay(firstOverlay, with: route.polyline)
-//                    self?.mapView.removeOverlay(firstOverlay)
+                    self?.mapView.removeOverlay(firstOverlay)
+                    self?.mapView.addOverlay(route.polyline, level: .aboveRoads)
+                    // 現在位置と目的地までの経路を表示するとき、animation効果を与えるかどうかの設定
+                    self?.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+                    // MARK: - routeを交換するより、removeの後addした方が処理が早かった
+                    //self?.mapView.exchangeOverlay(firstOverlay, with: route.polyline)
                 } else {
                     self?.mapView.addOverlay(route.polyline, level: .aboveRoads)
+                    self?.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
                 }
             }
+            // 計算が終わった後の処理
+            print("計算終わり")
         }
     }
     
