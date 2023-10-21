@@ -83,19 +83,19 @@ final class MapVC: UIViewController {
         return manager
     }()
     
-    let dismissButton: UIButton = {
-        let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
-        let image = UIImage(
-            systemName: "multiply",
-            withConfiguration: imageConfig
-        )?.withRenderingMode(.alwaysOriginal)
-        button.setImage(image, for: .normal)
-        button.tintColor = .systemGray3
-        button.addTarget(nil, action: #selector(dismissButtonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+//    let dismissButton: UIButton = {
+//        let button = UIButton()
+//        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
+//        let image = UIImage(
+//            systemName: "multiply",
+//            withConfiguration: imageConfig
+//        )?.withRenderingMode(.alwaysOriginal)
+//        button.setImage(image, for: .normal)
+//        button.tintColor = .systemGray3
+//        button.addTarget(nil, action: #selector(dismissButtonAction), for: .touchUpInside)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
     
     // Segment Controllerを実装(徒歩, 車, 電車等の移動)
     let transportationSegmentedController: UISegmentedControl = {
@@ -276,9 +276,9 @@ final class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setNavigationBar()
         getLocationUsagePermission()
-        view.addSubview(dismissButton)
+//        view.addSubview(dismissButton)
 //        view.addSubview(cancelNavitageRouteButton)
         view.addSubview(transportationSegmentedController)
         view.addSubview(addressLabel)
@@ -288,7 +288,7 @@ final class MapVC: UIViewController {
         view.addSubview(helmetNoticeLabel)
         view.addSubview(getHelmetButton)
         view.addSubview(takeOffHelmetButton)
-        setDismissBtnConstraints()
+        //setDismissBtnConstraints()
 //        setCancelNavigateBtnConstraints()
         setSegmentedControllerConstraints()
         //self.didChangeValue(segment: self.transportationSegmentedController)
@@ -321,6 +321,13 @@ final class MapVC: UIViewController {
         
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        self.viewWillAppear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: false)
+//        setNavigationBar()
+//        self.loadViewIfNeeded()
+//    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         self.locationManager.stopUpdatingLocation()
     }
@@ -329,6 +336,27 @@ final class MapVC: UIViewController {
 // MARK: - Logic and Function
 // ここにコードを再分配すること
 private extension MapVC {
+    private func setNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(rgb: 0x36B700).withAlphaComponent(0.7)
+        
+        self.navigationItem.title = "Map View"
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        appearance.titleTextAttributes = textAttributes
+        
+        let dismissBarButton = UIBarButtonItem(
+            image: UIImage(systemName: "xmark")?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(dismissBarButtonAction)
+        )
+        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = dismissBarButton
+        
+        self.navigationController?.navigationBar.standardAppearance = appearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
     // Buttonのborderをanimateさせる
     func animateBorderGradation() {
         // 1. BorderLineだけに色を入れるため、CAShapeLayerインスタンスを生成
@@ -677,7 +705,8 @@ private extension MapVC {
     }
     
     func setMapViewConstraints() {
-        mapView.topAnchor.constraint(equalTo: self.dismissButton.bottomAnchor, constant: 10).isActive =  true
+        // safeArealayoutのtopAnchorは、navigationBarの領域を除外した一番の上のtopAnchorを指す
+        mapView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive =  true
         mapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         // MARK: - MapViewのbottomAnchorのconstraintsをsegmentedControllerに合わせるつもり
@@ -689,12 +718,12 @@ private extension MapVC {
         self.locationButton.rightAnchor.constraint(equalTo: self.mapView.rightAnchor, constant: -6).isActive = true
     }
     
-    func setDismissBtnConstraints() {
-        self.dismissButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        self.dismissButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        self.dismissButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
-        self.dismissButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-    }
+//    func setDismissBtnConstraints() {
+//        self.dismissButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+//        self.dismissButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+//        self.dismissButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
+//        self.dismissButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+//    }
     
     // 経路に戻るボタンをMapViewの中に入れる予定
     func setShowRouteBtnConstraints() {
@@ -780,6 +809,11 @@ private extension MapVC {
      }
     
     @objc func dismissButtonAction() {
+        self.dismiss(animated: true)
+        self.locationManager.stopUpdatingLocation()
+    }
+    
+    @objc func dismissBarButtonAction() {
         self.dismiss(animated: true)
         self.locationManager.stopUpdatingLocation()
     }

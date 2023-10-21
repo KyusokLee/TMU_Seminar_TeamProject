@@ -41,6 +41,8 @@
 		94B0B989298543F6000BBE8D /* BorderColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0B988298543F6000BBE8D /* BorderColor.swift */; };
 		94B4BF9E297DACDF00B55117 /* CustomPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B4BF9D297DACDF00B55117 /* CustomPaddingLabel.swift */; };
 		94B4BFA0297DB0D200B55117 /* RaspberryPiOfficialLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */; };
+		94BDDF642AE3E9150094AD1E /* SendMessagesToServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BDDF632AE3E9150094AD1E /* SendMessagesToServerController.swift */; };
+		94BDDF662AE3E94E0094AD1E /* SendMessagesToServerView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BDDF652AE3E94E0094AD1E /* SendMessagesToServerView.storyboard */; };
 		94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D84A42297AD8130037AC39 /* LoadingView.swift */; };
 		94D84A46297AE5370037AC39 /* helmetBasic.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D84A45297AE5360037AC39 /* helmetBasic.png */; };
 		94D84A48297AE7290037AC39 /* shelterBasic.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D84A47297AE7290037AC39 /* shelterBasic.png */; };
@@ -107,6 +109,8 @@
 		94B0B988298543F6000BBE8D /* BorderColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderColor.swift; sourceTree = "<group>"; };
 		94B4BF9D297DACDF00B55117 /* CustomPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaddingLabel.swift; sourceTree = "<group>"; };
 		94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RaspberryPiOfficialLogo.png; sourceTree = "<group>"; };
+		94BDDF632AE3E9150094AD1E /* SendMessagesToServerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessagesToServerController.swift; sourceTree = "<group>"; };
+		94BDDF652AE3E94E0094AD1E /* SendMessagesToServerView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SendMessagesToServerView.storyboard; sourceTree = "<group>"; };
 		94D84A42297AD8130037AC39 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		94D84A45297AE5360037AC39 /* helmetBasic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helmetBasic.png; sourceTree = "<group>"; };
 		94D84A47297AE7290037AC39 /* shelterBasic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelterBasic.png; sourceTree = "<group>"; };
@@ -262,6 +266,7 @@
 				94A3711D296ECA0900D4EF76 /* VideoListVC.swift */,
 				94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */,
 				94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */,
+				94BDDF632AE3E9150094AD1E /* SendMessagesToServerController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 				94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */,
 				94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */,
 				94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */,
+				94BDDF652AE3E94E0094AD1E /* SendMessagesToServerView.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -455,6 +461,7 @@
 				94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */,
 				94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */,
 				942F1A2E2986A73F0026FB6D /* mock.json in Resources */,
+				94BDDF662AE3E94E0094AD1E /* SendMessagesToServerView.storyboard in Resources */,
 				94073C89297C25E0006BE381 /* HelmetPopupView.storyboard in Resources */,
 				94B4BFA0297DB0D200B55117 /* RaspberryPiOfficialLogo.png in Resources */,
 			);
@@ -490,6 +497,7 @@
 				9478262F29646A2E00051115 /* InfoModel.swift in Sources */,
 				94A3711E296ECA0900D4EF76 /* VideoListVC.swift in Sources */,
 				9478639D29471A48003EC94F /* AppDelegate.swift in Sources */,
+				94BDDF642AE3E9150094AD1E /* SendMessagesToServerController.swift in Sources */,
 				94D84A4A297AE7F60037AC39 /* CustomAnnotationView.swift in Sources */,
 				94073C87297C25D0006BE381 /* HelmetSuccessPopupVC.swift in Sources */,
 				942F1A2C2986A2CD0026FB6D /* DisasterModel.swift in Sources */,

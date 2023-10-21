@@ -343,27 +343,31 @@ class ViewController: UIViewController {
     
     @IBAction func presentMapButtonAction(_ sender: Any) {
         print("apple map display!")
-        
-        let appleMapVC = UIStoryboard(name: "MapView", bundle:nil).instantiateViewController(withIdentifier: "MapVC") as! MapVC
+        guard let controller = UIStoryboard(name: "MapView", bundle: nil)
+            .instantiateViewController(
+                withIdentifier: "MapVC"
+            ) as? MapVC else {
+            fatalError("MapVC could not be found")
+        }
         
         // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
         if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
             //🔥元々のやつ
-            appleMapVC.destinationLocation.longitude = longitudeInfo
-            appleMapVC.destinationLocation.latitude = latitudeInfo
+            controller.destinationLocation.longitude = longitudeInfo
+            controller.destinationLocation.latitude = latitudeInfo
 //            // MARK: - ⚠️練習のためのもの
 //            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
 //            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
             
-            appleMapVC.shelterLocation.longitude = shelterLongitude
-            appleMapVC.shelterLocation.latitude = shelterLatitude
+            controller.shelterLocation.longitude = shelterLongitude
+            controller.shelterLocation.latitude = shelterLatitude
             
             // MARK: - 災害の情報があれば
             if let disaster = self.disaster {
                 print(disaster)
-                appleMapVC.disasterLocation.longitude = disasterLongitude
-                appleMapVC.disasterLocation.latitude = disasterLatitude
-                appleMapVC.disaster = disaster
+                controller.disasterLocation.longitude = disasterLongitude
+                controller.disasterLocation.latitude = disasterLatitude
+                controller.disaster = disaster
             }
         } else {
             // alert 表示する
@@ -372,12 +376,20 @@ class ViewController: UIViewController {
             
             return
         }
-        
-        appleMapVC.modalPresentationStyle = .currentContext
-        
-        self.present(appleMapVC, animated: true) {
-            print("complete to display GPS of Raspi")
+        // MARK: -  mapViewControllerをnavigationControllerとして下から上にpresentする方法を実装
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationCapturesStatusBarAppearance = true
+        // fullScreenで表示させる方法
+        navigationController.modalPresentationStyle = .fullScreen
+        // navigation Controllerをpushじゃないpresentで表示させる方法
+        self.present(navigationController, animated: true) {
+            print("Complete to display apple map")
         }
+//        appleMapVC.modalPresentationStyle = .currentContext
+//
+//        self.present(appleMapVC, animated: true) {
+//            print("complete to display GPS of Raspi")
+//        }
     }
     
     func presentAlertView() -> UIAlertController {
