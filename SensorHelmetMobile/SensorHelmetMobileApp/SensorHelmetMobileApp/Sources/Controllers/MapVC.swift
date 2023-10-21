@@ -171,6 +171,27 @@ final class MapVC: UIViewController {
         return label
     }()
     
+    // サーバ側にメッセージを送信するボタン
+    let sendMessageToServerButton: UIButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 45, weight: .medium)
+        let image = UIImage(
+            systemName: "paperplane.circle.fill",
+            withConfiguration: imageConfig
+        )?.withTintColor(
+            .systemGreen.withAlphaComponent(0.7),
+            renderingMode: .alwaysOriginal
+        )
+        button.setImage(image, for: .normal)
+        button.addTarget(nil, action: #selector(sendMessageButtonAction), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.layer.shadowOpacity = 0.4
+//        button.layer.shadowRadius = 20
+//        button.layer.shadowOffset = CGSize(width: 4, height: 10)
+//        button.layer.shadowColor = UIColor.black.cgColor
+        return button
+    }()
+    
     let helmetNoticeLabel: UILabel = {
         let label = UILabel()
         label.text = ""
@@ -263,6 +284,7 @@ final class MapVC: UIViewController {
         view.addSubview(addressLabel)
         view.addSubview(distanceLabel)
         view.addSubview(expectedTimeLabel)
+        view.addSubview(sendMessageToServerButton)
         view.addSubview(helmetNoticeLabel)
         view.addSubview(getHelmetButton)
         view.addSubview(takeOffHelmetButton)
@@ -273,6 +295,7 @@ final class MapVC: UIViewController {
         setAddressLabelConstraints()
         setDistanceLabelConstraints()
         setExpectedTimeLabelConstraints()
+        setSendMessageButtonConstraints()
         setHelmetNoticeLabelConstraints()
         setGetHelmetButtonConstraints()
         setTakeOffHelmetButtonConstraints()
@@ -714,6 +737,12 @@ private extension MapVC {
         self.expectedTimeLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
     }
     
+    // MARK: - サーバ側にメッセージを送信するボタン
+    func setSendMessageButtonConstraints() {
+        self.sendMessageToServerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -23).isActive = true
+        self.sendMessageToServerButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -23).isActive = true
+    }
+    
     func setHelmetNoticeLabelConstraints() {
         self.helmetNoticeLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.helmetNoticeLabel.topAnchor.constraint(equalTo: self.expectedTimeLabel.bottomAnchor, constant: 5).isActive = true
@@ -952,6 +981,12 @@ private extension MapVC {
                 }
             }
         }
+    }
+    
+    // MARK: - サーバ側(Firestore)にメッセージを送信するボタン
+    @objc func sendMessageButtonAction() {
+        // Firestoreにメッセージを送信する
+        print("send message button!")
     }
     
     // 現在の位置を真ん中に表示
