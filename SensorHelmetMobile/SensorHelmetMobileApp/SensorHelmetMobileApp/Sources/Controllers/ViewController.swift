@@ -412,6 +412,7 @@ class ViewController: UIViewController {
         self.navigationController?.pushViewController(videoListVC, animated: true)
     }
     
+    // firestoreからデータを読み込む
     func getData() {
         Firestore.firestore().collection("Raspi").getDocuments { snapshot, error in
             if let error = error {
