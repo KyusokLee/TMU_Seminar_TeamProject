@@ -101,6 +101,7 @@ final class MapVC: UIViewController {
     let transportationSegmentedController: UISegmentedControl = {
         let walkImage = UIImage(systemName: "figure.walk")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
         let carImage = UIImage(systemName: "car.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
+        // MARK: - 公共交通機関のcaseは消す予定
         let publicTransImage = UIImage(systemName: "tram.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
         let items: [UIImage] = [walkImage!, carImage!, publicTransImage!]
         let segmentedController = UISegmentedControl(items: items)
@@ -304,6 +305,9 @@ final class MapVC: UIViewController {
 //        removeGetHelmetButtonConstraints()
         mapView.frame = view.bounds
         mapView.showsUserLocation = true
+        // 交通情報の表示（リアルタイムの混雑状況）
+        mapView.showsTraffic = true
+        
         // mapViewにCustomAnnotationViewを登録
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
         mapView.addSubview(locationButton)
@@ -339,14 +343,14 @@ private extension MapVC {
     private func setNavigationBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(rgb: 0x36B700).withAlphaComponent(0.7)
+        appearance.backgroundColor = .systemBackground
         
         self.navigationItem.title = "Map View"
-        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         appearance.titleTextAttributes = textAttributes
         
         let dismissBarButton = UIBarButtonItem(
-            image: UIImage(systemName: "xmark")?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal),
+            image: UIImage(systemName: "xmark")?.withTintColor(UIColor.black, renderingMode: .alwaysOriginal),
             style: .plain,
             target: self,
             action: #selector(dismissBarButtonAction)
@@ -1017,10 +1021,20 @@ private extension MapVC {
         }
     }
     
-    // MARK: - サーバ側(Firestore)にメッセージを送信するボタン
+    // MARK: - Navigation Controller のpushメソッドを用いて, 災害が起きた場所からの近くの官公庁リストを表示する
     @objc func sendMessageButtonAction() {
         // Firestoreにメッセージを送信する
         print("send message button!")
+        let controller = NearbyPublicInstitutionListViewController.instantiate()
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationCapturesStatusBarAppearance = true
+        navigationController.modalPresentationStyle = .fullScreen
+//        // fullScreenであるが、1つ前のViewのサイズに合わせてpushされる
+//        navigationController?.pushViewController(controller, animated: true)
+        // navigation Controllerをpushじゃないpresentで表示させる方法
+        self.present(navigationController, animated: true) {
+            print("Complete to present Nearby Public Institution List View")
+        }
     }
     
     // 現在の位置を真ん中に表示

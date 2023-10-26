@@ -168,6 +168,13 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var COGasDensityLabel: UILabel! {
+        didSet {
+            COGasDensityLabel.isHidden = true
+            COGasDensityLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
     var longitudeInfo: Double = 0.0
     var latitudeInfo: Double = 0.0
     var shelterLongitude: Double = 0.0
@@ -413,6 +420,7 @@ class ViewController: UIViewController {
             self.longitudeLabel.isHidden = true
             self.latitudeLabel.isHidden = true
             self.ipLabel.isHidden = true
+            self.COGasDensityLabel.isEnabled = true
             self.curDateLabel.text = "データ取得時間: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
             self.getData()
         }
@@ -452,6 +460,7 @@ class ViewController: UIViewController {
                     self.longitudeLabel.text = "経度: " + infoData.longitude!
                     self.latitudeLabel.text = "緯度: " + infoData.latitude!
                     self.ipLabel.text = "IPアドレス: " + infoData.ip!
+                    self.COGasDensityLabel.text = "COガス密度: " + infoData.COGasDensity!
                     // 以下の処理で渡す
                     self.longitudeInfo = Double(infoData.longitude!)!
                     self.latitudeInfo = Double(infoData.latitude!)!
@@ -469,6 +478,7 @@ class ViewController: UIViewController {
                     self.longitudeLabel.isHidden = false
                     self.latitudeLabel.isHidden = false
                     self.ipLabel.isHidden = false
+                    self.COGasDensityLabel.isHidden = false
                     
                 } catch let error {
                     print("error: \(error)")
