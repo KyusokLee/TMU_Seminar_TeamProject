@@ -34,7 +34,7 @@ class PublicInstitutionTableViewCell: UITableViewCell {
 }
 
 // Logic and function
-private extension PublicInstitutionTableViewCell {
+extension PublicInstitutionTableViewCell {
     // UILabelのconfigureを行う
     func configure(institutionType: String, institutionName: String) {
         // MARK: - Typeごとに分ける作業を行う

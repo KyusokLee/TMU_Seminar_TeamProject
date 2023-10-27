@@ -12,6 +12,9 @@
 		94073C8B297C26BC006BE381 /* done_check_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94073C8A297C26BC006BE381 /* done_check_icon.png */; };
 		942F1A2C2986A2CD0026FB6D /* DisasterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942F1A2B2986A2CD0026FB6D /* DisasterModel.swift */; };
 		942F1A2E2986A73F0026FB6D /* mock.json in Resources */ = {isa = PBXBuildFile; fileRef = 942F1A2D2986A73F0026FB6D /* mock.json */; };
+		94386F062AEBB33C00EBF1EC /* CustomFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */; };
+		94386F092AEBB88900EBF1EC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 94386F082AEBB88900EBF1EC /* FirebaseFirestoreSwift */; };
+		94386F0B2AEBC30300EBF1EC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F0A2AEBC30300EBF1EC /* Message.swift */; };
 		9458484A2AEA90CF007C9A46 /* hospital.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848462AEA90CF007C9A46 /* hospital.png */; };
 		9458484B2AEA90CF007C9A46 /* government.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848472AEA90CF007C9A46 /* government.png */; };
 		9458484C2AEA90CF007C9A46 /* policeOffice.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848482AEA90CF007C9A46 /* policeOffice.png */; };
@@ -87,6 +90,8 @@
 		94073C8A297C26BC006BE381 /* done_check_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done_check_icon.png; sourceTree = "<group>"; };
 		942F1A2B2986A2CD0026FB6D /* DisasterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisasterModel.swift; sourceTree = "<group>"; };
 		942F1A2D2986A73F0026FB6D /* mock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock.json; sourceTree = "<group>"; };
+		94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFirestore.swift; sourceTree = "<group>"; };
+		94386F0A2AEBC30300EBF1EC /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		945848462AEA90CF007C9A46 /* hospital.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hospital.png; sourceTree = "<group>"; };
 		945848472AEA90CF007C9A46 /* government.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = government.png; sourceTree = "<group>"; };
 		945848482AEA90CF007C9A46 /* policeOffice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = policeOffice.png; sourceTree = "<group>"; };
@@ -144,6 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94386F092AEBB88900EBF1EC /* FirebaseFirestoreSwift in Frameworks */,
 				94782629296462E700051115 /* FirebaseAnalytics in Frameworks */,
 				9478262B296462E700051115 /* FirebaseFirestore in Frameworks */,
 				9478262D296462E700051115 /* FirebaseStorage in Frameworks */,
@@ -198,6 +204,13 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		94386F072AEBB88900EBF1EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9478639029471A48003EC94F = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +218,7 @@
 				947863B229471A49003EC94F /* SensorHelmetMobileAppTests */,
 				947863BC29471A49003EC94F /* SensorHelmetMobileAppUITests */,
 				9478639A29471A48003EC94F /* Products */,
+				94386F072AEBB88900EBF1EC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -253,6 +267,8 @@
 				9478262E29646A2E00051115 /* InfoModel.swift */,
 				942F1A2B2986A2CD0026FB6D /* DisasterModel.swift */,
 				9458484F2AEA922D007C9A46 /* PublicInstitutionModel.swift */,
+				94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */,
+				94386F0A2AEBC30300EBF1EC /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -386,6 +402,7 @@
 				9478262A296462E700051115 /* FirebaseFirestore */,
 				9478262C296462E700051115 /* FirebaseStorage */,
 				948C12362AEA5FAB00B1DFE6 /* MessageKit */,
+				94386F082AEBB88900EBF1EC /* FirebaseFirestoreSwift */,
 			);
 			productName = SensorHelmetMobileApp;
 			productReference = 9478639929471A48003EC94F /* SensorHelmetMobileApp.app */;
@@ -526,6 +543,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94386F062AEBB33C00EBF1EC /* CustomFirestore.swift in Sources */,
 				947826312964744100051115 /* TCPNetwork.swift in Sources */,
 				949E8E072965B9300015FD1C /* MapVC.swift in Sources */,
 				94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */,
@@ -546,6 +564,7 @@
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
 				949E8E052965B73A0015FD1C /* String+Utils.swift in Sources */,
 				94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */,
+				94386F0B2AEBC30300EBF1EC /* Message.swift in Sources */,
 				949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 				94FAA58C296E67C3007BD387 /* UIColor+Utils.swift in Sources */,
@@ -913,6 +932,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		94386F082AEBB88900EBF1EC /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94782627296462E700051115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		94782628296462E700051115 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 94782627296462E700051115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
