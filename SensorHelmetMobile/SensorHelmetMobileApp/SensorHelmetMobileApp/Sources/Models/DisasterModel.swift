@@ -20,4 +20,5 @@ struct DisasterModel: Codable {
 struct AddressInfo: Codable {
     var city: String?
     var localName: String?
+    var localNameEnglish: String?
 }
