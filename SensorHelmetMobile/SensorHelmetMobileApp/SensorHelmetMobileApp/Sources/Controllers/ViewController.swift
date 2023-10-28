@@ -280,7 +280,11 @@ class ViewController: UIViewController {
     
     // MARK: - local　pushのobserverを登録して、Local pushがくるときに行う処理を可能にする
     func addLocalPushObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePushNotification(_:)), name: Notification.Name("DisasterOccurNotification"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(handlePushNotification(_:)), name: Notification.Name("DisasterOccurNotification"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name("didReceivePushTouch"), object: nil, queue: nil) { notification in
+            
+            self.handlePushNotification(notification)
+        }
     }
     
     func getDisasterOccurLocationData(placeName: String) {
@@ -361,11 +365,11 @@ class ViewController: UIViewController {
         self.navigationItem.title = "Home View"
     }
     
-    @objc func handlePushNotification(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let placeName = userInfo["locationLocalName"] as? String {
+    func handlePushNotification(_ notification: Notification) {
+      if let userInfo = notification.userInfo,
+           let placeName = userInfo["locationLocalName"]! as? String {
             print("Local通知で渡されたデータ: \(placeName)")
-        }
+        } else { return }
     }
     
     @IBAction func bluetoothButtonAction(_ sender: Any) {

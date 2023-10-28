@@ -25,7 +25,6 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
         ) as? NearbyPublicInstitutionListViewController else {
             fatalError("NearbyPublicInstitutionListViewController could not be found.")
         }
-        
         controller.loadViewIfNeeded()
         
         return controller
