@@ -13,6 +13,7 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
     
     @IBOutlet weak var publicInstitutionListTableView: UITableView!
     
+    var occurPlaceLocalNameEng: String?
     var publicInstitutionModel: PublicInstitution?
     var publicInstitutionList: [String] = []
     
@@ -25,12 +26,13 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
             fatalError("NearbyPublicInstitutionListViewController could not be found.")
         }
         
+        controller.loadViewIfNeeded()
+        
         return controller
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavigationBar()
         registerCell()
         
         publicInstitutionListTableView.delegate = self
@@ -42,17 +44,24 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
+        // ここにnavigationBarのUI Settingをせず、ViewDidLoadや、instantiateでnavigationBarのsettingを行うと, BarItemの表示も、受け取るデータも正常に受け取れてないまま画面を表示してしまう
+        setNavigationBar()
     }
 }
 
 // MARK: - Logic and Function
-private extension NearbyPublicInstitutionListViewController {
+extension NearbyPublicInstitutionListViewController {
     private func setNavigationBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .systemBackground
         
-        self.navigationItem.title = "近くの公共機関"
+        // アラームが表示されていないのにも関わらず　Toyodaの地名が入ってしまった
+        if let locationNameEng = occurPlaceLocalNameEng {
+            self.navigationItem.title = "\(locationNameEng)駅近くの公共機関"
+        } else {
+            self.navigationItem.title = "近くの公共機関"
+        }
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         appearance.titleTextAttributes = textAttributes
         
@@ -67,63 +76,68 @@ private extension NearbyPublicInstitutionListViewController {
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
-    // MARK: - 災害が起きた場所のアルファベットからデータを認識させて、firestoreからその場所のデータと一致するdocumentを読み込むようにしたい
-    private func getNearbyInstitutionList() {
-        // firestoreからデータを読み込む
-        Firestore.firestore().collection("PublicInstitutionList").getDocuments { snapshot, error in
-            if let error = error {
-                print("Debug: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let documents = snapshot?.documents else { return }
-            
-            var infoDatas: [InfoModel] = []
-            let decoder = JSONDecoder()
-            
-            // Raspiで測定して、Firestoreに格納した温度のデータを読み込む
-            for document in documents {
-                do {
-                    let data = document.data()
-                    let jsonData = try JSONSerialization.data(withJSONObject: data)
-                    let infoData = try decoder.decode(InfoModel.self, from: jsonData)
-                    print(infoData)
-                    infoDatas.append(infoData)
-                    self.dateLabel.text = "日付: " + infoData.date!
-                    self.timeLabel.text = "時間: " + infoData.time!
-                    self.tempLabel.text = "気温: " + infoData.temp!
-                    self.humidLabel.text = "湿度: " + infoData.humid!
-                    self.longitudeLabel.text = "経度: " + infoData.longitude!
-                    self.latitudeLabel.text = "緯度: " + infoData.latitude!
-                    self.ipLabel.text = "IPアドレス: " + infoData.ip!
-                    self.COGasDensityLabel.text = "COガス密度: " + infoData.COGasDensity!
-                    // 以下の処理で渡す
-                    self.longitudeInfo = Double(infoData.longitude!)!
-                    self.latitudeInfo = Double(infoData.latitude!)!
-                    self.shelterLongitude = Double(infoData.shelterLongitude!)!
-                    self.shelterLatitude = Double(infoData.shelterLatitude!)!
-                    
-                    // MARK: - ⚠️演習のためのもの
-                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
-                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
-                
-                    self.dateLabel.isHidden = false
-                    self.timeLabel.isHidden = false
-                    self.tempLabel.isHidden = false
-                    self.humidLabel.isHidden = false
-                    self.longitudeLabel.isHidden = false
-                    self.latitudeLabel.isHidden = false
-                    self.ipLabel.isHidden = false
-                    self.COGasDensityLabel.isHidden = false
-                    
-                } catch let error {
-                    print("error: \(error)")
-                }
-            }
-            
-            self.curDateLabel.isHidden = false
-        }
+    // MARK: - 場所の名前を特定し、dataをfirestoreから持ってくるように
+    func configure(with placeName: String) {
+        occurPlaceLocalNameEng = placeName
     }
+    
+    // MARK: - 災害が起きた場所のアルファベットからデータを認識させて、firestoreからその場所のデータと一致するdocumentを読み込むようにしたい
+//    private func getNearbyInstitutionList() {
+//        // firestoreからデータを読み込む
+//        Firestore.firestore().collection("PublicInstitutionList").getDocuments { snapshot, error in
+//            if let error = error {
+//                print("Debug: \(error.localizedDescription)")
+//                return
+//            }
+//
+//            guard let documents = snapshot?.documents else { return }
+//
+//            var infoDatas: [InfoModel] = []
+//            let decoder = JSONDecoder()
+//
+//            // Raspiで測定して、Firestoreに格納した温度のデータを読み込む
+//            for document in documents {
+//                do {
+//                    let data = document.data()
+//                    let jsonData = try JSONSerialization.data(withJSONObject: data)
+//                    let infoData = try decoder.decode(InfoModel.self, from: jsonData)
+//                    print(infoData)
+//                    infoDatas.append(infoData)
+//                    self.dateLabel.text = "日付: " + infoData.date!
+//                    self.timeLabel.text = "時間: " + infoData.time!
+//                    self.tempLabel.text = "気温: " + infoData.temp!
+//                    self.humidLabel.text = "湿度: " + infoData.humid!
+//                    self.longitudeLabel.text = "経度: " + infoData.longitude!
+//                    self.latitudeLabel.text = "緯度: " + infoData.latitude!
+//                    self.ipLabel.text = "IPアドレス: " + infoData.ip!
+//                    self.COGasDensityLabel.text = "COガス密度: " + infoData.COGasDensity!
+//                    // 以下の処理で渡す
+//                    self.longitudeInfo = Double(infoData.longitude!)!
+//                    self.latitudeInfo = Double(infoData.latitude!)!
+//                    self.shelterLongitude = Double(infoData.shelterLongitude!)!
+//                    self.shelterLatitude = Double(infoData.shelterLatitude!)!
+//
+//                    // MARK: - ⚠️演習のためのもの
+//                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
+//                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
+//
+//                    self.dateLabel.isHidden = false
+//                    self.timeLabel.isHidden = false
+//                    self.tempLabel.isHidden = false
+//                    self.humidLabel.isHidden = false
+//                    self.longitudeLabel.isHidden = false
+//                    self.latitudeLabel.isHidden = false
+//                    self.ipLabel.isHidden = false
+//                    self.COGasDensityLabel.isHidden = false
+//
+//                } catch let error {
+//                    print("error: \(error)")
+//                }
+//            }
+//
+//            self.curDateLabel.isHidden = false
+//        }
+//    }
     
     private func registerCell() {
         publicInstitutionListTableView.register(UINib(nibName: "PublicInstitutionTableViewCell", bundle: nil), forCellReuseIdentifier: "PublicInstitutionTableViewCell")
@@ -144,8 +158,9 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
             return UITableViewCell()
         }
         
-        // MARK: - 公共機関の名前が入る
-        cell.configure(institutionType: <#T##String#>, institutionName: <#T##String#>)
+//        // MARK: - 公共機関の名前が入る
+//        cell.configure(institutionType: <#T##String#>, institutionName: <#T##String#>)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

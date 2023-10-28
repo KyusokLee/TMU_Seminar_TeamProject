@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         UNUserNotificationCenter.current().delegate = self
+        
         return true
     }
 
@@ -42,5 +43,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.list, .banner])
+    }
+    
+    // Local PushがTriggerされるたびに呼び出される
+    // messageをTouchしたときの間数
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let notification = response.notification.request
+        // タップした通知の識別子を読み込む
+        let identifier = notification.identifier
+        // userInfo
+        let userInfo = notification.content.userInfo
+        // window
+        let window = UIApplication.shared.windows.first
+        
+        if let locationName = userInfo["locationLocalName"] as? String {
+            // 特定のViewControllerにデータを渡し、画面をUpdate
+            // MapVCにPinを立てる作業(UIの変更)
+            print(locationName)
+            if let mainViewController = window?.rootViewController as? ViewController {
+                mainViewController.getDisasterOccurLocationData(placeName: locationName)
+            }
+        }
+        print("didReceive - identifier: \(identifier)")
+        print("didReceive - UserInfo: \(userInfo)")
+        
+        completionHandler()
     }
 }

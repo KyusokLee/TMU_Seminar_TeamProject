@@ -1022,10 +1022,13 @@ private extension MapVC {
     }
     
     // MARK: - Navigation Controller のpushメソッドを用いて, 災害が起きた場所からの近くの官公庁リストを表示する
+    // MARK: - 災害が起きた場所の英語の名前を渡して, 近くの公共機関のリストをデータベースから追出できるように
     @objc func sendMessageButtonAction() {
         // Firestoreにメッセージを送信する
         print("send message button!")
+        let occurPlaceEnglish = disaster?.addressInfo?.localNameEnglish
         let controller = NearbyPublicInstitutionListViewController.instantiate()
+        controller.configure(with: occurPlaceEnglish ?? "")
         let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationCapturesStatusBarAppearance = true
         navigationController.modalPresentationStyle = .fullScreen
@@ -1128,6 +1131,7 @@ extension MapVC: MKMapViewDelegate {
             UIGraphicsEndImageContext()
             annotationView?.image = resizedImage
         case 2:
+            // MARK: - 災害が起きた場所にPinを置きたいが、まだ実装不足
             tapTitle = "\(disaster?.disasterType ?? "")発生地"
             pinImage = UIImage(named: "helmetBasic")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor(rgb: 0xF57C00))
            // pinImage = UIImage(named: "\(disaster?.image ?? "")")

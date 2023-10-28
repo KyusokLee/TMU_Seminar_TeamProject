@@ -187,17 +187,20 @@ class ViewController: UIViewController {
     var disaster: DisasterModel?
     var disasterLongitude: Double = 0.0
     var disasterLatitude: Double = 0.0
+    var disasterOccurLocationName: String = ""
     let notificationCenter = UNUserNotificationCenter.current()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigationController()
+        addLocalPushObserver()
         self.bluetoothButton.isUserInteractionEnabled = false
         setImageView()
         // alarmの権限を得る
         requestNotificationAuthorization()
         disasterOccurred()
+        
     }
     
     func setImageView() {
@@ -227,12 +230,16 @@ class ViewController: UIViewController {
         print("Send Notification!")
 
         let content = UNMutableNotificationContent()
+        
         if let disasterType = disaster?.disasterType,
            let city = disaster?.addressInfo?.city,
            let localName = disaster?.addressInfo?.localName,
            let description = disaster?.description {
             content.title = "⚠️\(disasterType)が発生しました!"
             content.body = "\(city)、\(localName)の付近で\n\(description)しました。"
+            // MARK: - contentの内容を保存
+            // 災害が起きた場所によってLocalNameを変える必要があるので、この処理にした
+            content.userInfo = ["locationLocalName": "\(localName)"]
         }
         
         
@@ -244,7 +251,7 @@ class ViewController: UIViewController {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
 
         let request = UNNotificationRequest(
-            identifier: UUID().uuidString,
+            identifier: "DisasterOccurNotification",
             content: content,
             trigger: trigger
         )
@@ -254,6 +261,8 @@ class ViewController: UIViewController {
             if let error = error {
                 // handle errors
                 print(error.localizedDescription)
+            } else {
+                print("Push Alarm is successfully implemented")
             }
         }
 
@@ -267,6 +276,15 @@ class ViewController: UIViewController {
 //                }
 //            }
 //        }
+    }
+    
+    // MARK: - local　pushのobserverを登録して、Local pushがくるときに行う処理を可能にする
+    func addLocalPushObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePushNotification(_:)), name: Notification.Name("DisasterOccurNotification"), object: nil)
+    }
+    
+    func getDisasterOccurLocationData(placeName: String) {
+        print("Local通知で渡されたデータ: \(placeName)")
     }
     
     // MARK: - 任意のタイミングを設定して、任意の災害が起きたことを想定する
@@ -341,6 +359,13 @@ class ViewController: UIViewController {
         
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.title = "Home View"
+    }
+    
+    @objc func handlePushNotification(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let placeName = userInfo["locationLocalName"] as? String {
+            print("Local通知で渡されたデータ: \(placeName)")
+        }
     }
     
     @IBAction func bluetoothButtonAction(_ sender: Any) {

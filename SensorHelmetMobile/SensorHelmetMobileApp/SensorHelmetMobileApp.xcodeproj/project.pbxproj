@@ -15,6 +15,7 @@
 		94386F062AEBB33C00EBF1EC /* CustomFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */; };
 		94386F092AEBB88900EBF1EC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 94386F082AEBB88900EBF1EC /* FirebaseFirestoreSwift */; };
 		94386F0B2AEBC30300EBF1EC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F0A2AEBC30300EBF1EC /* Message.swift */; };
+		94386F0D2AEBE50000EBF1EC /* Encodable+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F0C2AEBE50000EBF1EC /* Encodable+Utils.swift */; };
 		9458484A2AEA90CF007C9A46 /* hospital.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848462AEA90CF007C9A46 /* hospital.png */; };
 		9458484B2AEA90CF007C9A46 /* government.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848472AEA90CF007C9A46 /* government.png */; };
 		9458484C2AEA90CF007C9A46 /* policeOffice.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848482AEA90CF007C9A46 /* policeOffice.png */; };
@@ -92,6 +93,7 @@
 		942F1A2D2986A73F0026FB6D /* mock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock.json; sourceTree = "<group>"; };
 		94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFirestore.swift; sourceTree = "<group>"; };
 		94386F0A2AEBC30300EBF1EC /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		94386F0C2AEBE50000EBF1EC /* Encodable+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Utils.swift"; sourceTree = "<group>"; };
 		945848462AEA90CF007C9A46 /* hospital.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hospital.png; sourceTree = "<group>"; };
 		945848472AEA90CF007C9A46 /* government.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = government.png; sourceTree = "<group>"; };
 		945848482AEA90CF007C9A46 /* policeOffice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = policeOffice.png; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				949E8E042965B73A0015FD1C /* String+Utils.swift */,
 				94FAA58B296E67C3007BD387 /* UIColor+Utils.swift */,
 				949E8EE329784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift */,
+				94386F0C2AEBE50000EBF1EC /* Encodable+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
 				949E8E052965B73A0015FD1C /* String+Utils.swift in Sources */,
 				94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */,
+				94386F0D2AEBE50000EBF1EC /* Encodable+Utils.swift in Sources */,
 				94386F0B2AEBC30300EBF1EC /* Message.swift in Sources */,
 				949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,

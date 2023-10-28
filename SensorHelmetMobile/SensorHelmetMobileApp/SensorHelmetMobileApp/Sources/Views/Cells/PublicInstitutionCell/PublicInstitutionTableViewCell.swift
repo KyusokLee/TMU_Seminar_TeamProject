@@ -48,7 +48,7 @@ extension PublicInstitutionTableViewCell {
                 publicInstitutionTypeLabel.text = stringValue
                 // image 処理
                 let image = UIImage(named: stringValue.lowercased())?.withTintColor(.black, renderingMode: .alwaysOriginal)
-                size = CGSize(width: 35, height: 35)
+                let size = CGSize(width: 35, height: 35)
                 UIGraphicsBeginImageContext(size)
                 let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
