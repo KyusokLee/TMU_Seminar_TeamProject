@@ -14,17 +14,19 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
     @IBOutlet weak var publicInstitutionListTableView: UITableView!
     
     var occurPlaceLocalNameEng: String?
-    var publicInstitutionModel: PublicInstitution?
-    var publicInstitutionList: [String] = []
+    var publicInstitutionList: [PublicInstitution] = []
+    let customFirestore = CustomFirestore()
     
-    // カメラをVCへの画面遷移メソッド
-    static func instantiate() -> NearbyPublicInstitutionListViewController {
+    // 画面遷移メソッド
+    static func instantiate(with placeName: String) -> NearbyPublicInstitutionListViewController {
         let storyboard = UIStoryboard(name: "NearbyPublicInstitutionListView", bundle: nil)
         guard let controller = storyboard.instantiateViewController(
             withIdentifier: "NearbyPublicInstitutionListViewController"
         ) as? NearbyPublicInstitutionListViewController else {
             fatalError("NearbyPublicInstitutionListViewController could not be found.")
         }
+        
+        controller.configure(with: placeName)
         controller.loadViewIfNeeded()
         
         return controller
@@ -38,6 +40,7 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
         publicInstitutionListTableView.dataSource = self
 
         // Do any additional setup after loading the view.
+        closurePrac()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +48,13 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: false)
         // ここにnavigationBarのUI Settingをせず、ViewDidLoadや、instantiateでnavigationBarのsettingを行うと, BarItemの表示も、受け取るデータも正常に受け取れてないまま画面を表示してしまう
         setNavigationBar()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        printList()
+        self.publicInstitutionListTableView.reloadData()
     }
 }
 
@@ -73,6 +83,55 @@ extension NearbyPublicInstitutionListViewController {
         self.navigationController?.navigationBar.topItem?.leftBarButtonItem = dismissBarButton
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    // MARK: - practice
+    func closurePrac() {
+        // 正常に持ってきた
+        fetchData(with: occurPlaceLocalNameEng ?? "") { [weak self] list in
+            self?.publicInstitutionList = list
+            print("클로저 내부 : \n", self?.publicInstitutionList)
+            print("클로저 내부에서 PublicInstituion 요소 수: ", self?.publicInstitutionList.count)
+            
+            // MARK: - ここではちゃんと反映されている
+            
+        }
+        
+        // MARK: - うまく処理されていなかった理由: Closureは外部が処理されたあとに、内部が処理されるので、print出力ではうまく表示されていないかもしれないが、実際は反映されているかもしれない
+        
+        // MARK: - でも、ここでは、反映されていない
+        print("클로저 외부: \n", self.publicInstitutionList)
+        print("클로저 외부에서 PublicInstituion 요소 수: ", self.publicInstitutionList.count)
+    }
+    
+    // MARK: - 処理確認のためのprint文間数
+    func printList() {
+        // MARK: - でも、ここでは、反映されていない
+        print("프린트 함수: \n", self.publicInstitutionList)
+        print("프린트 함수에서 PublicInstituion 요소 수: ", self.publicInstitutionList.count)
+    }
+    
+//    // MARK: - 公共機関のリストを持ってきて、反映させる
+    func fetchData(with placeName: String, completion: @escaping ([PublicInstitution]) -> Void) {
+        var list: [PublicInstitution] = []
+        
+        customFirestore.getInstitutionList(place: placeName) { [weak self] result in
+            
+            switch result {
+            case .success(let institutions):
+                
+                for institution in institutions {
+                    print("name: ", institution.name ?? "")
+                    print("type: ", institution.type ?? "")
+                    list.append(institution)
+                }
+                print("Temp Listの数: ", list.count )
+                completion(list)
+            case .failure(let error):
+                print(error)
+                completion([])
+            }
+        }
     }
     
     // MARK: - 場所の名前を特定し、dataをfirestoreから持ってくるように
@@ -152,21 +211,33 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
         return publicInstitutionList.count
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PublicInstitutionTableViewCell", for: indexPath) as? PublicInstitutionTableViewCell else {
             return UITableViewCell()
         }
         
-//        // MARK: - 公共機関の名前が入る
-//        cell.configure(institutionType: <#T##String#>, institutionName: <#T##String#>)
+        let type = publicInstitutionList[indexPath.row].type ?? ""
+        let name = publicInstitutionList[indexPath.row].name ?? ""
+        
+        // MARK: - 公共機関の名前が入る
+        cell.configure(institutionType: type, institutionName: name)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        
+        let publicInstitutionName = publicInstitutionList[indexPath.row].name ?? ""
+        let controller = MessagesViewController.instantiate(with: publicInstitutionName)
+        controller.institutionName = publicInstitutionName
+//        controller.configure(with: occurPlaceEnglish ?? "")
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationCapturesStatusBarAppearance = true
+        navigationController.modalPresentationStyle = .fullScreen
+        // fullScreenであるが、1つ前のViewのサイズに合わせてpushされる
+        self.navigationController?.pushViewController(controller, animated: true)
     }
-    
-    
 }

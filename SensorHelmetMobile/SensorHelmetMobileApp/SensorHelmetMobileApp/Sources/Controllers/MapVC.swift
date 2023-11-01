@@ -102,8 +102,8 @@ final class MapVC: UIViewController {
         let walkImage = UIImage(systemName: "figure.walk")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
         let carImage = UIImage(systemName: "car.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
         // MARK: - 公共交通機関のcaseは消す予定
-        let publicTransImage = UIImage(systemName: "tram.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
-        let items: [UIImage] = [walkImage!, carImage!, publicTransImage!]
+//        let publicTransImage = UIImage(systemName: "tram.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
+        let items: [UIImage] = [walkImage!, carImage!]
         let segmentedController = UISegmentedControl(items: items)
 //        segmentedController.setImage(walkImage, forSegmentAt: 0)
 //        segmentedController.setImage(carImage, forSegmentAt: 1)
@@ -868,8 +868,6 @@ private extension MapVC {
             print("walk")
         } else if segment.selectedSegmentIndex == 1 {
             print("Car")
-        } else if segment.selectedSegmentIndex == 2 {
-            print("Public Trasportation")
         }
     }
     
@@ -1027,8 +1025,8 @@ private extension MapVC {
         // Firestoreにメッセージを送信する
         print("send message button!")
         let occurPlaceEnglish = disaster?.addressInfo?.localNameEnglish
-        let controller = NearbyPublicInstitutionListViewController.instantiate()
-        controller.configure(with: occurPlaceEnglish ?? "")
+        let controller = NearbyPublicInstitutionListViewController.instantiate(with: occurPlaceEnglish ?? "")
+//        controller.configure(with: occurPlaceEnglish ?? "")
         let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationCapturesStatusBarAppearance = true
         navigationController.modalPresentationStyle = .fullScreen
@@ -1059,7 +1057,7 @@ extension MapVC: MKMapViewDelegate {
         
         if annotationViewPinNumber == 0 {
             // ヘルメット場所
-            routeRenderer.strokeColor = UIColor(red:1.00, green:0.35, blue:0.30, alpha:1.0)
+            routeRenderer.strokeColor = UIColor(red:0.35, green:0.35, blue:1.30, alpha:1.0)
             routeRenderer.lineWidth = 5.0
             routeRenderer.alpha = 1.0
         } else if annotationViewPinNumber == 1 {

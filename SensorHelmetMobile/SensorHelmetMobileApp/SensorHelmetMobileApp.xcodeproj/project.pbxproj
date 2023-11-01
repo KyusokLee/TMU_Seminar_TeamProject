@@ -10,16 +10,18 @@
 		94073C87297C25D0006BE381 /* HelmetSuccessPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */; };
 		94073C89297C25E0006BE381 /* HelmetPopupView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */; };
 		94073C8B297C26BC006BE381 /* done_check_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94073C8A297C26BC006BE381 /* done_check_icon.png */; };
+		942AD3482AEFB97B006EED1D /* MessagesView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 942AD3472AEFB97B006EED1D /* MessagesView.storyboard */; };
+		942AD34C2AEFB9E8006EED1D /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942AD34B2AEFB9E7006EED1D /* MessagesViewController.swift */; };
 		942F1A2C2986A2CD0026FB6D /* DisasterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942F1A2B2986A2CD0026FB6D /* DisasterModel.swift */; };
 		942F1A2E2986A73F0026FB6D /* mock.json in Resources */ = {isa = PBXBuildFile; fileRef = 942F1A2D2986A73F0026FB6D /* mock.json */; };
 		94386F062AEBB33C00EBF1EC /* CustomFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */; };
 		94386F092AEBB88900EBF1EC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 94386F082AEBB88900EBF1EC /* FirebaseFirestoreSwift */; };
 		94386F0B2AEBC30300EBF1EC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F0A2AEBC30300EBF1EC /* Message.swift */; };
 		94386F0D2AEBE50000EBF1EC /* Encodable+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F0C2AEBE50000EBF1EC /* Encodable+Utils.swift */; };
-		9458484A2AEA90CF007C9A46 /* hospital.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848462AEA90CF007C9A46 /* hospital.png */; };
-		9458484B2AEA90CF007C9A46 /* government.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848472AEA90CF007C9A46 /* government.png */; };
-		9458484C2AEA90CF007C9A46 /* policeOffice.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848482AEA90CF007C9A46 /* policeOffice.png */; };
-		9458484E2AEA90FA007C9A46 /* fireStation.png in Resources */ = {isa = PBXBuildFile; fileRef = 9458484D2AEA90FA007C9A46 /* fireStation.png */; };
+		9458484A2AEA90CF007C9A46 /* Hospital.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848462AEA90CF007C9A46 /* Hospital.png */; };
+		9458484B2AEA90CF007C9A46 /* Government.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848472AEA90CF007C9A46 /* Government.png */; };
+		9458484C2AEA90CF007C9A46 /* PoliceOffice.png in Resources */ = {isa = PBXBuildFile; fileRef = 945848482AEA90CF007C9A46 /* PoliceOffice.png */; };
+		9458484E2AEA90FA007C9A46 /* FireStation.png in Resources */ = {isa = PBXBuildFile; fileRef = 9458484D2AEA90FA007C9A46 /* FireStation.png */; };
 		945848502AEA922D007C9A46 /* PublicInstitutionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458484F2AEA922D007C9A46 /* PublicInstitutionModel.swift */; };
 		9478262629645FA100051115 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9478262529645FA100051115 /* GoogleService-Info.plist */; };
 		94782629296462E700051115 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 94782628296462E700051115 /* FirebaseAnalytics */; };
@@ -89,15 +91,17 @@
 		94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelmetSuccessPopupVC.swift; sourceTree = "<group>"; };
 		94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelmetPopupView.storyboard; sourceTree = "<group>"; };
 		94073C8A297C26BC006BE381 /* done_check_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done_check_icon.png; sourceTree = "<group>"; };
+		942AD3472AEFB97B006EED1D /* MessagesView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MessagesView.storyboard; sourceTree = "<group>"; };
+		942AD34B2AEFB9E7006EED1D /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		942F1A2B2986A2CD0026FB6D /* DisasterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisasterModel.swift; sourceTree = "<group>"; };
 		942F1A2D2986A73F0026FB6D /* mock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock.json; sourceTree = "<group>"; };
 		94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFirestore.swift; sourceTree = "<group>"; };
 		94386F0A2AEBC30300EBF1EC /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		94386F0C2AEBE50000EBF1EC /* Encodable+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Utils.swift"; sourceTree = "<group>"; };
-		945848462AEA90CF007C9A46 /* hospital.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hospital.png; sourceTree = "<group>"; };
-		945848472AEA90CF007C9A46 /* government.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = government.png; sourceTree = "<group>"; };
-		945848482AEA90CF007C9A46 /* policeOffice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = policeOffice.png; sourceTree = "<group>"; };
-		9458484D2AEA90FA007C9A46 /* fireStation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireStation.png; sourceTree = "<group>"; };
+		945848462AEA90CF007C9A46 /* Hospital.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Hospital.png; sourceTree = "<group>"; };
+		945848472AEA90CF007C9A46 /* Government.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Government.png; sourceTree = "<group>"; };
+		945848482AEA90CF007C9A46 /* PoliceOffice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PoliceOffice.png; sourceTree = "<group>"; };
+		9458484D2AEA90FA007C9A46 /* FireStation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FireStation.png; sourceTree = "<group>"; };
 		9458484F2AEA922D007C9A46 /* PublicInstitutionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicInstitutionModel.swift; sourceTree = "<group>"; };
 		9478262529645FA100051115 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9478262E29646A2E00051115 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
@@ -194,10 +198,10 @@
 		940C1B5E2982B6C8006D370D /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				9458484D2AEA90FA007C9A46 /* fireStation.png */,
-				945848472AEA90CF007C9A46 /* government.png */,
-				945848462AEA90CF007C9A46 /* hospital.png */,
-				945848482AEA90CF007C9A46 /* policeOffice.png */,
+				9458484D2AEA90FA007C9A46 /* FireStation.png */,
+				945848472AEA90CF007C9A46 /* Government.png */,
+				945848462AEA90CF007C9A46 /* Hospital.png */,
+				945848482AEA90CF007C9A46 /* PoliceOffice.png */,
 				94D84A45297AE5360037AC39 /* helmetBasic.png */,
 				94D84A47297AE7290037AC39 /* shelterBasic.png */,
 				94073C8A297C26BC006BE381 /* done_check_icon.png */,
@@ -306,6 +310,7 @@
 				94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */,
 				94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */,
 				94BDDF632AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift */,
+				942AD34B2AEFB9E7006EED1D /* MessagesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -322,6 +327,7 @@
 				94A37123296ECB6D00D4EF76 /* VideoDetailView.storyboard */,
 				94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */,
 				94BDDF652AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard */,
+				942AD3472AEFB97B006EED1D /* MessagesView.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -505,22 +511,23 @@
 				947863A629471A49003EC94F /* Assets.xcassets in Resources */,
 				94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */,
 				94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */,
-				9458484C2AEA90CF007C9A46 /* policeOffice.png in Resources */,
+				9458484C2AEA90CF007C9A46 /* PoliceOffice.png in Resources */,
 				947863A429471A48003EC94F /* Main.storyboard in Resources */,
 				94D84A46297AE5370037AC39 /* helmetBasic.png in Resources */,
 				9478262629645FA100051115 /* GoogleService-Info.plist in Resources */,
-				9458484A2AEA90CF007C9A46 /* hospital.png in Resources */,
-				9458484E2AEA90FA007C9A46 /* fireStation.png in Resources */,
+				9458484A2AEA90CF007C9A46 /* Hospital.png in Resources */,
+				9458484E2AEA90FA007C9A46 /* FireStation.png in Resources */,
 				94A37124296ECB6D00D4EF76 /* VideoDetailView.storyboard in Resources */,
 				94073C8B297C26BC006BE381 /* done_check_icon.png in Resources */,
 				94D84A48297AE7290037AC39 /* shelterBasic.png in Resources */,
 				94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */,
 				94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */,
+				942AD3482AEFB97B006EED1D /* MessagesView.storyboard in Resources */,
 				942F1A2E2986A73F0026FB6D /* mock.json in Resources */,
 				948C123C2AEA785300B1DFE6 /* PublicInstitutionTableViewCell.xib in Resources */,
 				94BDDF662AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard in Resources */,
 				94073C89297C25E0006BE381 /* HelmetPopupView.storyboard in Resources */,
-				9458484B2AEA90CF007C9A46 /* government.png in Resources */,
+				9458484B2AEA90CF007C9A46 /* Government.png in Resources */,
 				94B4BFA0297DB0D200B55117 /* RaspberryPiOfficialLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -565,6 +572,7 @@
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				94B0B989298543F6000BBE8D /* BorderColor.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
+				942AD34C2AEFB9E8006EED1D /* MessagesViewController.swift in Sources */,
 				949E8E052965B73A0015FD1C /* String+Utils.swift in Sources */,
 				94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */,
 				94386F0D2AEBE50000EBF1EC /* Encodable+Utils.swift in Sources */,

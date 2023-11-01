@@ -9,11 +9,6 @@ import Foundation
 
 // MARK: - 災害が起きることを想定して、hard codingで任意のデータをlocal notificationしたい
 struct PublicInstitution: Codable {
-    var type: PublicInstitutionType
+    var type: String?
     var name: String?
-    var image: String?
-}
-
-enum PublicInstitutionType: String, CaseIterable, Codable {
-    case Government, FireStation, PoliceOffice, Hospital
 }

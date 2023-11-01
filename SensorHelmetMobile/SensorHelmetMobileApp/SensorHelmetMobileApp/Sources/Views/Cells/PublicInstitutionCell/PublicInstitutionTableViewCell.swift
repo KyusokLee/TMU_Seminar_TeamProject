@@ -37,30 +37,23 @@ class PublicInstitutionTableViewCell: UITableViewCell {
 extension PublicInstitutionTableViewCell {
     // UILabelのconfigureを行う
     func configure(institutionType: String, institutionName: String) {
-        // MARK: - Typeごとに分ける作業を行う
-        // 公共機関のタイプは4つだけを設定
-        // 市役所などの官公庁, 消防署, 警察署, 病院
-        // Government, FireStation, PoliceOffice, Hospital
-        // ImageViewのconfigureを行う
-        for type in PublicInstitutionType.allCases {
-            let stringValue = type.rawValue
-            if institutionType == stringValue {
-                publicInstitutionTypeLabel.text = stringValue
-                // image 処理
-                let image = UIImage(named: stringValue.lowercased())?.withTintColor(.black, renderingMode: .alwaysOriginal)
-                let size = CGSize(width: 35, height: 35)
-                UIGraphicsBeginImageContext(size)
-                let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                publicInstitutionImageView.image = resizedImage
-            } else {
-                // 未登録の公共機関の場合
-                publicInstitutionTypeLabel.text = "公共機関"
-                let image = UIImage(systemName: "questionmark")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-                publicInstitutionImageView.image = image
-            }
+        let image = UIImage(named: institutionType)?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        
+        if let image = image {
+            // Firestoreに登録されてる公共機関の名前
+            let size = CGSize(width: 35, height: 35)
+            UIGraphicsBeginImageContext(size)
+            image.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            publicInstitutionImageView.image = resizedImage
+        } else {
+            // 登録されていない公共機関の場合
+            let defaultImage = UIImage(systemName: "questionmark")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+            publicInstitutionImageView.image = defaultImage
         }
         
         publicInstitutionNameLabel.text = institutionName
+        publicInstitutionTypeLabel.text = institutionType
     }
 }

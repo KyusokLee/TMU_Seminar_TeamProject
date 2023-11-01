@@ -190,6 +190,9 @@ class ViewController: UIViewController {
     var disasterOccurLocationName: String = ""
     let notificationCenter = UNUserNotificationCenter.current()
     
+    // Final Class を用いてinstance化したfirestoreのもの
+    let customFireStore = CustomFirestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -496,9 +499,9 @@ class ViewController: UIViewController {
                     self.shelterLongitude = Double(infoData.shelterLongitude!)!
                     self.shelterLatitude = Double(infoData.shelterLatitude!)!
                     
-                    // MARK: - ⚠️演習のためのもの
-                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
-                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
+//                    // MARK: - ⚠️演習のためのもの
+//                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
+//                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
                 
                     self.dateLabel.isHidden = false
                     self.timeLabel.isHidden = false
