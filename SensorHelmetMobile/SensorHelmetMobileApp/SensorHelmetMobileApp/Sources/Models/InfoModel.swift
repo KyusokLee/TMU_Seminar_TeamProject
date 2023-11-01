@@ -15,6 +15,7 @@ struct InfoModel: Codable {
     var longitude: String?
     var latitude: String?
     var ip: String?
+    var COGasDensity: String?
     var shelterLongitude: String?
     var shelterLatitude: String?
     var practiceLogitude: String?
@@ -28,6 +29,7 @@ struct InfoModel: Codable {
         case longitude
         case latitude
         case ip
+        case COGasDensity
         case shelterLongitude = "destinationLong"
         case shelterLatitude = "destinationLati"
         case practiceLogitude = "pracLongi"

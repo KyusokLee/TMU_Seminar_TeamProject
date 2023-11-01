@@ -168,6 +168,13 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var COGasDensityLabel: UILabel! {
+        didSet {
+            COGasDensityLabel.isHidden = true
+            COGasDensityLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
     var longitudeInfo: Double = 0.0
     var latitudeInfo: Double = 0.0
     var shelterLongitude: Double = 0.0
@@ -180,17 +187,23 @@ class ViewController: UIViewController {
     var disaster: DisasterModel?
     var disasterLongitude: Double = 0.0
     var disasterLatitude: Double = 0.0
+    var disasterOccurLocationName: String = ""
     let notificationCenter = UNUserNotificationCenter.current()
+    
+    // Final Class を用いてinstance化したfirestoreのもの
+    let customFireStore = CustomFirestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigationController()
+        addLocalPushObserver()
         self.bluetoothButton.isUserInteractionEnabled = false
         setImageView()
         // alarmの権限を得る
         requestNotificationAuthorization()
         disasterOccurred()
+        
     }
     
     func setImageView() {
@@ -220,12 +233,16 @@ class ViewController: UIViewController {
         print("Send Notification!")
 
         let content = UNMutableNotificationContent()
+        
         if let disasterType = disaster?.disasterType,
            let city = disaster?.addressInfo?.city,
            let localName = disaster?.addressInfo?.localName,
            let description = disaster?.description {
             content.title = "⚠️\(disasterType)が発生しました!"
             content.body = "\(city)、\(localName)の付近で\n\(description)しました。"
+            // MARK: - contentの内容を保存
+            // 災害が起きた場所によってLocalNameを変える必要があるので、この処理にした
+            content.userInfo = ["locationLocalName": "\(localName)"]
         }
         
         
@@ -237,7 +254,7 @@ class ViewController: UIViewController {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
 
         let request = UNNotificationRequest(
-            identifier: UUID().uuidString,
+            identifier: "DisasterOccurNotification",
             content: content,
             trigger: trigger
         )
@@ -247,6 +264,8 @@ class ViewController: UIViewController {
             if let error = error {
                 // handle errors
                 print(error.localizedDescription)
+            } else {
+                print("Push Alarm is successfully implemented")
             }
         }
 
@@ -260,6 +279,19 @@ class ViewController: UIViewController {
 //                }
 //            }
 //        }
+    }
+    
+    // MARK: - local　pushのobserverを登録して、Local pushがくるときに行う処理を可能にする
+    func addLocalPushObserver() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(handlePushNotification(_:)), name: Notification.Name("DisasterOccurNotification"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name("didReceivePushTouch"), object: nil, queue: nil) { notification in
+            
+            self.handlePushNotification(notification)
+        }
+    }
+    
+    func getDisasterOccurLocationData(placeName: String) {
+        print("Local通知で渡されたデータ: \(placeName)")
     }
     
     // MARK: - 任意のタイミングを設定して、任意の災害が起きたことを想定する
@@ -336,6 +368,13 @@ class ViewController: UIViewController {
         self.navigationItem.title = "Home View"
     }
     
+    func handlePushNotification(_ notification: Notification) {
+      if let userInfo = notification.userInfo,
+           let placeName = userInfo["locationLocalName"]! as? String {
+            print("Local通知で渡されたデータ: \(placeName)")
+        } else { return }
+    }
+    
     @IBAction func bluetoothButtonAction(_ sender: Any) {
         let serialVC = UIStoryboard.init(name: "SerialView", bundle: nil).instantiateViewController(withIdentifier: "SerialVC")
         self.present(serialVC, animated: true, completion: nil)
@@ -343,27 +382,31 @@ class ViewController: UIViewController {
     
     @IBAction func presentMapButtonAction(_ sender: Any) {
         print("apple map display!")
-        
-        let appleMapVC = UIStoryboard(name: "MapView", bundle:nil).instantiateViewController(withIdentifier: "MapVC") as! MapVC
+        guard let controller = UIStoryboard(name: "MapView", bundle: nil)
+            .instantiateViewController(
+                withIdentifier: "MapVC"
+            ) as? MapVC else {
+            fatalError("MapVC could not be found")
+        }
         
         // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
         if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
             //🔥元々のやつ
-            appleMapVC.destinationLocation.longitude = longitudeInfo
-            appleMapVC.destinationLocation.latitude = latitudeInfo
+            controller.destinationLocation.longitude = longitudeInfo
+            controller.destinationLocation.latitude = latitudeInfo
 //            // MARK: - ⚠️練習のためのもの
 //            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
 //            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
             
-            appleMapVC.shelterLocation.longitude = shelterLongitude
-            appleMapVC.shelterLocation.latitude = shelterLatitude
+            controller.shelterLocation.longitude = shelterLongitude
+            controller.shelterLocation.latitude = shelterLatitude
             
             // MARK: - 災害の情報があれば
             if let disaster = self.disaster {
                 print(disaster)
-                appleMapVC.disasterLocation.longitude = disasterLongitude
-                appleMapVC.disasterLocation.latitude = disasterLatitude
-                appleMapVC.disaster = disaster
+                controller.disasterLocation.longitude = disasterLongitude
+                controller.disasterLocation.latitude = disasterLatitude
+                controller.disaster = disaster
             }
         } else {
             // alert 表示する
@@ -372,12 +415,20 @@ class ViewController: UIViewController {
             
             return
         }
-        
-        appleMapVC.modalPresentationStyle = .currentContext
-        
-        self.present(appleMapVC, animated: true) {
-            print("complete to display GPS of Raspi")
+        // MARK: -  mapViewControllerをnavigationControllerとして下から上にpresentする方法を実装
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationCapturesStatusBarAppearance = true
+        // fullScreenで表示させる方法
+        navigationController.modalPresentationStyle = .fullScreen
+        // navigation Controllerをpushじゃないpresentで表示させる方法
+        self.present(navigationController, animated: true) {
+            print("Complete to display apple map")
         }
+//        appleMapVC.modalPresentationStyle = .currentContext
+//
+//        self.present(appleMapVC, animated: true) {
+//            print("complete to display GPS of Raspi")
+//        }
     }
     
     func presentAlertView() -> UIAlertController {
@@ -401,6 +452,7 @@ class ViewController: UIViewController {
             self.longitudeLabel.isHidden = true
             self.latitudeLabel.isHidden = true
             self.ipLabel.isHidden = true
+            self.COGasDensityLabel.isEnabled = true
             self.curDateLabel.text = "データ取得時間: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
             self.getData()
         }
@@ -440,15 +492,16 @@ class ViewController: UIViewController {
                     self.longitudeLabel.text = "経度: " + infoData.longitude!
                     self.latitudeLabel.text = "緯度: " + infoData.latitude!
                     self.ipLabel.text = "IPアドレス: " + infoData.ip!
+                    self.COGasDensityLabel.text = "COガス密度: " + infoData.COGasDensity!
                     // 以下の処理で渡す
                     self.longitudeInfo = Double(infoData.longitude!)!
                     self.latitudeInfo = Double(infoData.latitude!)!
                     self.shelterLongitude = Double(infoData.shelterLongitude!)!
                     self.shelterLatitude = Double(infoData.shelterLatitude!)!
                     
-                    // MARK: - ⚠️演習のためのもの
-                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
-                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
+//                    // MARK: - ⚠️演習のためのもの
+//                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
+//                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
                 
                     self.dateLabel.isHidden = false
                     self.timeLabel.isHidden = false
@@ -457,6 +510,7 @@ class ViewController: UIViewController {
                     self.longitudeLabel.isHidden = false
                     self.latitudeLabel.isHidden = false
                     self.ipLabel.isHidden = false
+                    self.COGasDensityLabel.isHidden = false
                     
                 } catch let error {
                     print("error: \(error)")
