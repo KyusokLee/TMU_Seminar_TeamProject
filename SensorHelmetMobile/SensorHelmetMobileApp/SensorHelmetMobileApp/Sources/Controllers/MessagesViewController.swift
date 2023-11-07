@@ -22,7 +22,7 @@ class MessagesViewController: UIViewController {
             fatalError("MessagesViewController could not be found.")
         }
         
-        
+        controller.fetchData(with: institutionName)
         controller.loadViewIfNeeded()
         
         return controller
@@ -38,7 +38,7 @@ class MessagesViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(false, animated: false)
-        setNavigationBar()
+         setNavigationBar()
     }
     
     
@@ -58,26 +58,25 @@ extension MessagesViewController {
         } else {
             self.navigationItem.title = "未登録の公共機関"
         }
+        // 簡単にback Buttonを Customizeする方法
+        // ただし、chevron.leftのimageの色を消すだけ
+        // また、"Back"というdefault文字を消す
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         appearance.titleTextAttributes = textAttributes
         
-        let backBarButton = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left")?.withTintColor(UIColor.black, renderingMode: .alwaysOriginal),
-            style: .plain,
-            target: self,
-            action: #selector(backBarButtonAction)
-        )
-        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = backBarButton
+        
         self.navigationController?.navigationBar.standardAppearance = appearance
+        self.navigationController?.navigationBar.compactAppearance = appearance
+        self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     func fetchData(with institutionName: String) {
-        
+        self.institutionName = institutionName
     }
     
-    @objc func backBarButtonAction() {
-        print("Tab Back Button")
-        self.navigationController?.popViewController(animated: true)
-    }
+    
 }

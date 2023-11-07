@@ -232,8 +232,6 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
         tableView.deselectRow(at: indexPath, animated: true)
         let publicInstitutionName = publicInstitutionList[indexPath.row].name ?? ""
         let controller = MessagesViewController.instantiate(with: publicInstitutionName)
-        controller.institutionName = publicInstitutionName
-//        controller.configure(with: occurPlaceEnglish ?? "")
         let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationCapturesStatusBarAppearance = true
         navigationController.modalPresentationStyle = .fullScreen
