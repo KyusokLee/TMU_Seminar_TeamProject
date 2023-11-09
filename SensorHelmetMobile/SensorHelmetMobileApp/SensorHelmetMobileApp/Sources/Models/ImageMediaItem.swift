@@ -9,8 +9,6 @@ import UIKit
 import MessageKit
 
 
-// チャットの内容にimageが入るかも知れないので、imageファイルと関連したModel定義
-// MediaItemは　MessageKit内に存在するprotocolであり、imageを表すために必要な必須情報を定義
 struct ImageMediaItem: MediaItem {
     var url: URL?
     var image: UIImage?

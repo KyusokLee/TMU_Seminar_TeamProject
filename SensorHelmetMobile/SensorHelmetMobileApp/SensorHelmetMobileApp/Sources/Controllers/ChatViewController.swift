@@ -8,6 +8,7 @@
 import UIKit
 import MessageKit
 import InputBarAccessoryView
+import FirebaseFirestore
 
 // Life Cycle and Variables
 // MessagesViewControllerは, MessageKitのUIを表示するVC

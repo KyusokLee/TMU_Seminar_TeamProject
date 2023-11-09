@@ -5,6 +5,8 @@
 //  Created by Kyus'lee on 2023/10/27.
 //
 
+import Foundation
+import FirebaseStorage
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
@@ -12,6 +14,7 @@ final class CustomFirestore {
     
     // リアルタイムな変更を反映させるためのListener
     private var documentListener: ListenerRegistration?
+    private let storage = Storage.storage().reference()
     
     // MARK: - 公共リストを持ってくる
     // MARK: - ここがチャットルームに入るまえのChannelを指す
@@ -78,6 +81,7 @@ final class CustomFirestore {
         // MARK: - threadの後のdocumentにuuidが入る
         // 順番的に表す
         removeListener()
+        // channel(list)をlistenさせる
         let collectionListener = Firestore.firestore().collection(collectionPath)
         
         documentListener = collectionListener

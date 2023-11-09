@@ -6,13 +6,42 @@
 //
 
 import Foundation
+import MessageKit
 // MARK: - FireStoreを通してやりとりするメッセージのModelを定義
 // iPアドレスをhelmet numberの代わりにするのも考え中
 
 // MARK: - 方法: ラズパイのipアドレスをfirestoreに先に保存してNumbering作業を行うとスムーズになる可能性
 // helmet Numberに関してはまだ確実な実装方法を探り中
 // helmet NumberもStringとして定義することにした -> enum caseのrawValueを一つのタイプにした方が処理が楽なため
-struct Message: Codable {
+struct Message: MessageType {
+    let id: String?
+    var messageId: String {
+        return id ?? UUID().uuidString
+    }
+    
+    let content: String
+    let sentDate: Date
+    let sender: SenderType
+    var kind: MessageKind {
+        if let image = image {
+            let mediaItem = MediaItemImage(image: image)
+        } else {
+            return .text(content)
+        }
+    }
+    
+    var image: UIImage?
+    var downloadURL: URL?
+    
+    
+    
+    
+    
+    
+    
+}
+
+extension Message: Codable {
     var helmetNumber: String?
     var id: String?
     var content: String?

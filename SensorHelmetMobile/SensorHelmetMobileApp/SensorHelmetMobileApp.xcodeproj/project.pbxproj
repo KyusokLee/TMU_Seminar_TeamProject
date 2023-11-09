@@ -57,6 +57,7 @@
 		94B4BFA0297DB0D200B55117 /* RaspberryPiOfficialLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */; };
 		94BDDF642AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BDDF632AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift */; };
 		94BDDF662AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BDDF652AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard */; };
+		94CE5A2F2AFCEB1F00211902 /* MediaItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CE5A2E2AFCEB1F00211902 /* MediaItemImage.swift */; };
 		94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D84A42297AD8130037AC39 /* LoadingView.swift */; };
 		94D84A46297AE5370037AC39 /* helmetBasic.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D84A45297AE5360037AC39 /* helmetBasic.png */; };
 		94D84A48297AE7290037AC39 /* shelterBasic.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D84A47297AE7290037AC39 /* shelterBasic.png */; };
@@ -68,7 +69,6 @@
 		94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */; };
 		94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */; };
 		94FAA58C296E67C3007BD387 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAA58B296E67C3007BD387 /* UIColor+Utils.swift */; };
-		94FFEAA22AFA39E400DBF046 /* ImageMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FFEAA12AFA39E400DBF046 /* ImageMediaItem.swift */; };
 		94FFEAA42AFA42D400DBF046 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FFEAA32AFA42D400DBF046 /* Sender.swift */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +139,7 @@
 		94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RaspberryPiOfficialLogo.png; sourceTree = "<group>"; };
 		94BDDF632AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPublicInstitutionListViewController.swift; sourceTree = "<group>"; };
 		94BDDF652AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NearbyPublicInstitutionListView.storyboard; sourceTree = "<group>"; };
+		94CE5A2E2AFCEB1F00211902 /* MediaItemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemImage.swift; sourceTree = "<group>"; };
 		94D84A42297AD8130037AC39 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		94D84A45297AE5360037AC39 /* helmetBasic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helmetBasic.png; sourceTree = "<group>"; };
 		94D84A47297AE7290037AC39 /* shelterBasic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelterBasic.png; sourceTree = "<group>"; };
@@ -150,7 +151,6 @@
 		94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTableViewCell.swift; sourceTree = "<group>"; };
 		94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanTableViewCell.xib; sourceTree = "<group>"; };
 		94FAA58B296E67C3007BD387 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
-		94FFEAA12AFA39E400DBF046 /* ImageMediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMediaItem.swift; sourceTree = "<group>"; };
 		94FFEAA32AFA42D400DBF046 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -279,8 +279,8 @@
 				9458484F2AEA922D007C9A46 /* PublicInstitutionModel.swift */,
 				94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */,
 				94386F0A2AEBC30300EBF1EC /* Message.swift */,
-				94FFEAA12AFA39E400DBF046 /* ImageMediaItem.swift */,
 				94FFEAA32AFA42D400DBF046 /* Sender.swift */,
+				94CE5A2E2AFCEB1F00211902 /* MediaItemImage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -560,6 +560,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94386F062AEBB33C00EBF1EC /* CustomFirestore.swift in Sources */,
+				94CE5A2F2AFCEB1F00211902 /* MediaItemImage.swift in Sources */,
 				947826312964744100051115 /* TCPNetwork.swift in Sources */,
 				949E8E072965B9300015FD1C /* MapVC.swift in Sources */,
 				94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */,
@@ -584,7 +585,6 @@
 				94386F0D2AEBE50000EBF1EC /* Encodable+Utils.swift in Sources */,
 				94386F0B2AEBC30300EBF1EC /* Message.swift in Sources */,
 				949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */,
-				94FFEAA22AFA39E400DBF046 /* ImageMediaItem.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 				94FAA58C296E67C3007BD387 /* UIColor+Utils.swift in Sources */,
 				94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */,
