@@ -53,7 +53,7 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        printList()
+        // reloadしないとCellが反映されない
         self.publicInstitutionListTableView.reloadData()
     }
 }
@@ -102,13 +102,6 @@ extension NearbyPublicInstitutionListViewController {
         // MARK: - でも、ここでは、反映されていない
         print("클로저 외부: \n", self.publicInstitutionList)
         print("클로저 외부에서 PublicInstituion 요소 수: ", self.publicInstitutionList.count)
-    }
-    
-    // MARK: - 処理確認のためのprint文間数
-    func printList() {
-        // MARK: - でも、ここでは、反映されていない
-        print("프린트 함수: \n", self.publicInstitutionList)
-        print("프린트 함수에서 PublicInstituion 요소 수: ", self.publicInstitutionList.count)
     }
     
 //    // MARK: - 公共機関のリストを持ってきて、反映させる
@@ -231,7 +224,8 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let publicInstitutionName = publicInstitutionList[indexPath.row].name ?? ""
-        let controller = MessagesViewController.instantiate(with: publicInstitutionName)
+        let controller = ChatViewController.instantiate(with: publicInstitutionName)
+        // MARK: - publicInstitutionNameがchannelを指す
         let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationCapturesStatusBarAppearance = true
         navigationController.modalPresentationStyle = .fullScreen

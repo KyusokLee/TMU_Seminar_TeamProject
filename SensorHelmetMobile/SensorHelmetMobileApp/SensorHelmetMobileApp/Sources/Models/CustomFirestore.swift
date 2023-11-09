@@ -14,6 +14,7 @@ final class CustomFirestore {
     private var documentListener: ListenerRegistration?
     
     // MARK: - 公共リストを持ってくる
+    // MARK: - ここがチャットルームに入るまえのChannelを指す
     func getInstitutionList(place: String, completion: @escaping (Result<[PublicInstitution], Error>) -> Void) {
         // Listという名前のCollectionのリストを全部表示する
         let collectionPath = "PublicInstitutionList/Near\(place)/List"
@@ -71,9 +72,11 @@ final class CustomFirestore {
         }
     }
     
-    // メッセージのデータを持ってくる
+    // メッセージのデータをリアルタイムに持ってくる
     func subscribe(_ place: String, _ institutionType: String, _ institutionName: String, id: String, completion: @escaping (Result<[Message], Error>) -> Void) {
         let collectionPath = "PublicInstitutionList/Near\(place)/List/\(institutionType)/Messages/\(id)/thread"
+        // MARK: - threadの後のdocumentにuuidが入る
+        // 順番的に表す
         removeListener()
         let collectionListener = Firestore.firestore().collection(collectionPath)
         
@@ -102,6 +105,7 @@ final class CustomFirestore {
             }
     }
     
+    // ListenerのSubscribeを解除するメソッド
     func removeListener() {
         documentListener?.remove()
     }

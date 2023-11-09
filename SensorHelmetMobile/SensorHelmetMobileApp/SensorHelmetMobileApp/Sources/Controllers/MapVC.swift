@@ -83,20 +83,6 @@ final class MapVC: UIViewController {
         return manager
     }()
     
-//    let dismissButton: UIButton = {
-//        let button = UIButton()
-//        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
-//        let image = UIImage(
-//            systemName: "multiply",
-//            withConfiguration: imageConfig
-//        )?.withRenderingMode(.alwaysOriginal)
-//        button.setImage(image, for: .normal)
-//        button.tintColor = .systemGray3
-//        button.addTarget(nil, action: #selector(dismissButtonAction), for: .touchUpInside)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
-    
     // Segment Controllerを実装(徒歩, 車, 電車等の移動)
     let transportationSegmentedController: UISegmentedControl = {
         let walkImage = UIImage(systemName: "figure.walk")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)

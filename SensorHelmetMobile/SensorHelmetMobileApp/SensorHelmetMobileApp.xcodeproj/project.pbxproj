@@ -11,7 +11,7 @@
 		94073C89297C25E0006BE381 /* HelmetPopupView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */; };
 		94073C8B297C26BC006BE381 /* done_check_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94073C8A297C26BC006BE381 /* done_check_icon.png */; };
 		942AD3482AEFB97B006EED1D /* MessagesView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 942AD3472AEFB97B006EED1D /* MessagesView.storyboard */; };
-		942AD34C2AEFB9E8006EED1D /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942AD34B2AEFB9E7006EED1D /* MessagesViewController.swift */; };
+		942AD34C2AEFB9E8006EED1D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942AD34B2AEFB9E7006EED1D /* ChatViewController.swift */; };
 		942F1A2C2986A2CD0026FB6D /* DisasterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942F1A2B2986A2CD0026FB6D /* DisasterModel.swift */; };
 		942F1A2E2986A73F0026FB6D /* mock.json in Resources */ = {isa = PBXBuildFile; fileRef = 942F1A2D2986A73F0026FB6D /* mock.json */; };
 		94386F062AEBB33C00EBF1EC /* CustomFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */; };
@@ -68,6 +68,8 @@
 		94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */; };
 		94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */; };
 		94FAA58C296E67C3007BD387 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAA58B296E67C3007BD387 /* UIColor+Utils.swift */; };
+		94FFEAA22AFA39E400DBF046 /* ImageMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FFEAA12AFA39E400DBF046 /* ImageMediaItem.swift */; };
+		94FFEAA42AFA42D400DBF046 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FFEAA32AFA42D400DBF046 /* Sender.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,7 +94,7 @@
 		94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelmetPopupView.storyboard; sourceTree = "<group>"; };
 		94073C8A297C26BC006BE381 /* done_check_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done_check_icon.png; sourceTree = "<group>"; };
 		942AD3472AEFB97B006EED1D /* MessagesView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MessagesView.storyboard; sourceTree = "<group>"; };
-		942AD34B2AEFB9E7006EED1D /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		942AD34B2AEFB9E7006EED1D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		942F1A2B2986A2CD0026FB6D /* DisasterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisasterModel.swift; sourceTree = "<group>"; };
 		942F1A2D2986A73F0026FB6D /* mock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock.json; sourceTree = "<group>"; };
 		94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFirestore.swift; sourceTree = "<group>"; };
@@ -148,6 +150,8 @@
 		94DD511E294A01C500DB0287 /* ScanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTableViewCell.swift; sourceTree = "<group>"; };
 		94DD511F294A01C500DB0287 /* ScanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanTableViewCell.xib; sourceTree = "<group>"; };
 		94FAA58B296E67C3007BD387 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
+		94FFEAA12AFA39E400DBF046 /* ImageMediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMediaItem.swift; sourceTree = "<group>"; };
+		94FFEAA32AFA42D400DBF046 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +279,8 @@
 				9458484F2AEA922D007C9A46 /* PublicInstitutionModel.swift */,
 				94386F052AEBB33C00EBF1EC /* CustomFirestore.swift */,
 				94386F0A2AEBC30300EBF1EC /* Message.swift */,
+				94FFEAA12AFA39E400DBF046 /* ImageMediaItem.swift */,
+				94FFEAA32AFA42D400DBF046 /* Sender.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -310,7 +316,7 @@
 				94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */,
 				94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */,
 				94BDDF632AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift */,
-				942AD34B2AEFB9E7006EED1D /* MessagesViewController.swift */,
+				942AD34B2AEFB9E7006EED1D /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -572,16 +578,18 @@
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				94B0B989298543F6000BBE8D /* BorderColor.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
-				942AD34C2AEFB9E8006EED1D /* MessagesViewController.swift in Sources */,
+				942AD34C2AEFB9E8006EED1D /* ChatViewController.swift in Sources */,
 				949E8E052965B73A0015FD1C /* String+Utils.swift in Sources */,
 				94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */,
 				94386F0D2AEBE50000EBF1EC /* Encodable+Utils.swift in Sources */,
 				94386F0B2AEBC30300EBF1EC /* Message.swift in Sources */,
 				949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */,
+				94FFEAA22AFA39E400DBF046 /* ImageMediaItem.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 				94FAA58C296E67C3007BD387 /* UIColor+Utils.swift in Sources */,
 				94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */,
 				94B4BF9E297DACDF00B55117 /* CustomPaddingLabel.swift in Sources */,
+				94FFEAA42AFA42D400DBF046 /* Sender.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
