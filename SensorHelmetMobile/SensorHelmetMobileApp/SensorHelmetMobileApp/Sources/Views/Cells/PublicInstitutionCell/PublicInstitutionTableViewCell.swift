@@ -11,9 +11,18 @@ class PublicInstitutionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var publicInstitutionImageView: UIImageView!
     
-    @IBOutlet weak var publicInstitutionNameLabel: UILabel!
+    @IBOutlet weak var publicInstitutionNameLabel: UILabel! {
+        didSet {
+            publicInstitutionNameLabel.font = .systemFont(ofSize: 17, weight: .semibold)
+        }
+    }
     
-    @IBOutlet weak var publicInstitutionTypeLabel: UILabel!
+    @IBOutlet weak var publicInstitutionTypeLabel: UILabel! {
+        didSet {
+            publicInstitutionTypeLabel.textColor = .systemGray.withAlphaComponent(0.85)
+            publicInstitutionTypeLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        }
+    }
     
     @IBOutlet weak var chevronImageView: UIImageView! {
         didSet {

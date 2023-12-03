@@ -83,20 +83,6 @@ final class MapVC: UIViewController {
         return manager
     }()
     
-//    let dismissButton: UIButton = {
-//        let button = UIButton()
-//        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
-//        let image = UIImage(
-//            systemName: "multiply",
-//            withConfiguration: imageConfig
-//        )?.withRenderingMode(.alwaysOriginal)
-//        button.setImage(image, for: .normal)
-//        button.tintColor = .systemGray3
-//        button.addTarget(nil, action: #selector(dismissButtonAction), for: .touchUpInside)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
-    
     // Segment Controllerを実装(徒歩, 車, 電車等の移動)
     let transportationSegmentedController: UISegmentedControl = {
         let walkImage = UIImage(systemName: "figure.walk")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
@@ -105,9 +91,6 @@ final class MapVC: UIViewController {
 //        let publicTransImage = UIImage(systemName: "tram.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
         let items: [UIImage] = [walkImage!, carImage!]
         let segmentedController = UISegmentedControl(items: items)
-//        segmentedController.setImage(walkImage, forSegmentAt: 0)
-//        segmentedController.setImage(carImage, forSegmentAt: 1)
-//        segmentedController.setImage(publicTransImage, forSegmentAt: 2)
         // MARK: - それぞれのImageをTapしたときのActionはSegmentedControllerのAddTargetで行う
         segmentedController.addTarget(nil, action: #selector(didChangeValue(segment:)), for: .valueChanged)
         // default Indexの設定
@@ -722,13 +705,6 @@ private extension MapVC {
         self.locationButton.rightAnchor.constraint(equalTo: self.mapView.rightAnchor, constant: -6).isActive = true
     }
     
-//    func setDismissBtnConstraints() {
-//        self.dismissButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-//        self.dismissButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-//        self.dismissButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
-//        self.dismissButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-//    }
-    
     // 経路に戻るボタンをMapViewの中に入れる予定
     func setShowRouteBtnConstraints() {
         self.showRouteButton.bottomAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: -15).isActive = true
@@ -742,12 +718,6 @@ private extension MapVC {
         self.transportationSegmentedController.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
         self.transportationSegmentedController.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
     }
-
-    // MARK: - 経路記録のためのボタンを実装したかった
-//    func setCancelNavigateBtnConstraints() {
-//        self.cancelNavitageRouteButton.bottomAnchor.constraint(equalTo: self.addressLabel.topAnchor, constant: -10).isActive = true
-//        self.cancelNavitageRouteButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -80).isActive = true
-//    }
     
     // MARK: - addressLabelのConstraintsをSegmentedControllerに合わせる予定
     func setAddressLabelConstraints() {
@@ -823,14 +793,6 @@ private extension MapVC {
     }
     
     @objc func showRouteButtonAction() {
-//        didTapNavigateButton = true
-//        // navigate buttonを押すと、案内中止Buttonを活性化し、このボタンは、非活性化にする
-//        navigateRouteButton.isEnabled = false
-//        navigateRouteButton.configuration?.showsActivityIndicator = true
-        //cancelNavitageRouteButton.isEnabled = true
-//        showRouteButton.configuration?.title = "経路確認中"
-//        cancelNavitageRouteButton.isEnabled = true
-        
         if didGetHelmet {
             targetLocationCoordinate = shelterLocation
         } else {
@@ -839,26 +801,6 @@ private extension MapVC {
         
         setCenterRegion(center: currentLocation, target: targetLocationCoordinate)
     }
-    
-//    // リアルタイムな経路探索を中止する
-//    @objc func cancelNavigateRouteButtonAction() {
-//        didTapCancelNavigateButton = true
-//        didTapNavigateButton = false
-//        cancelNavitageRouteButton.isEnabled = false
-//        navigateRouteButton.configuration?.showsActivityIndicator = false
-//        navigateRouteButton.configuration?.title = "経路案内"
-//        navigateRouteButton.isEnabled = true
-//
-//        var targetDestination: CLLocationCoordinate2D?
-//        // 経路表示（overlay calculate）を実施
-//        if !didGetHelmet {
-//            targetDestination = destinationLocation
-//        } else {
-//            targetDestination = shelterLocation
-//        }
-//
-//        calculateDirection(curLocate: currentLocation, targetLocate: targetDestination!)
-//    }
     
     // MARK: - Segmented ControllerのimageをAction化する
     @objc func didChangeValue(segment: UISegmentedControl) {

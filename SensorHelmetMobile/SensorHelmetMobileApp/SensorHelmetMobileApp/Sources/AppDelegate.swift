@@ -63,9 +63,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let identifier = notification.identifier
         // userInfo
         let userInfo = notification.content.userInfo
-        // window
-        let window = UIApplication.shared.windows.first
+        // windowのdeprecatedに合わせるためのコード
         let application = UIApplication.shared
+        let scenes = application.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
         
         //　Applicationのstateによって処理を変える
         switch application.applicationState {
