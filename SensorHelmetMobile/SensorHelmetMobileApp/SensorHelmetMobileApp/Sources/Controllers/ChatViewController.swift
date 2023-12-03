@@ -339,19 +339,22 @@ extension ChatViewController: MessagesDataSource {
 
     // messageBottomLabelの属性テキスト
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        // Date型
+        // メッセージを送信した日付と時刻
+        let messageDate = messages[indexPath.section].sentDate
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = DateFormatter.dateFormat(
-            fromTemplate: "HH:mm",
+            fromTemplate: "yyyy年MM月dd日, HH:mm",
             options: 0,
             locale: Locale(identifier: "ja_JP")
         )
         
         // MARK: - FireStoreに格納したTimestamp型の日付データを表示したい様式に変換する作業
         return NSAttributedString(
-            string: dateFormatter.string(from: messages[indexPath.section].sentDate),
+            string: dateFormatter.string(from: messageDate),
             attributes: [
                 .font: UIFont.systemFont(ofSize: 12.0),
-                .foregroundColor: UIColor.secondaryLabel
+                .foregroundColor: UIColor.black
             ]
         )
     }
@@ -361,6 +364,10 @@ extension ChatViewController: MessagesDataSource {
 
 // Message Layout
 extension ChatViewController: MessagesLayoutDelegate {
+    func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize.zero
+    }
+    
     // 下の余白
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: 0, height: 8)
@@ -368,6 +375,10 @@ extension ChatViewController: MessagesLayoutDelegate {
         
     // 吹き出しの上にある名前が出るところのheight
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 20
+    }
+    
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 20
     }
 }

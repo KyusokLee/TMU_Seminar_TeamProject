@@ -301,6 +301,7 @@ final class MapVC: UIViewController {
         mapView.setUserTrackingMode(.follow, animated: true)
         mapView.delegate = self
         mapView.translatesAutoresizingMaskIntoConstraints = false
+        // addMapViewTapGesture()
         view.addSubview(mapView)
         // mapViewの上にButtonを表示させる方法 (AppleのHIGに望ましくない)
         // view.bringSubviewToFront(dismissButton)
@@ -691,6 +692,34 @@ private extension MapVC {
         return requestLocationServiceAlert
     }
     
+    func showHelmetUserInfoSheet() {
+        // MARK: - sheetPresantationControllerに載せたいVCをここで指定
+        let controller = UIViewController()
+        controller.view.backgroundColor = UIColor.white
+        
+        // 表示される高さをカストマイズする方法
+        if let sheet = controller.sheetPresentationController {
+            sheet.detents = [
+                .custom(resolver: { context in
+                    0.3 * context.maximumDetentValue
+                }),
+                .medium(),
+                .large()
+            ]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersGrabberVisible = true
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.preferredCornerRadius = 30.0
+        }
+        
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+//    func addMapViewTapGesture() {
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMapView(_ :)))
+//        mapView.addGestureRecognizer(tapGesture)
+//    }
+    
     func setMapViewConstraints() {
         // safeArealayoutのtopAnchorは、navigationBarの領域を除外した一番の上のtopAnchorを指す
         mapView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive =  true
@@ -779,8 +808,21 @@ private extension MapVC {
              let hour = Int(time/3600)
              let minutes = (time - Double(hour * 3600))/60
              return String(hour) + "時間" + String(format: "%.0f", minutes)  + "分"
-         }
-     }
+        }
+    }
+    
+//    @objc func didTapMapView(_ gesture: UITapGestureRecognizer) {
+//        // MARK: - 特定のViewをgestureから除外する方法
+//        let touchPoint = gesture.location(in: mapView)
+//        
+//        // LocationButtonとshowRouteButton以外の部分をtapした時、実行
+//        if !locationButton.frame.contains(touchPoint) && !showRouteButton.frame.contains(touchPoint) {
+//            print("Tap mapview")
+//        }
+//        
+////        let locationOnMap = mapView.convert(locationInView, toCoordinateFrom: mapView)
+////        print("タップされた座標: \(locationOnMap.latitude), \(locationOnMap.longitude)")
+//    }
     
     @objc func dismissButtonAction() {
         self.dismiss(animated: true)
@@ -996,7 +1038,6 @@ extension MapVC: MKMapViewDelegate {
         }
         
         let routeRenderer = MKPolylineRenderer(polyline: routePolyline)
-        
         if annotationViewPinNumber == 0 {
             // ヘルメット場所
             routeRenderer.strokeColor = UIColor(red:0.35, green:0.35, blue:1.30, alpha:1.0)
@@ -1011,14 +1052,23 @@ extension MapVC: MKMapViewDelegate {
         
         return routeRenderer
     }
-    
         
     // annotaionViewをtapしたとき、呼び出されるメソッド
+    // MARK: - ここで、sheetPresentationControllerをpresentするべき
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // CLLocationとCLLocationCoodinate2Dは、異なるもの
         if let coordinate = view.annotation?.coordinate {
-            print("Tap Annotation")
+            print("Tapped Annotation!")
+            // MARK: - Helmet ユーザの情報を表示するSheetPresentationControllerを表示
+            self.showHelmetUserInfoSheet()
             print(coordinate)
+            
+//            // MARK: - AnnotationViewの右に表示される吹き出しがView上で表示されている場合
+//            if !(view.detailCalloutAccessoryView?.isHidden ?? <#default value#>) {
+//                
+//            } else {
+//                // AnnotationViewの吹き出しが表示されていない場合
+//            }
         }
     }
     
