@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import Firebase
 
 // Life Cycle and Variables
 final class NearbyPublicInstitutionListViewController: UIViewController {
@@ -16,6 +17,14 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
     var occurPlaceLocalNameEng: String?
     var publicInstitutionList: [PublicInstitution] = []
     let customFirestore = CustomFirestore()
+    
+    // MARK: - ユーザである場合の分岐はまだ実装してない
+    // helmetユーザであるなら、helmet1かhelmet2を異なって行う
+    // helmetユーザでない場合,nilとなり、公共機関であることを示す
+    // MARK: - ChatRoomId -> helmet1とのチャットか、helmet2とのチャットかを分岐する
+    var chatRoomId: String?
+    var helmetNumber: String?
+    // タップしたヘルメットユーザの変数
     
     // 画面遷移メソッド
     static func instantiate(with placeName: String) -> NearbyPublicInstitutionListViewController {
@@ -34,13 +43,11 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerCell()
         
-        publicInstitutionListTableView.delegate = self
-        publicInstitutionListTableView.dataSource = self
-
-        // Do any additional setup after loading the view.
-        closurePrac()
+        setupController()
+        
+        // リアルタイムにデータベースの更新を行うため、Listenerを設定
+        setupPublicInstitutionListListener()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +62,10 @@ final class NearbyPublicInstitutionListViewController: UIViewController {
         super.viewDidAppear(animated)
         // reloadしないとCellが反映されない
         self.publicInstitutionListTableView.reloadData()
+    }
+    
+    deinit {
+        customFirestore.removeListener()
     }
 }
 
@@ -85,113 +96,125 @@ extension NearbyPublicInstitutionListViewController {
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
-    // MARK: - practice
-    func closurePrac() {
-        // 正常に持ってきた
-        fetchData(with: occurPlaceLocalNameEng ?? "") { [weak self] list in
-            self?.publicInstitutionList = list
-            print("클로저 내부 : \n", self?.publicInstitutionList)
-            print("클로저 내부에서 PublicInstituion 요소 수: ", self?.publicInstitutionList.count)
-            
-            // MARK: - ここではちゃんと反映されている
-            
-        }
-        
-        // MARK: - うまく処理されていなかった理由: Closureは外部が処理されたあとに、内部が処理されるので、print出力ではうまく表示されていないかもしれないが、実際は反映されているかもしれない
-        
-        // MARK: - でも、ここでは、反映されていない
-        print("클로저 외부: \n", self.publicInstitutionList)
-        print("클로저 외부에서 PublicInstituion 요소 수: ", self.publicInstitutionList.count)
-    }
+//    // MARK: - Listenerを設定
+//    func setupPublicInstitutionListListener() {
+//        // 正常に持ってきた
+//        fetchData(with: occurPlaceLocalNameEng ?? "") { [weak self] list in
+//            self?.publicInstitutionList = list
+//            print("Closure 内部 : \n", self?.publicInstitutionList)
+//            print("Closure内部のPublicInstituionの数: ", self?.publicInstitutionList.count)
+//
+//        }
+//
+//        // MARK: - うまく処理されていなかった理由: Closureは外部が処理されたあとに、内部が処理されるので、print出力ではうまく表示されていないかもしれないが、実際は反映されているかもしれない
+//
+//        // MARK: - でも、ここでは、反映されていない
+//        print("Closure 外部: \n", self.publicInstitutionList)
+//        print("Closure外部のPublicInstituionの数: ", self.publicInstitutionList.count)
+//    }
     
 //    // MARK: - 公共機関のリストを持ってきて、反映させる
-    func fetchData(with placeName: String, completion: @escaping ([PublicInstitution]) -> Void) {
-        var list: [PublicInstitution] = []
+    func setupPublicInstitutionListListener() {
+//        var list: [PublicInstitution] = []
         
-        customFirestore.getInstitutionList(place: placeName) { [weak self] result in
-            
+        // MARK: - ここで公共機関リストを取得
+        customFirestore.getInstitutionList(place: occurPlaceLocalNameEng ?? "") { [weak self] result in
             switch result {
             case .success(let institutions):
-                
-                for institution in institutions {
-                    print("name: ", institution.name ?? "")
-                    print("type: ", institution.type ?? "")
-                    list.append(institution)
-                }
-                print("Temp Listの数: ", list.count )
-                completion(list)
+                // MARK: - 配列を引き渡す
+                self?.updateCell(with: institutions)
+//                for institution in institutions {
+//                    print("name: ", institution.name ?? "")
+//                    print("type: ", institution.type ?? "")
+//                    list.append(institution)
+//                }
+//                print("Temp Listの数: ", list.count )
+//                completion(list)
             case .failure(let error):
                 print(error)
-                completion([])
             }
         }
     }
     
-    // MARK: - 場所の名前を特定し、dataをfirestoreから持ってくるように
-    func configure(with placeName: String) {
-        occurPlaceLocalNameEng = placeName
+    // FireStoreのDocument(PublicInstitutionList)に変更があるとき、呼び出すメソッド
+    // MARK: -　最初のsnapshotである場合、.addedで指定したデータベースの全てのDocumentsが表示される
+    func updateCell(with data: [(PublicInstitution, DocumentChangeType)]) {
+        // 一つずつchannelのデータをaddedする
+        data.forEach { (institutionChannel, documentChangeType) in
+            switch documentChangeType {
+            case .added:
+                self.addPublicInstitutionListInTable(institutionChannel)
+            case .modified:
+                self.updatePublicInstitutionListInTable(institutionChannel)
+            case .removed:
+                self.removePublicInstitutionListInTable(institutionChannel)
+            }
+        }
+        
     }
     
-    // MARK: - 災害が起きた場所のアルファベットからデータを認識させて、firestoreからその場所のデータと一致するdocumentを読み込むようにしたい
-//    private func getNearbyInstitutionList() {
-//        // firestoreからデータを読み込む
-//        Firestore.firestore().collection("PublicInstitutionList").getDocuments { snapshot, error in
-//            if let error = error {
-//                print("Debug: \(error.localizedDescription)")
-//                return
-//            }
-//
-//            guard let documents = snapshot?.documents else { return }
-//
-//            var infoDatas: [InfoModel] = []
-//            let decoder = JSONDecoder()
-//
-//            // Raspiで測定して、Firestoreに格納した温度のデータを読み込む
-//            for document in documents {
-//                do {
-//                    let data = document.data()
-//                    let jsonData = try JSONSerialization.data(withJSONObject: data)
-//                    let infoData = try decoder.decode(InfoModel.self, from: jsonData)
-//                    print(infoData)
-//                    infoDatas.append(infoData)
-//                    self.dateLabel.text = "日付: " + infoData.date!
-//                    self.timeLabel.text = "時間: " + infoData.time!
-//                    self.tempLabel.text = "気温: " + infoData.temp!
-//                    self.humidLabel.text = "湿度: " + infoData.humid!
-//                    self.longitudeLabel.text = "経度: " + infoData.longitude!
-//                    self.latitudeLabel.text = "緯度: " + infoData.latitude!
-//                    self.ipLabel.text = "IPアドレス: " + infoData.ip!
-//                    self.COGasDensityLabel.text = "COガス密度: " + infoData.COGasDensity!
-//                    // 以下の処理で渡す
-//                    self.longitudeInfo = Double(infoData.longitude!)!
-//                    self.latitudeInfo = Double(infoData.latitude!)!
-//                    self.shelterLongitude = Double(infoData.shelterLongitude!)!
-//                    self.shelterLatitude = Double(infoData.shelterLatitude!)!
-//
-//                    // MARK: - ⚠️演習のためのもの
-//                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
-//                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
-//
-//                    self.dateLabel.isHidden = false
-//                    self.timeLabel.isHidden = false
-//                    self.tempLabel.isHidden = false
-//                    self.humidLabel.isHidden = false
-//                    self.longitudeLabel.isHidden = false
-//                    self.latitudeLabel.isHidden = false
-//                    self.ipLabel.isHidden = false
-//                    self.COGasDensityLabel.isHidden = false
-//
-//                } catch let error {
-//                    print("error: \(error)")
-//                }
-//            }
-//
-//            self.curDateLabel.isHidden = false
-//        }
-//    }
+    // MARK: - Added Cell and Document Data setting firstly
+    // Cellの追加などは行うつもりではないので、まずは最初にデータを持ってくること機能だけを実装
+    // MARK: - ユーザ間の場合はそのチャットルームを生成する必要があると思う
+    func addPublicInstitutionListInTable(_ institution: PublicInstitution) {
+        if !publicInstitutionList.contains(institution) {
+            // 配列にそのデータがない場合
+            publicInstitutionList.append(institution)
+        } else {
+            // 配列にそのデータがある場合
+        }
+        
+        guard let index = publicInstitutionList.firstIndex(of: institution) else { return }
+        publicInstitutionListTableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+    }
     
+    // MARK: - Update Cell
+    // メッセージを受信したとき、メッセージを送信したときに該当Cellを一番上に持っていく
+    func updatePublicInstitutionListInTable(_ institution: PublicInstitution) {
+        guard let index = publicInstitutionList.firstIndex(of: institution) else { return }
+        
+        publicInstitutionList[index] = institution
+        publicInstitutionListTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+    }
+    
+    // MARK: Remove Cell
+    // MARK: - データの種類によって分岐する予定
+    // 一つ一つのデータを削除する予定はない
+    func removePublicInstitutionListInTable(_ institution: PublicInstitution) {
+        print("Delete Event!")
+    }
+    
+    func setupController() {
+        registerCell()
+        publicInstitutionListTableView.delegate = self
+        publicInstitutionListTableView.dataSource = self
+    }
+    
+    // MARK: - 場所の名前を特定し、dataをfirestoreから持ってくるように
+    func configure(with placeName: String) {
+        self.occurPlaceLocalNameEng = placeName
+        // MARK: - helmetごとの分岐をしたいのであれば、ここを違くすればいい
+        // MARK: - ここで公共機関であるかヘルメットユーザであるかを分岐しておく
+        // MARK: - helmetNumberは""に変更したりして、公共機関の場合、ヘルメットユーザの場合のそれぞれの動きを試す
+        self.helmetNumber = "helmet1"
+        
+        // MARK: - chatRoomID
+        // MARK: - まずは動きを確認できるようにすることを目標としているので、chatRoomIDはhelmet1に固定する
+        self.chatRoomId = "helmet1"
+        // Helmet２の場合 -> helmet2
+        // self.helmetNumber = "helmet2"
+        
+        // 公共機関の場合 -> ""
+        // self.helmetNumber = ""
+    }
+        
     private func registerCell() {
-        publicInstitutionListTableView.register(UINib(nibName: "PublicInstitutionTableViewCell", bundle: nil), forCellReuseIdentifier: "PublicInstitutionTableViewCell")
+        publicInstitutionListTableView.register(
+            UINib(
+                nibName: "PublicInstitutionTableViewCell",
+                bundle: nil),
+            forCellReuseIdentifier: "PublicInstitutionTableViewCell"
+        )
     }
     
     @objc func dismissBarButtonAction() {
@@ -204,6 +227,7 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
         return publicInstitutionList.count
     }
     
+    // Sectionは一つ
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -223,12 +247,22 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         let publicInstitutionName = publicInstitutionList[indexPath.row].name ?? ""
-        let controller = ChatViewController.instantiate(with: publicInstitutionName)
+        let publicInstitutionType = publicInstitutionList[indexPath.row].type ?? ""
+        let occurPlace = self.occurPlaceLocalNameEng ?? ""
+        // MARK: - ChatRoomNumみたいな変数を設けるべき
+        // MARK: - ヘルメットを着用してないユーザなら、チャットができないようにする　→ 無分別なチャットを防ぎ、データ及びトラフィック量を減らす
+        let chatRoomNumber = self.chatRoomId ?? ""
+        // MARK: - ヘルメットユーザか公共機関であるかを分岐しておく
+        // nil -> 公共機関である
+        let userIdentifier = self.helmetNumber ?? ""
+        
+        let controller = ChatViewController.instantiate(with: publicInstitutionName, type: publicInstitutionType, occurPlace: occurPlace, chatRoomNum: chatRoomNumber, userId: userIdentifier)
         // MARK: - publicInstitutionNameがchannelを指す
-        let navigationController = UINavigationController(rootViewController: controller)
-        navigationController.modalPresentationCapturesStatusBarAppearance = true
-        navigationController.modalPresentationStyle = .fullScreen
+//        let navigationController = UINavigationController(rootViewController: controller)
+//        navigationController.modalPresentationCapturesStatusBarAppearance = true
+//        navigationController.modalPresentationStyle = .fullScreen
         // fullScreenであるが、1つ前のViewのサイズに合わせてpushされる
         self.navigationController?.pushViewController(controller, animated: true)
     }

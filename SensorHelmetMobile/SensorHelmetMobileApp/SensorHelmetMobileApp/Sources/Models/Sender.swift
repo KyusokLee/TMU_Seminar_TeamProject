@@ -7,6 +7,8 @@
 
 import MessageKit
 
+// MARK: - 送信者の分岐
+// 
 struct Sender: SenderType {
     // 送信者ID
     var senderId: String
