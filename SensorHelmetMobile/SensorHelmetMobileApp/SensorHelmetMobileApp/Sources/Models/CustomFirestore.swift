@@ -140,6 +140,53 @@ final class CustomFirestore {
 //                completion(.success(messages))
 //            }
     
+    // MARK: - まず、最初のViewControllerですべてのhelmetのデータを持ってくる必要がある
+    // MARK: - リアルタイムな情報を取得し続ける
+    // MARK: - helmet1, helmet2だけを今回の研究では想定
+    func getAllHelmetSensorInfo(completion: @escaping (Result<[InfoModel], Error>) -> Void) {
+        let collectionPath = "Raspi"
+        // MARK: - 前にリアルタイムでデータをlistenした対象Modelを解除して、新しくlistenする対象の再確立
+        removeListener()
+        let collectionListener = Firestore.firestore().collection(collectionPath)
+        let decoder = JSONDecoder()
+        
+        documentListener = collectionListener
+            .addSnapshotListener{ snapshot, error in
+                guard let snapshot = snapshot else {
+                    completion(.failure(error!))
+                    return
+                }
+                
+//                guard let documents = snapshot?.documents else { return }
+                
+                var sensorDataInfo = [InfoModel]()
+                snapshot.documentChanges.forEach { change in
+                    
+                    switch change.type {
+                    case .added, .modified:
+                        do {
+                            let data = change.document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let infoData = try decoder.decode(InfoModel.self, from: jsonData)
+                            sensorDataInfo.append(infoData)
+                        } catch {
+                            completion(.failure(error))
+                        }
+                    default: break
+                    }
+                }
+                completion(.success(sensorDataInfo))
+            }
+    }
+    
+    // MARK: - 指定した特定のHelmetセンサーのデータをRealTimeで取得・更新できるメソッド
+    func subscribeSensorData() {
+        
+    }
+    
+    // MARK: - 他のユーザのセンサーデータを持ってくるメソッド
+    
+    
     // ListenerのSubscribeを解除するメソッド
     func removeListener() {
         documentListener?.remove()

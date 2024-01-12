@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		940001492B4BEB1E00287477 /* UICollectionView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940001482B4BEB1E00287477 /* UICollectionView+Utils.swift */; };
+		9400014D2B4BF70F00287477 /* SensorDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9400014B2B4BF70F00287477 /* SensorDataCollectionViewCell.swift */; };
+		9400014E2B4BF71000287477 /* SensorDataCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9400014C2B4BF70F00287477 /* SensorDataCollectionViewCell.xib */; };
+		940001552B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940001532B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.swift */; };
+		940001562B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 940001542B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.xib */; };
+		940001592B4C00C000287477 /* SensorDataLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940001572B4C00C000287477 /* SensorDataLabelTableViewCell.swift */; };
+		9400015A2B4C00C000287477 /* SensorDataLabelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 940001582B4C00C000287477 /* SensorDataLabelTableViewCell.xib */; };
 		94073C87297C25D0006BE381 /* HelmetSuccessPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */; };
 		94073C89297C25E0006BE381 /* HelmetPopupView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */; };
 		94073C8B297C26BC006BE381 /* done_check_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94073C8A297C26BC006BE381 /* done_check_icon.png */; };
@@ -50,6 +57,9 @@
 		949FB2E82B1701FA00F2B32D /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949FB2E72B1701FA00F2B32D /* UserDefaultManager.swift */; };
 		949FB2EA2B17127100F2B32D /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949FB2E92B17127100F2B32D /* FirebaseStorageManager.swift */; };
 		949FB2EC2B17161200F2B32D /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949FB2EB2B17161200F2B32D /* UIImage+Utils.swift */; };
+		94A281BC2B1DDF1B000E0D98 /* HelmetInfoModalView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A281BB2B1DDF1A000E0D98 /* HelmetInfoModalView.storyboard */; };
+		94A281C02B1E1890000E0D98 /* HelmetUserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A281BE2B1E1890000E0D98 /* HelmetUserInfoTableViewCell.swift */; };
+		94A281C12B1E1890000E0D98 /* HelmetUserInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A281BF2B1E1890000E0D98 /* HelmetUserInfoTableViewCell.xib */; };
 		94A3711E296ECA0900D4EF76 /* VideoListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A3711D296ECA0900D4EF76 /* VideoListVC.swift */; };
 		94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */; };
 		94A37122296ECB5E00D4EF76 /* VideoDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */; };
@@ -61,6 +71,7 @@
 		94B4BFA0297DB0D200B55117 /* RaspberryPiOfficialLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */; };
 		94BDDF642AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BDDF632AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift */; };
 		94BDDF662AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BDDF652AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard */; };
+		94BDFD112B1C92FE00D62484 /* HelmetInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BDFD102B1C92FE00D62484 /* HelmetInfoModalViewController.swift */; };
 		94CE5A2F2AFCEB1F00211902 /* MediaItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CE5A2E2AFCEB1F00211902 /* MediaItemImage.swift */; };
 		94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D84A42297AD8130037AC39 /* LoadingView.swift */; };
 		94D84A46297AE5370037AC39 /* helmetBasic.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D84A45297AE5360037AC39 /* helmetBasic.png */; };
@@ -94,6 +105,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		940001482B4BEB1E00287477 /* UICollectionView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Utils.swift"; sourceTree = "<group>"; };
+		9400014B2B4BF70F00287477 /* SensorDataCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataCollectionViewCell.swift; sourceTree = "<group>"; };
+		9400014C2B4BF70F00287477 /* SensorDataCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorDataCollectionViewCell.xib; sourceTree = "<group>"; };
+		940001532B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataLabelTableViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		940001542B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorDataLabelTableViewCollectionViewCell.xib; sourceTree = "<group>"; };
+		940001572B4C00C000287477 /* SensorDataLabelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataLabelTableViewCell.swift; sourceTree = "<group>"; };
+		940001582B4C00C000287477 /* SensorDataLabelTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorDataLabelTableViewCell.xib; sourceTree = "<group>"; };
 		94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelmetSuccessPopupVC.swift; sourceTree = "<group>"; };
 		94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelmetPopupView.storyboard; sourceTree = "<group>"; };
 		94073C8A297C26BC006BE381 /* done_check_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done_check_icon.png; sourceTree = "<group>"; };
@@ -136,6 +154,9 @@
 		949FB2E72B1701FA00F2B32D /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		949FB2E92B17127100F2B32D /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
 		949FB2EB2B17161200F2B32D /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
+		94A281BB2B1DDF1A000E0D98 /* HelmetInfoModalView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelmetInfoModalView.storyboard; sourceTree = "<group>"; };
+		94A281BE2B1E1890000E0D98 /* HelmetUserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelmetUserInfoTableViewCell.swift; sourceTree = "<group>"; };
+		94A281BF2B1E1890000E0D98 /* HelmetUserInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelmetUserInfoTableViewCell.xib; sourceTree = "<group>"; };
 		94A3711D296ECA0900D4EF76 /* VideoListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListVC.swift; sourceTree = "<group>"; };
 		94A3711F296ECA1900D4EF76 /* VideoListView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoListView.storyboard; sourceTree = "<group>"; };
 		94A37121296ECB5E00D4EF76 /* VideoDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailVC.swift; sourceTree = "<group>"; };
@@ -147,6 +168,7 @@
 		94B4BF9F297DB0D200B55117 /* RaspberryPiOfficialLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RaspberryPiOfficialLogo.png; sourceTree = "<group>"; };
 		94BDDF632AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPublicInstitutionListViewController.swift; sourceTree = "<group>"; };
 		94BDDF652AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NearbyPublicInstitutionListView.storyboard; sourceTree = "<group>"; };
+		94BDFD102B1C92FE00D62484 /* HelmetInfoModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelmetInfoModalViewController.swift; sourceTree = "<group>"; };
 		94CE5A2E2AFCEB1F00211902 /* MediaItemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemImage.swift; sourceTree = "<group>"; };
 		94D84A42297AD8130037AC39 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		94D84A45297AE5360037AC39 /* helmetBasic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helmetBasic.png; sourceTree = "<group>"; };
@@ -192,6 +214,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9400014A2B4BF6EF00287477 /* SensorDataCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				9400014B2B4BF70F00287477 /* SensorDataCollectionViewCell.swift */,
+				9400014C2B4BF70F00287477 /* SensorDataCollectionViewCell.xib */,
+				940001532B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.swift */,
+				940001542B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.xib */,
+				940001572B4C00C000287477 /* SensorDataLabelTableViewCell.swift */,
+				940001582B4C00C000287477 /* SensorDataLabelTableViewCell.xib */,
+			);
+			path = SensorDataCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		940C1B5D2982B6B2006D370D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +363,7 @@
 				94073C86297C25D0006BE381 /* HelmetSuccessPopupVC.swift */,
 				94BDDF632AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift */,
 				942AD34B2AEFB9E7006EED1D /* ChatViewController.swift */,
+				94BDFD102B1C92FE00D62484 /* HelmetInfoModalViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -345,6 +381,7 @@
 				94073C88297C25E0006BE381 /* HelmetPopupView.storyboard */,
 				94BDDF652AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard */,
 				942AD3472AEFB97B006EED1D /* MessagesView.storyboard */,
+				94A281BB2B1DDF1A000E0D98 /* HelmetInfoModalView.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -366,8 +403,18 @@
 				949E8EE329784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift */,
 				94386F0C2AEBE50000EBF1EC /* Encodable+Utils.swift */,
 				949FB2EB2B17161200F2B32D /* UIImage+Utils.swift */,
+				940001482B4BEB1E00287477 /* UICollectionView+Utils.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		94A281BD2B1E1846000E0D98 /* HelmetModalSheet */ = {
+			isa = PBXGroup;
+			children = (
+				94A281BE2B1E1890000E0D98 /* HelmetUserInfoTableViewCell.swift */,
+				94A281BF2B1E1890000E0D98 /* HelmetUserInfoTableViewCell.xib */,
+			);
+			path = HelmetModalSheet;
 			sourceTree = "<group>";
 		};
 		94B0B987298543E5000BBE8D /* Enums */ = {
@@ -391,6 +438,8 @@
 		94DD5119294A009300DB0287 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				9400014A2B4BF6EF00287477 /* SensorDataCollectionViewCell */,
+				94A281BD2B1E1846000E0D98 /* HelmetModalSheet */,
 				948C12382AEA780500B1DFE6 /* PublicInstitutionCell */,
 				94DD511B294A00C500DB0287 /* Cell */,
 			);
@@ -479,7 +528,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					9478639829471A48003EC94F = {
 						CreatedOnToolsVersion = 14.1;
@@ -529,14 +578,19 @@
 				947863A629471A49003EC94F /* Assets.xcassets in Resources */,
 				94DD51142949FAB200DB0287 /* ScanView.storyboard in Resources */,
 				94DD5121294A01C500DB0287 /* ScanTableViewCell.xib in Resources */,
+				9400014E2B4BF71000287477 /* SensorDataCollectionViewCell.xib in Resources */,
 				9458484C2AEA90CF007C9A46 /* PoliceOffice.png in Resources */,
 				947863A429471A48003EC94F /* Main.storyboard in Resources */,
 				94D84A46297AE5370037AC39 /* helmetBasic.png in Resources */,
 				9478262629645FA100051115 /* GoogleService-Info.plist in Resources */,
 				9458484A2AEA90CF007C9A46 /* Hospital.png in Resources */,
+				94A281C12B1E1890000E0D98 /* HelmetUserInfoTableViewCell.xib in Resources */,
+				940001562B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.xib in Resources */,
 				9458484E2AEA90FA007C9A46 /* FireStation.png in Resources */,
 				94A37124296ECB6D00D4EF76 /* VideoDetailView.storyboard in Resources */,
+				9400015A2B4C00C000287477 /* SensorDataLabelTableViewCell.xib in Resources */,
 				94073C8B297C26BC006BE381 /* done_check_icon.png in Resources */,
+				94A281BC2B1DDF1B000E0D98 /* HelmetInfoModalView.storyboard in Resources */,
 				94D84A48297AE7290037AC39 /* shelterBasic.png in Resources */,
 				94A37128296ED88E00D4EF76 /* VideoListTableViewCell.xib in Resources */,
 				94A37120296ECA1900D4EF76 /* VideoListView.storyboard in Resources */,
@@ -573,8 +627,10 @@
 			files = (
 				94386F062AEBB33C00EBF1EC /* CustomFirestore.swift in Sources */,
 				94CE5A2F2AFCEB1F00211902 /* MediaItemImage.swift in Sources */,
+				940001592B4C00C000287477 /* SensorDataLabelTableViewCell.swift in Sources */,
 				947826312964744100051115 /* TCPNetwork.swift in Sources */,
 				949E8E072965B9300015FD1C /* MapVC.swift in Sources */,
+				94A281C02B1E1890000E0D98 /* HelmetUserInfoTableViewCell.swift in Sources */,
 				94DD51162949FBFD00DB0287 /* SerialVC.swift in Sources */,
 				947863A129471A48003EC94F /* ViewController.swift in Sources */,
 				94A37122296ECB5E00D4EF76 /* VideoDetailVC.swift in Sources */,
@@ -590,20 +646,24 @@
 				942F1A2C2986A2CD0026FB6D /* DisasterModel.swift in Sources */,
 				947863D229471C3B003EC94F /* BluetoothSerial.swift in Sources */,
 				949FB2EC2B17161200F2B32D /* UIImage+Utils.swift in Sources */,
+				940001492B4BEB1E00287477 /* UICollectionView+Utils.swift in Sources */,
 				949FB2E82B1701FA00F2B32D /* UserDefaultManager.swift in Sources */,
 				94B0B989298543F6000BBE8D /* BorderColor.swift in Sources */,
 				94DD5120294A01C500DB0287 /* ScanTableViewCell.swift in Sources */,
 				942AD34C2AEFB9E8006EED1D /* ChatViewController.swift in Sources */,
 				949E8E052965B73A0015FD1C /* String+Utils.swift in Sources */,
+				9400014D2B4BF70F00287477 /* SensorDataCollectionViewCell.swift in Sources */,
 				94A37127296ED88E00D4EF76 /* VideoListTableViewCell.swift in Sources */,
 				94386F0D2AEBE50000EBF1EC /* Encodable+Utils.swift in Sources */,
 				94386F0B2AEBC30300EBF1EC /* Message.swift in Sources */,
 				949E8EE429784C6500CDB2F8 /* CLLocationCoordicate2D+Utils.swift in Sources */,
 				9478639F29471A48003EC94F /* SceneDelegate.swift in Sources */,
 				94FAA58C296E67C3007BD387 /* UIColor+Utils.swift in Sources */,
+				940001552B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.swift in Sources */,
 				94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */,
 				949FB2EA2B17127100F2B32D /* FirebaseStorageManager.swift in Sources */,
 				94B4BF9E297DACDF00B55117 /* CustomPaddingLabel.swift in Sources */,
+				94BDFD112B1C92FE00D62484 /* HelmetInfoModalViewController.swift in Sources */,
 				94FFEAA42AFA42D400DBF046 /* Sender.swift in Sources */,
 				945E32CC2B120CE3000D3B11 /* DatabaseRepresentation.swift in Sources */,
 			);
@@ -665,6 +725,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -697,6 +758,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -725,6 +787,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -757,6 +820,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -953,8 +1017,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = exactVersion;
-				version = 10.6.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.6.0;
 			};
 		};
 		948C12352AEA5FAB00B1DFE6 /* XCRemoteSwiftPackageReference "MessageKit" */ = {

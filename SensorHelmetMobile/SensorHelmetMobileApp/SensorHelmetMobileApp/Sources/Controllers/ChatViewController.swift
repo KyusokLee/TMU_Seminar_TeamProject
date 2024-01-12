@@ -102,6 +102,7 @@ class ChatViewController: MessagesViewController {
         
         print("Keyboardを表示")
         self.messageInputBar.inputTextView.becomeFirstResponder()
+        self.messagesCollectionView.scrollToLastItem(at: .bottom, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -293,6 +294,10 @@ extension ChatViewController {
     @objc func didTapCameraButton() {
         let picker = UIImagePickerController()
         picker.delegate = self
+        
+        if let sheet = picker.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+        }
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             picker.sourceType = .camera

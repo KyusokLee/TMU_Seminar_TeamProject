@@ -17,11 +17,12 @@ import UserNotifications
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var raspberryPiImageView: UIImageView! {
-        didSet {
-            raspberryPiImageView.contentMode = .scaleAspectFit
-        }
-    }
+//    @IBOutlet weak var raspberryPiImageView: UIImageView! {
+//        didSet {
+//            raspberryPiImageView.contentMode = .scaleAspectFit
+//        }
+//    }
+    @IBOutlet weak var sensorDataCollectionView: UICollectionView!
     
     @IBOutlet weak var presentVideoListButton: UIButton! {
         didSet {
@@ -118,65 +119,66 @@ class ViewController: UIViewController {
             curDateLabel.isHidden = true
         }
     }
-    
-    @IBOutlet weak var dateLabel: UILabel! {
-        didSet {
-            dateLabel.isHidden = true
-            dateLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        }
-    }
-    
-    @IBOutlet weak var timeLabel: UILabel! {
-        didSet {
-            timeLabel.isHidden = true
-            timeLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        }
-    }
-    
-    @IBOutlet weak var tempLabel: UILabel!{
-        didSet {
-            tempLabel.isHidden = true
-            tempLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        }
-    }
-    
-    @IBOutlet weak var humidLabel: UILabel! {
-        didSet {
-            humidLabel.isHidden = true
-            humidLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        }
-    }
-    
-    @IBOutlet weak var longitudeLabel: UILabel! {
-        didSet {
-            longitudeLabel.isHidden = true
-            longitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        }
-    }
-    
-    @IBOutlet weak var latitudeLabel: UILabel! {
-        didSet {
-            latitudeLabel.isHidden = true
-            latitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        }
-    }
-    
-    @IBOutlet weak var ipLabel: UILabel! {
-        didSet {
-            ipLabel.isHidden = true
-            ipLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        }
-    }
-    
-    @IBOutlet weak var COGasDensityLabel: UILabel! {
-        didSet {
-            COGasDensityLabel.isHidden = true
-            COGasDensityLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        }
-    }
+//    
+//    @IBOutlet weak var dateLabel: UILabel! {
+//        didSet {
+//            dateLabel.isHidden = true
+//            dateLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//        }
+//    }
+//    
+//    @IBOutlet weak var timeLabel: UILabel! {
+//        didSet {
+//            timeLabel.isHidden = true
+//            timeLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//        }
+//    }
+//    
+//    @IBOutlet weak var tempLabel: UILabel!{
+//        didSet {
+//            tempLabel.isHidden = true
+//            tempLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//        }
+//    }
+//    
+//    @IBOutlet weak var humidLabel: UILabel! {
+//        didSet {
+//            humidLabel.isHidden = true
+//            humidLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//        }
+//    }
+//    
+//    @IBOutlet weak var longitudeLabel: UILabel! {
+//        didSet {
+//            longitudeLabel.isHidden = true
+//            longitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//        }
+//    }
+//    
+//    @IBOutlet weak var latitudeLabel: UILabel! {
+//        didSet {
+//            latitudeLabel.isHidden = true
+//            latitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//        }
+//    }
+//    
+//    @IBOutlet weak var ipLabel: UILabel! {
+//        didSet {
+//            ipLabel.isHidden = true
+//            ipLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//        }
+//    }
+//    
+//    @IBOutlet weak var COGasPPMLabel: UILabel! {
+//        didSet {
+//            COGasPPMLabel.isHidden = true
+//            COGasPPMLabel.font = .systemFont(ofSize: 17, weight: .medium)
+//        }
+//    }
     
     var longitudeInfo: Double = 0.0
     var latitudeInfo: Double = 0.0
+    var hasHelmetLocation: Bool = false
     var shelterLongitude: Double = 0.0
     var shelterLatitude: Double = 0.0
     // MARK: - ⚠️演習のための位置情報
@@ -189,6 +191,12 @@ class ViewController: UIViewController {
     var disasterLatitude: Double = 0.0
     var disasterOccurLocationName: String = ""
     let notificationCenter = UNUserNotificationCenter.current()
+    let CODangerousPPM = 50.0
+    
+    // MARK: - helmet1 と helmet2のすべてのhelmetの情報を最初のHomeViewControllerで受け取り、mapViewにannotaionViewとしてすべてのhelmetの位置を表示させるようにする
+    var sensorHelmetList: [InfoModel] = []
+    // MARK: - CollectionViewCellで表示するためのもの
+    var sensorDataStringArray: [String] = []
     
     // Final Class を用いてinstance化したfirestoreのもの
     let customFireStore = CustomFirestore()
@@ -198,21 +206,37 @@ class ViewController: UIViewController {
         
         setNavigationController()
         addLocalPushObserver()
+        setupCollectionView()
+        
         self.bluetoothButton.isUserInteractionEnabled = false
-        setImageView()
+//        setImageView()
         // alarmの権限を得る
         requestNotificationAuthorization()
         disasterOccurred()
-        
+        // リアルタイムにデータベースの更新を行うため、Listenerを設定
+        setupSensorHelmetInfoListener()
     }
     
-    func setImageView() {
-        if let image = redrawImage() {
-            DispatchQueue.main.async {
-                self.raspberryPiImageView.image = image
-            }
-        }
+    func setupCollectionView() {
+        sensorDataCollectionView.dataSource = self
+        sensorDataCollectionView.delegate = self
+        sensorDataCollectionView.isPagingEnabled = true
+        registerCell()
     }
+    
+    func registerCell() {
+        sensorDataCollectionView.register(
+            UINib(nibName: "SensorDataCollectionViewCell", bundle: nil),
+            forCellWithReuseIdentifier: "SensorDataCollectionViewCell"
+        )
+    }
+//    func setImageView() {
+//        if let image = redrawImage() {
+//            DispatchQueue.main.async {
+//                self.raspberryPiImageView.image = image
+//            }
+//        }
+//    }
     
     // Local Pushの権限のrequest
     func requestNotificationAuthorization() {
@@ -369,11 +393,115 @@ class ViewController: UIViewController {
     }
     
     func handlePushNotification(_ notification: Notification) {
-      if let userInfo = notification.userInfo,
-           let placeName = userInfo["locationLocalName"]! as? String {
-            print("Local通知で渡されたデータ: \(placeName)")
+        if let userInfo = notification.userInfo {
+            if let placeName = userInfo["locationLocalName"] as? String {
+                print("Local通知で渡されたデータ: \(placeName)")
+            }
         } else { return }
     }
+    
+    // MARK: - Helmet1とHelmet2のリアルタイムなデータを取得・追跡することができた
+    func setupSensorHelmetInfoListener() {
+        customFireStore.getAllHelmetSensorInfo { [weak self] result in
+            switch result {
+            case .success(let sensorHelmets):
+                // MARK: - 一旦　helmet1のデータだけを
+                let firstData = sensorHelmets.first!
+                self?.checkUserEmergencyState(targetData: firstData)
+                self?.setUIUpdatingDurationAnimation(targetData: firstData)
+                print(firstData)
+                
+//                sensorHelmets.forEach { helmetData in
+//                    // MARK: - 緊急状態であるかどうかのメソッド
+//                    self?.checkUserEmergencyState(targetData: helmetData)
+//                    
+//                    // MARK: - データのリアルタイム更新
+//                    self?.updateUIWithSensorData(targetData: helmetData)
+//                    
+//                    print(helmetData)
+//                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func checkUserEmergencyState(targetData helmetData: InfoModel) {
+        if let ppmString = helmetData.COGasPPM {
+            // MARK: - %前にある空白もofに入れないと変換できない
+            if let COGasNumber = Double(ppmString.replacingOccurrences(of: " ppm", with: "")) {
+                if COGasNumber > CODangerousPPM {
+                    self.pushEmergencyLocalMessage(COGasPPM: COGasNumber)
+                }
+            } else {
+                print("変換できない文字列です。")
+            }
+        }
+    }
+    
+    func setUIUpdatingDurationAnimation(targetData helmetData: InfoModel) {
+        DispatchQueue.main.async {
+            self.curDateLabel.isHidden = true
+//            self.dateLabel.isHidden = true
+//            self.timeLabel.isHidden = true
+//            self.tempLabel.isHidden = true
+//            self.humidLabel.isHidden = true
+//            self.longitudeLabel.isHidden = true
+//            self.latitudeLabel.isHidden = true
+//            self.ipLabel.isHidden = true
+//            self.COGasPPMLabel.isHidden = true
+            // MARK: - Dataが更新されるときにこのメソッドが呼び出されるため、日付をStringFromDateにするのが正しい
+            self.curDateLabel.text = "データ最終更新日時: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
+            
+            self.updateUIWithSensorData(targetData: helmetData)
+        }
+    }
+    
+    func updateUIWithSensorData(targetData helmetData: InfoModel) {
+        
+//        self.dateLabel.text = "日付: " + helmetData.date!
+//        self.timeLabel.text = "時間: " + helmetData.time!
+//        self.tempLabel.text = "気温: " + helmetData.temp!
+//        self.humidLabel.text = "湿度: " + helmetData.humid!
+//        self.longitudeLabel.text = "経度: " + helmetData.longitude!
+//        self.latitudeLabel.text = "緯度: " + helmetData.latitude!
+//        self.ipLabel.text = "IPアドレス: " + helmetData.ip!
+//        self.COGasPPMLabel.text = "COガスppm: " + helmetData.COGasPPM!
+        // 以下の処理で渡す
+        self.longitudeInfo = Double(helmetData.longitude!)!
+        self.latitudeInfo = Double(helmetData.latitude!)!
+        self.hasHelmetLocation = true
+        self.shelterLongitude = Double(helmetData.shelterLongitude!)!
+        self.shelterLatitude = Double(helmetData.shelterLatitude!)!
+    
+//        self.dateLabel.isHidden = false
+//        self.timeLabel.isHidden = false
+//        self.tempLabel.isHidden = false
+//        self.humidLabel.isHidden = false
+//        self.longitudeLabel.isHidden = false
+//        self.latitudeLabel.isHidden = false
+//        self.ipLabel.isHidden = false
+//        self.COGasPPMLabel.isHidden = false
+        self.curDateLabel.isHidden = false
+    }
+    
+    func pushEmergencyLocalMessage(COGasPPM ppm: Double) {
+        let content = UNMutableNotificationContent()
+        content.title = "⚠️‼️注意: 危険な状態にいます‼️⚠️"
+        content.body = "一酸化炭素が\(ppm) ppmを超えています.\n 迅速な対応が必要です."
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: "dangerNotification", content: content, trigger: trigger)
+
+        notificationCenter.add(request) { error in
+            if let error = error {
+                print("Error sending notification: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // MARK: - アプリがバックグラウンドの状態にいるときも通用するようにしたい
+    // MARK: - userInfoが必要かも
     
     @IBAction func bluetoothButtonAction(_ sender: Any) {
         let serialVC = UIStoryboard.init(name: "SerialView", bundle: nil).instantiateViewController(withIdentifier: "SerialVC")
@@ -389,14 +517,13 @@ class ViewController: UIViewController {
             fatalError("MapVC could not be found")
         }
         
-        // longitudeとlatitudeがisHiddenじゃないとき、その位置情報をmapに表示できるように
-        if !self.longitudeLabel.isHidden && !self.latitudeLabel.isHidden {
+        if hasHelmetLocation {
             //🔥元々のやつ
             controller.destinationLocation.longitude = longitudeInfo
             controller.destinationLocation.latitude = latitudeInfo
-//            // MARK: - ⚠️練習のためのもの
-//            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
-//            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
+    //            // MARK: - ⚠️練習のためのもの
+    //            appleMapVC.destinationLocation.longitude = pracLongitudeInfo
+    //            appleMapVC.destinationLocation.latitude = pracLatitudeInfo
             
             controller.shelterLocation.longitude = shelterLongitude
             controller.shelterLocation.latitude = shelterLatitude
@@ -412,9 +539,11 @@ class ViewController: UIViewController {
             // alert 表示する
             print("No presented data with location data!")
             self.present(presentAlertView(), animated: true)
-            
             return
         }
+        
+        // MARK: - helmetDataを全て引き渡す
+        controller.helmetSensorData = self.sensorHelmetList
         // MARK: -  mapViewControllerをnavigationControllerとして下から上にpresentする方法を実装
         let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationCapturesStatusBarAppearance = true
@@ -424,11 +553,6 @@ class ViewController: UIViewController {
         self.present(navigationController, animated: true) {
             print("Complete to display apple map")
         }
-//        appleMapVC.modalPresentationStyle = .currentContext
-//
-//        self.present(appleMapVC, animated: true) {
-//            print("complete to display GPS of Raspi")
-//        }
     }
     
     func presentAlertView() -> UIAlertController {
@@ -445,16 +569,15 @@ class ViewController: UIViewController {
     @IBAction func getDataAction(_ sender: Any) {
         DispatchQueue.main.async {
             self.curDateLabel.isHidden = true
-            self.dateLabel.isHidden = true
-            self.timeLabel.isHidden = true
-            self.tempLabel.isHidden = true
-            self.humidLabel.isHidden = true
-            self.longitudeLabel.isHidden = true
-            self.latitudeLabel.isHidden = true
-            self.ipLabel.isHidden = true
-            self.COGasDensityLabel.isEnabled = true
-            self.curDateLabel.text = "データ取得時間: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
-            self.getData()
+//            self.dateLabel.isHidden = true
+//            self.timeLabel.isHidden = true
+//            self.tempLabel.isHidden = true
+//            self.humidLabel.isHidden = true
+//            self.longitudeLabel.isHidden = true
+//            self.latitudeLabel.isHidden = true
+//            self.ipLabel.isHidden = true
+//            self.COGasPPMLabel.isEnabled = true
+            self.curDateLabel.text = "データ最終更新日時: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
         }
     }
     
@@ -477,48 +600,64 @@ class ViewController: UIViewController {
             var infoDatas: [InfoModel] = []
             let decoder = JSONDecoder()
             
-            // Raspiで測定して、Firestoreに格納した温度のデータを読み込む
-            for document in documents {
-                do {
-                    let data = document.data()
-                    let jsonData = try JSONSerialization.data(withJSONObject: data)
-                    let infoData = try decoder.decode(InfoModel.self, from: jsonData)
-                    print(infoData)
-                    infoDatas.append(infoData)
-                    self.dateLabel.text = "日付: " + infoData.date!
-                    self.timeLabel.text = "時間: " + infoData.time!
-                    self.tempLabel.text = "気温: " + infoData.temp!
-                    self.humidLabel.text = "湿度: " + infoData.humid!
-                    self.longitudeLabel.text = "経度: " + infoData.longitude!
-                    self.latitudeLabel.text = "緯度: " + infoData.latitude!
-                    self.ipLabel.text = "IPアドレス: " + infoData.ip!
-                    self.COGasDensityLabel.text = "COガス密度: " + infoData.COGasDensity!
-                    // 以下の処理で渡す
-                    self.longitudeInfo = Double(infoData.longitude!)!
-                    self.latitudeInfo = Double(infoData.latitude!)!
-                    self.shelterLongitude = Double(infoData.shelterLongitude!)!
-                    self.shelterLatitude = Double(infoData.shelterLatitude!)!
-                    
+            let firstHelmetData = documents.first!
+            
+            do {
+                let data = firstHelmetData.data()
+                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                let infoData = try decoder.decode(InfoModel.self, from: jsonData)
+//                    print(infoData)
+                infoDatas.append(infoData)
+//                self.dateLabel.text = "日付: " + infoData.date!
+//                self.timeLabel.text = "時間: " + infoData.time!
+//                self.tempLabel.text = "気温: " + infoData.temp!
+//                self.humidLabel.text = "湿度: " + infoData.humid!
+//                self.longitudeLabel.text = "経度: " + infoData.longitude!
+//                self.latitudeLabel.text = "緯度: " + infoData.latitude!
+//                self.ipLabel.text = "IPアドレス: " + infoData.ip!
+//                self.COGasPPMLabel.text = "COガス密度: " + infoData.COGasPPM!
+                // 以下の処理で渡す
+                self.longitudeInfo = Double(infoData.longitude!)!
+                self.latitudeInfo = Double(infoData.latitude!)!
+                self.hasHelmetLocation = true
+                self.shelterLongitude = Double(infoData.shelterLongitude!)!
+                self.shelterLatitude = Double(infoData.shelterLatitude!)!
+                
 //                    // MARK: - ⚠️演習のためのもの
 //                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
 //                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
-                
-                    self.dateLabel.isHidden = false
-                    self.timeLabel.isHidden = false
-                    self.tempLabel.isHidden = false
-                    self.humidLabel.isHidden = false
-                    self.longitudeLabel.isHidden = false
-                    self.latitudeLabel.isHidden = false
-                    self.ipLabel.isHidden = false
-                    self.COGasDensityLabel.isHidden = false
-                    
-                } catch let error {
-                    print("error: \(error)")
-                }
-            }
             
-            self.curDateLabel.isHidden = false
+//                self.dateLabel.isHidden = false
+//                self.timeLabel.isHidden = false
+//                self.tempLabel.isHidden = false
+//                self.humidLabel.isHidden = false
+//                self.longitudeLabel.isHidden = false
+//                self.latitudeLabel.isHidden = false
+//                self.ipLabel.isHidden = false
+//                self.COGasPPMLabel.isHidden = false
+                
+            } catch let error {
+                print("error: \(error)")
+            }
         }
+        
+        self.curDateLabel.isHidden = false
     }
 }
 
+extension ViewController: UICollectionViewDelegate {
+    
+}
+
+
+extension ViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    
+}
