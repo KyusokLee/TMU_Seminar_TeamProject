@@ -1,4 +1,4 @@
-## TMU 朝香ラボのゼミ研究（自由研究）_IoT防災ヘルメットの実装
+## TMU 朝香研_リアルタイム性を備えたIoT防災ヘルメット
 
 <img src="https://user-images.githubusercontent.com/89962765/227458410-631e8762-2d23-452a-9664-006371b29e2f.png" width="150" height="150"/>
 
@@ -7,9 +7,10 @@
 |Kyusok|Takumi|
 |:-:|:-:|
 |<img src="https://avatars.githubusercontent.com/u/89962765?v=4" width="200">|<img src="https://avatars.githubusercontent.com/u/117294735?v=4" width="200">|
+|- Firebase関連実装</br>- iOSアプリ実装</br>- ラズベリーパイのセンサー類関連コード作成(共同)|- ラズベリーパイのセンサー類関連コード作成(共同)</br>- 動画編集・作成|
 
-
-### 🎥デモ動画
+### 🎥デモ動画（既存システム）
+- 動画の内容は、筆者が３年生のころ、瀬名波くんと共同で開発した機能までの内容であり、完成した動画は今後作成していく予定である
 - YouTube 上(限定公開)で，機能を簡潔にまとめた動画を視聴可能
   https://youtu.be/Jgu0WJBPKX8
 
