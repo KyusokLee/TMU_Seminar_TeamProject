@@ -9,6 +9,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import CoreLocationUI
+import FirebaseFirestore
 
 // Apple Mapを用いた経路探索と現在位置の取得
 // TODO: Helmetの場所にある程度近づけると、Helmetのannotationを消し、避難所のannotationを立てる
@@ -26,6 +27,7 @@ import CoreLocationUI
 
 // MARK: Variables and Life Cycle
 final class MapVC: UIViewController {
+    
     private var mapView: MKMapView = MKMapView()
     private var timer: Timer?
     
@@ -70,10 +72,22 @@ final class MapVC: UIViewController {
     // Disasterのモデルを渡す
     var disaster: DisasterModel?
     
+    // MARK: - 複数のhelmetユーザの位置を表示するためには、InfoModelを格納するlistが必修
+    // MARK: - HomeViewでただ、持ってくるつもり
+    var helmetSensorData: [InfoModel] = []
+    
     // 前の位置記録を保存
     var previousCoordinate: CLLocationCoordinate2D?
     // 移動先の位置記録を保存
     var followCoordinate: CLLocationCoordinate2D?
+    
+    private let loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        // 初期設定として、loadingをtrueに
+        view.isLoading = true
+        return view
+    }()
     
     // リアルタイムな現在位置情報をmanageするための変数
     lazy var locationManager: CLLocationManager = {
@@ -84,7 +98,7 @@ final class MapVC: UIViewController {
     }()
     
     // Segment Controllerを実装(徒歩, 車, 電車等の移動)
-    let transportationSegmentedController: UISegmentedControl = {
+    lazy var transportationSegmentedController: UISegmentedControl = {
         let walkImage = UIImage(systemName: "figure.walk")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
         let carImage = UIImage(systemName: "car.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
         // MARK: - 公共交通機関のcaseは消す予定
@@ -100,7 +114,7 @@ final class MapVC: UIViewController {
     }()
     
     // 経路までのnavigatorのButtonを表示
-    let showRouteButton: UIButton = {
+    lazy var showRouteButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.buttonSize = .medium
@@ -127,7 +141,7 @@ final class MapVC: UIViewController {
     }()
     
     //MARK: - distanceLabelの上にクリックした住所を表示したい
-    let addressLabel: UILabel = {
+    lazy var addressLabel: UILabel = {
         let label = UILabel()
         label.text = "住所を表示"
         //住所の場合は、fontを濃くする
@@ -137,7 +151,7 @@ final class MapVC: UIViewController {
         return label
     }()
     
-    let distanceLabel: UILabel = {
+    lazy var distanceLabel: UILabel = {
         let label = UILabel()
         label.text = "距離を表示"
         label.font = .systemFont(ofSize: 17, weight: .medium)
@@ -146,7 +160,7 @@ final class MapVC: UIViewController {
         return label
     }()
     
-    let expectedTimeLabel: UILabel = {
+    lazy var expectedTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "所要時間を表示"
         label.font = .systemFont(ofSize: 17, weight: .medium)
@@ -156,7 +170,7 @@ final class MapVC: UIViewController {
     }()
     
     // サーバ側にメッセージを送信するボタン
-    let sendMessageToServerButton: UIButton = {
+    lazy var sendMessageToServerButton: UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 45, weight: .medium)
         let image = UIImage(
@@ -176,7 +190,7 @@ final class MapVC: UIViewController {
         return button
     }()
     
-    let helmetNoticeLabel: UILabel = {
+    lazy var helmetNoticeLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = .systemFont(ofSize: 17, weight: .medium)
@@ -185,7 +199,7 @@ final class MapVC: UIViewController {
         return label
     }()
     
-    let getHelmetButton: UIButton = {
+    lazy var getHelmetButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
         config.buttonSize = .large
@@ -244,7 +258,7 @@ final class MapVC: UIViewController {
     }()
     
     //現在の位置を中央にする
-    let locationButton: CLLocationButton = {
+    lazy var locationButton: CLLocationButton = {
         let button = CLLocationButton()
         let buttonRect = CGRect(x: 0, y: 0, width: 50, height: 50)
         button.icon = .arrowOutline
@@ -292,7 +306,10 @@ final class MapVC: UIViewController {
         mapView.showsTraffic = true
         
         // mapViewにCustomAnnotationViewを登録
-        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
+        mapView.register(
+            CustomAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier
+        )
         mapView.addSubview(locationButton)
         setLocationButtonConstraints()
         mapView.addSubview(showRouteButton)
@@ -307,6 +324,9 @@ final class MapVC: UIViewController {
         // view.bringSubviewToFront(dismissButton)
         setMapViewConstraints()
         
+        self.view.addSubview(loadingView)
+        setLoadingViewConstraints()
+        self.view.isUserInteractionEnabled = false
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
@@ -611,6 +631,10 @@ private extension MapVC {
                     self?.mapView.addOverlay(route.polyline, level: .aboveRoads)
                     self?.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
                 }
+                // MARK: - loadingをfalseに
+                self?.loadingView.isLoading = false
+                // MARK: - viewのuseractionをtrueに
+                self?.view.isUserInteractionEnabled = true
             }
             // 計算が終わった後の処理
             print("計算終わり")
@@ -693,26 +717,38 @@ private extension MapVC {
     }
     
     func showHelmetUserInfoSheet() {
-        // MARK: - sheetPresantationControllerに載せたいVCをここで指定
-        let controller = UIViewController()
-        controller.view.backgroundColor = UIColor.white
+        let placeName = addressLabel.text
+        var removedPlaceName = ""
         
-        // 表示される高さをカストマイズする方法
-        if let sheet = controller.sheetPresentationController {
-            sheet.detents = [
-                .custom(resolver: { context in
-                    0.3 * context.maximumDetentValue
-                }),
-                .medium(),
-                .large()
-            ]
-            sheet.largestUndimmedDetentIdentifier = .medium
-            sheet.prefersGrabberVisible = true
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.preferredCornerRadius = 30.0
+        if let originalName = placeName {
+            // 前から4文字消す
+            removedPlaceName = String(originalName.dropFirst(4))
+        } else {
+            removedPlaceName = ""
         }
         
-        self.present(controller, animated: true, completion: nil)
+        // MARK: - sheetPresantationControllerに載せたいVCをここで指定
+        // MARK: - connectStateにdidGetHelmetを引き渡すつもり
+        let controller = HelmetInfoModalViewController.instantiate(with: "helmet1", placeName: removedPlaceName, connectState: true)
+        controller.view.backgroundColor = UIColor.white
+
+        // MARK: - navigationBarをcustomするため
+        // navigationControllerにsheetPresentationControllerを導入すればdetentsも設定した通り、表示できた
+        let navigationController = UINavigationController(rootViewController: controller)
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.detents = [
+                .custom(resolver: { context in
+                    0.25 * context.maximumDetentValue
+                }),
+                .medium()
+            ]
+//            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersGrabberVisible = true
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.preferredCornerRadius = 24
+        }
+        
+        self.present(navigationController, animated: true, completion: nil)
     }
     
 //    func addMapViewTapGesture() {
@@ -795,6 +831,13 @@ private extension MapVC {
         self.takeOffHelmetButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -80).isActive = true
     }
     
+    func setLoadingViewConstraints() {
+        NSLayoutConstraint.activate([
+            self.loadingView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.loadingView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
+    }
+    
     // 所要時間をString型に変換するメソッド
     func formatTime(_ time:Double) -> String {
          switch time {
@@ -847,6 +890,9 @@ private extension MapVC {
     // MARK: - Segmented ControllerのimageをAction化する
     @objc func didChangeValue(segment: UISegmentedControl) {
         // 移動手段を変えるたびに予想時間とルートを再計算する必要があるので、calculateDirectionを呼び出す作業にした
+        self.loadingView.isLoading = true
+        self.view.isUserInteractionEnabled = false
+        
         calculateDirection(curLocate: self.currentLocation, targetLocate: self.targetLocationCoordinate, transportIndex: segment.selectedSegmentIndex)
         if segment.selectedSegmentIndex == 0 {
             print("walk")

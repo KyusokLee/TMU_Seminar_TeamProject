@@ -238,7 +238,7 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
         }
         
         let type = publicInstitutionList[indexPath.row].type ?? ""
-        let name = publicInstitutionList[indexPath.row].name ?? ""
+        let name = publicInstitutionList[indexPath.row].name
         
         // MARK: - 公共機関の名前が入る
         cell.configure(institutionType: type, institutionName: name)
@@ -248,8 +248,8 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let publicInstitutionName = publicInstitutionList[indexPath.row].name ?? ""
-        let publicInstitutionType = publicInstitutionList[indexPath.row].type ?? ""
+        let institutionName = publicInstitutionList[indexPath.row].name
+        let institutionType = publicInstitutionList[indexPath.row].type ?? ""
         let occurPlace = self.occurPlaceLocalNameEng ?? ""
         // MARK: - ChatRoomNumみたいな変数を設けるべき
         // MARK: - ヘルメットを着用してないユーザなら、チャットができないようにする　→ 無分別なチャットを防ぎ、データ及びトラフィック量を減らす
@@ -258,7 +258,7 @@ extension NearbyPublicInstitutionListViewController: UITableViewDelegate, UITabl
         // nil -> 公共機関である
         let userIdentifier = self.helmetNumber ?? ""
         
-        let controller = ChatViewController.instantiate(with: publicInstitutionName, type: publicInstitutionType, occurPlace: occurPlace, chatRoomNum: chatRoomNumber, userId: userIdentifier)
+        let controller = ChatViewController.instantiate(with: institutionName, type: institutionType, occurPlace: occurPlace, chatRoomNum: chatRoomNumber, userId: userIdentifier)
         // MARK: - publicInstitutionNameがchannelを指す
 //        let navigationController = UINavigationController(rootViewController: controller)
 //        navigationController.modalPresentationCapturesStatusBarAppearance = true
