@@ -230,13 +230,13 @@ class ViewController: UIViewController {
             forCellWithReuseIdentifier: "SensorDataCollectionViewCell"
         )
     }
-//    func setImageView() {
-//        if let image = redrawImage() {
-//            DispatchQueue.main.async {
-//                self.raspberryPiImageView.image = image
-//            }
-//        }
-//    }
+    func setImageView() {
+        if let image = redrawImage(imageName: "RaspberryPiOfficialLogo") {
+            DispatchQueue.main.async {
+                self.raspberryPiImageView.image = image
+            }
+        }
+    }
     
     // Local Pushの権限のrequest
     func requestNotificationAuthorization() {
@@ -364,8 +364,9 @@ class ViewController: UIViewController {
 //        }
     }
     
-    func redrawImage() -> UIImage? {
-        let customImage = UIImage(named: "RaspberryPiOfficialLogo")
+    // MARK: - ImageのRedrawing (ここでは特定のimageをすることにした)
+    func redrawImage(imageName: String) -> UIImage? {
+        let customImage = UIImage(named: imageName)
         let newImageRect = CGRect(x: 0, y: 0, width: 200, height: 200)
         UIGraphicsBeginImageContext(CGSize(width: 200, height: 200))
         customImage?.draw(in: newImageRect)
