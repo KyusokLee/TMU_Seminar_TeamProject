@@ -72,6 +72,8 @@ final class MapVC: UIViewController {
     // Disasterのモデルを渡す
     var disaster: DisasterModel?
     
+    // Final Class を用いてinstance化したfirestoreのもの
+    let customFireStore = CustomFirestore()
     // MARK: - 複数のhelmetユーザの位置を表示するためには、InfoModelを格納するlistが必修
     // MARK: - HomeViewでただ、持ってくるつもり
     var helmetSensorData: [InfoModel] = []
@@ -276,6 +278,8 @@ final class MapVC: UIViewController {
         super.viewDidLoad()
         setNavigationBar()
         getLocationUsagePermission()
+        // リアルタイムにデータベースの更新を行うため、Listenerを設定
+        registerSensorHelmetInfoListener()
 //        view.addSubview(dismissButton)
 //        view.addSubview(cancelNavitageRouteButton)
         view.addSubview(transportationSegmentedController)
@@ -363,6 +367,60 @@ private extension MapVC {
         
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    //MARK: - Helmet1とHelmet2の現在位置をマップ上でリアルタイムに表示する
+    func registerSensorHelmetInfoListener() {
+        customFireStore.getAllHelmetSensorInfo { [weak self] result in
+            switch result {
+            case .success(let sensorHelmets):
+                // MARK: - helmet1とhelmet2のデータを全部取得
+                sensorHelmets.forEach { helmetData in
+                    // MARK: - 緊急状態であるかどうかのメソッド
+                    self?.checkUserEmergencyState(targetData: helmetData)
+
+                    // MARK: - データのリアルタイム更新
+                    self?.updateUIWithSensorData(targetData: helmetData)
+
+                    print(helmetData)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func updateUIWithSensorData(targetData helmetData: InfoModel) {
+        
+//        self.dateLabel.text = "日付: " + helmetData.date!
+//        self.timeLabel.text = "時間: " + helmetData.time!
+//        self.tempLabel.text = "気温: " + helmetData.temp!
+//        self.humidLabel.text = "湿度: " + helmetData.humid!
+//        self.longitudeLabel.text = "経度: " + helmetData.longitude!
+//        self.latitudeLabel.text = "緯度: " + helmetData.latitude!
+//        self.ipLabel.text = "IPアドレス: " + helmetData.ip!
+//        self.COGasPPMLabel.text = "COガスppm: " + helmetData.COGasPPM!
+        // 以下の処理で渡す
+        self.longitudeInfo = Double(helmetData.longitude!)!
+        self.latitudeInfo = Double(helmetData.latitude!)!
+        self.hasHelmetLocation = true
+        self.shelterLongitude = Double(helmetData.shelterLongitude!)!
+        self.shelterLatitude = Double(helmetData.shelterLatitude!)!
+    
+//        self.dateLabel.isHidden = false
+//        self.timeLabel.isHidden = false
+//        self.tempLabel.isHidden = false
+//        self.humidLabel.isHidden = false
+//        self.longitudeLabel.isHidden = false
+//        self.latitudeLabel.isHidden = false
+//        self.ipLabel.isHidden = false
+//        self.COGasPPMLabel.isHidden = false
+        self.curDateLabel.isHidden = false
+    }
+    
+    // MARK: - Helmetの位置を更新してMapに表示すように
+    func updateHelmetLocation(targetData helmetData: InfoModel) {
+        
     }
     
     // Buttonのborderをanimateさせる
