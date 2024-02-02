@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,11 +49,21 @@
                             <action selector="didTapMessageButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ylt-R4-hpL"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78c-Iz-KeC">
+                        <rect key="frame" x="216" y="21.666666666666671" width="75" height="35"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <connections>
+                            <action selector="didTapRouteButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lnx-yq-kTE"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="eKI-uc-0T1" firstAttribute="leading" secondItem="kHm-Ty-5n5" secondAttribute="trailing" constant="15" id="1MK-il-LTu"/>
+                    <constraint firstItem="zvw-GZ-VVa" firstAttribute="leading" secondItem="78c-Iz-KeC" secondAttribute="trailing" constant="10" id="1UF-KZ-eW2"/>
                     <constraint firstItem="9dL-Og-wwL" firstAttribute="leading" secondItem="kHm-Ty-5n5" secondAttribute="trailing" constant="15" id="Bds-zx-MKw"/>
                     <constraint firstItem="zvw-GZ-VVa" firstAttribute="centerY" secondItem="kHm-Ty-5n5" secondAttribute="centerY" id="H64-5Q-Lev"/>
+                    <constraint firstItem="78c-Iz-KeC" firstAttribute="centerY" secondItem="kHm-Ty-5n5" secondAttribute="centerY" id="JL0-fv-u03"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9dL-Og-wwL" secondAttribute="bottom" constant="15" id="ScC-9O-Aw8"/>
                     <constraint firstAttribute="trailing" secondItem="zvw-GZ-VVa" secondAttribute="trailing" constant="15" id="f6z-S2-LkP"/>
                     <constraint firstItem="eKI-uc-0T1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="kFE-vl-OaN"/>
@@ -67,6 +77,7 @@
                 <outlet property="helmetImageView" destination="kHm-Ty-5n5" id="jMZ-gU-9pp"/>
                 <outlet property="locationLabel" destination="9dL-Og-wwL" id="JeE-7M-4n1"/>
                 <outlet property="messageButton" destination="zvw-GZ-VVa" id="Wsp-7a-j60"/>
+                <outlet property="routeButton" destination="78c-Iz-KeC" id="iC7-Wb-gJj"/>
                 <outlet property="userNameLabel" destination="eKI-uc-0T1" id="fJp-Cf-guZ"/>
             </connections>
             <point key="canvasLocation" x="166.41221374045801" y="42.253521126760567"/>

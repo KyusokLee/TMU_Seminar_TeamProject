@@ -17,12 +17,11 @@ import UserNotifications
 
 class ViewController: UIViewController {
     
-//    @IBOutlet weak var raspberryPiImageView: UIImageView! {
-//        didSet {
-//            raspberryPiImageView.contentMode = .scaleAspectFit
-//        }
-//    }
-    @IBOutlet weak var sensorDataCollectionView: UICollectionView!
+    @IBOutlet weak var raspberryPiImageView: UIImageView! {
+        didSet {
+            raspberryPiImageView.contentMode = .scaleAspectFit
+        }
+    }
     
     @IBOutlet weak var presentVideoListButton: UIButton! {
         didSet {
@@ -119,66 +118,69 @@ class ViewController: UIViewController {
             curDateLabel.isHidden = true
         }
     }
-//    
-//    @IBOutlet weak var dateLabel: UILabel! {
-//        didSet {
-//            dateLabel.isHidden = true
-//            dateLabel.font = .systemFont(ofSize: 17, weight: .medium)
-//        }
-//    }
-//    
-//    @IBOutlet weak var timeLabel: UILabel! {
-//        didSet {
-//            timeLabel.isHidden = true
-//            timeLabel.font = .systemFont(ofSize: 17, weight: .medium)
-//        }
-//    }
-//    
-//    @IBOutlet weak var tempLabel: UILabel!{
-//        didSet {
-//            tempLabel.isHidden = true
-//            tempLabel.font = .systemFont(ofSize: 17, weight: .medium)
-//        }
-//    }
-//    
-//    @IBOutlet weak var humidLabel: UILabel! {
-//        didSet {
-//            humidLabel.isHidden = true
-//            humidLabel.font = .systemFont(ofSize: 17, weight: .medium)
-//        }
-//    }
-//    
-//    @IBOutlet weak var longitudeLabel: UILabel! {
-//        didSet {
-//            longitudeLabel.isHidden = true
-//            longitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
-//        }
-//    }
-//    
-//    @IBOutlet weak var latitudeLabel: UILabel! {
-//        didSet {
-//            latitudeLabel.isHidden = true
-//            latitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
-//        }
-//    }
-//    
-//    @IBOutlet weak var ipLabel: UILabel! {
-//        didSet {
-//            ipLabel.isHidden = true
-//            ipLabel.font = .systemFont(ofSize: 17, weight: .medium)
-//        }
-//    }
-//    
-//    @IBOutlet weak var COGasPPMLabel: UILabel! {
-//        didSet {
-//            COGasPPMLabel.isHidden = true
-//            COGasPPMLabel.font = .systemFont(ofSize: 17, weight: .medium)
-//        }
-//    }
+    
+    @IBOutlet weak var dateLabel: UILabel! {
+        didSet {
+            dateLabel.isHidden = true
+            dateLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
+    @IBOutlet weak var timeLabel: UILabel! {
+        didSet {
+            timeLabel.isHidden = true
+            timeLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
+    @IBOutlet weak var tempLabel: UILabel!{
+        didSet {
+            tempLabel.isHidden = true
+            tempLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
+    @IBOutlet weak var humidLabel: UILabel! {
+        didSet {
+            humidLabel.isHidden = true
+            humidLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
+    @IBOutlet weak var longitudeLabel: UILabel! {
+        didSet {
+            longitudeLabel.isHidden = true
+            longitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
+    @IBOutlet weak var latitudeLabel: UILabel! {
+        didSet {
+            latitudeLabel.isHidden = true
+            latitudeLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
+    @IBOutlet weak var ipLabel: UILabel! {
+        didSet {
+            ipLabel.isHidden = true
+            ipLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
+    
+    @IBOutlet weak var COGasPPMLabel: UILabel! {
+        didSet {
+            COGasPPMLabel.isHidden = true
+            COGasPPMLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        }
+    }
     
     var longitudeInfo: Double = 0.0
     var latitudeInfo: Double = 0.0
+    
     var hasHelmetLocation: Bool = false
+    var isDataPresented: Bool = true
+    
     var shelterLongitude: Double = 0.0
     var shelterLatitude: Double = 0.0
     // MARK: - ⚠️演習のための位置情報
@@ -206,10 +208,9 @@ class ViewController: UIViewController {
         
         setNavigationController()
         addLocalPushObserver()
-        setupCollectionView()
         
         self.bluetoothButton.isUserInteractionEnabled = false
-//        setImageView()
+        setImageView()
         // alarmの権限を得る
         requestNotificationAuthorization()
         disasterOccurred()
@@ -217,21 +218,8 @@ class ViewController: UIViewController {
         setupSensorHelmetInfoListener()
     }
     
-    func setupCollectionView() {
-        sensorDataCollectionView.dataSource = self
-        sensorDataCollectionView.delegate = self
-        sensorDataCollectionView.isPagingEnabled = true
-        registerCell()
-    }
-    
-    func registerCell() {
-        sensorDataCollectionView.register(
-            UINib(nibName: "SensorDataCollectionViewCell", bundle: nil),
-            forCellWithReuseIdentifier: "SensorDataCollectionViewCell"
-        )
-    }
     func setImageView() {
-        if let image = redrawImage(imageName: "RaspberryPiOfficialLogo") {
+        if let image = redrawImage(imageName: "helmetBasic") {
             DispatchQueue.main.async {
                 self.raspberryPiImageView.image = image
             }
@@ -309,7 +297,6 @@ class ViewController: UIViewController {
     func addLocalPushObserver() {
 //        NotificationCenter.default.addObserver(self, selector: #selector(handlePushNotification(_:)), name: Notification.Name("DisasterOccurNotification"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name("didReceivePushTouch"), object: nil, queue: nil) { notification in
-            
             self.handlePushNotification(notification)
         }
     }
@@ -370,7 +357,8 @@ class ViewController: UIViewController {
         let newImageRect = CGRect(x: 0, y: 0, width: 200, height: 200)
         UIGraphicsBeginImageContext(CGSize(width: 200, height: 200))
         customImage?.draw(in: newImageRect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
+        let color = UIColor(rgb: 0xFEB309)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal).withTintColor(color)
         UIGraphicsEndImageContext()
         
         return newImage
@@ -379,8 +367,8 @@ class ViewController: UIViewController {
     func setNavigationController() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(rgb: 0x64B5F6)
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.backgroundColor = .systemBackground
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         
         self.navigationItem.backButtonTitle = "Back"
         self.navigationController?.navigationBar.tintColor = UIColor.black
@@ -443,14 +431,14 @@ class ViewController: UIViewController {
     func setUIUpdatingDurationAnimation(targetData helmetData: InfoModel) {
         DispatchQueue.main.async {
             self.curDateLabel.isHidden = true
-//            self.dateLabel.isHidden = true
-//            self.timeLabel.isHidden = true
-//            self.tempLabel.isHidden = true
-//            self.humidLabel.isHidden = true
-//            self.longitudeLabel.isHidden = true
-//            self.latitudeLabel.isHidden = true
-//            self.ipLabel.isHidden = true
-//            self.COGasPPMLabel.isHidden = true
+            self.dateLabel.isHidden = true
+            self.timeLabel.isHidden = true
+            self.tempLabel.isHidden = true
+            self.humidLabel.isHidden = true
+            self.longitudeLabel.isHidden = true
+            self.latitudeLabel.isHidden = true
+            self.ipLabel.isHidden = true
+            self.COGasPPMLabel.isHidden = true
             // MARK: - Dataが更新されるときにこのメソッドが呼び出されるため、日付をStringFromDateにするのが正しい
             self.curDateLabel.text = "データ最終更新日時: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
             
@@ -459,31 +447,31 @@ class ViewController: UIViewController {
     }
     
     func updateUIWithSensorData(targetData helmetData: InfoModel) {
+        self.hasHelmetLocation = true
         
-//        self.dateLabel.text = "日付: " + helmetData.date!
-//        self.timeLabel.text = "時間: " + helmetData.time!
-//        self.tempLabel.text = "気温: " + helmetData.temp!
-//        self.humidLabel.text = "湿度: " + helmetData.humid!
-//        self.longitudeLabel.text = "経度: " + helmetData.longitude!
-//        self.latitudeLabel.text = "緯度: " + helmetData.latitude!
-//        self.ipLabel.text = "IPアドレス: " + helmetData.ip!
-//        self.COGasPPMLabel.text = "COガスppm: " + helmetData.COGasPPM!
+        self.dateLabel.text = "データ更新日付: " + helmetData.date!
+        self.timeLabel.text = "時間: " + helmetData.time!
+        self.tempLabel.text = "気温: " + helmetData.temp!
+        self.humidLabel.text = "湿度: " + helmetData.humid!
+        self.longitudeLabel.text = "経度: " + helmetData.longitude!
+        self.latitudeLabel.text = "緯度: " + helmetData.latitude!
+        self.ipLabel.text = "IPアドレス: " + helmetData.ip!
+        self.COGasPPMLabel.text = "COガスppm: " + helmetData.COGasPPM!
         // 以下の処理で渡す
         self.longitudeInfo = Double(helmetData.longitude!)!
         self.latitudeInfo = Double(helmetData.latitude!)!
-        self.hasHelmetLocation = true
         self.shelterLongitude = Double(helmetData.shelterLongitude!)!
         self.shelterLatitude = Double(helmetData.shelterLatitude!)!
-    
-//        self.dateLabel.isHidden = false
-//        self.timeLabel.isHidden = false
-//        self.tempLabel.isHidden = false
-//        self.humidLabel.isHidden = false
-//        self.longitudeLabel.isHidden = false
-//        self.latitudeLabel.isHidden = false
-//        self.ipLabel.isHidden = false
-//        self.COGasPPMLabel.isHidden = false
-        self.curDateLabel.isHidden = false
+        
+        if hasHelmetLocation {
+            DispatchQueue.main.async {
+                self.changeDataLabelVisibleState(false)
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.changeDataLabelVisibleState(true)
+            }
+        }
     }
     
     func pushEmergencyLocalMessage(COGasPPM ppm: Double) {
@@ -503,7 +491,6 @@ class ViewController: UIViewController {
     
     // MARK: - アプリがバックグラウンドの状態にいるときも通用するようにしたい
     // MARK: - userInfoが必要かも
-    
     @IBAction func bluetoothButtonAction(_ sender: Any) {
         let serialVC = UIStoryboard.init(name: "SerialView", bundle: nil).instantiateViewController(withIdentifier: "SerialVC")
         self.present(serialVC, animated: true, completion: nil)
@@ -569,16 +556,10 @@ class ViewController: UIViewController {
     
     @IBAction func getDataAction(_ sender: Any) {
         DispatchQueue.main.async {
-            self.curDateLabel.isHidden = true
-//            self.dateLabel.isHidden = true
-//            self.timeLabel.isHidden = true
-//            self.tempLabel.isHidden = true
-//            self.humidLabel.isHidden = true
-//            self.longitudeLabel.isHidden = true
-//            self.latitudeLabel.isHidden = true
-//            self.ipLabel.isHidden = true
-//            self.COGasPPMLabel.isEnabled = true
-            self.curDateLabel.text = "データ最終更新日時: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
+            // ここのToggle処理でTrueとFalseを柔軟に変更する
+            self.isDataPresented.toggle()
+            self.curDateLabel.text = "データ最終取得日時: " + "yyyy年MM月dd日 HH時mm分ss秒".stringFromDate()
+            self.changeDataLabelVisibleState(self.isDataPresented)
         }
     }
     
@@ -609,14 +590,14 @@ class ViewController: UIViewController {
                 let infoData = try decoder.decode(InfoModel.self, from: jsonData)
 //                    print(infoData)
                 infoDatas.append(infoData)
-//                self.dateLabel.text = "日付: " + infoData.date!
-//                self.timeLabel.text = "時間: " + infoData.time!
-//                self.tempLabel.text = "気温: " + infoData.temp!
-//                self.humidLabel.text = "湿度: " + infoData.humid!
-//                self.longitudeLabel.text = "経度: " + infoData.longitude!
-//                self.latitudeLabel.text = "緯度: " + infoData.latitude!
-//                self.ipLabel.text = "IPアドレス: " + infoData.ip!
-//                self.COGasPPMLabel.text = "COガス密度: " + infoData.COGasPPM!
+                self.dateLabel.text = "データ更新日付: " + infoData.date!
+                self.timeLabel.text = "時間: " + infoData.time!
+                self.tempLabel.text = "気温: " + infoData.temp!
+                self.humidLabel.text = "湿度: " + infoData.humid!
+                self.longitudeLabel.text = "経度: " + infoData.longitude!
+                self.latitudeLabel.text = "緯度: " + infoData.latitude!
+                self.ipLabel.text = "IPアドレス: " + infoData.ip!
+                self.COGasPPMLabel.text = "COガス密度: " + infoData.COGasPPM!
                 // 以下の処理で渡す
                 self.longitudeInfo = Double(infoData.longitude!)!
                 self.latitudeInfo = Double(infoData.latitude!)!
@@ -628,14 +609,14 @@ class ViewController: UIViewController {
 //                    self.pracLongitudeInfo = Double(infoData.practiceLogitude!)!
 //                    self.pracLatitudeInfo = Double(infoData.practiceLatitude!)!
             
-//                self.dateLabel.isHidden = false
-//                self.timeLabel.isHidden = false
-//                self.tempLabel.isHidden = false
-//                self.humidLabel.isHidden = false
-//                self.longitudeLabel.isHidden = false
-//                self.latitudeLabel.isHidden = false
-//                self.ipLabel.isHidden = false
-//                self.COGasPPMLabel.isHidden = false
+                self.dateLabel.isHidden = false
+                self.timeLabel.isHidden = false
+                self.tempLabel.isHidden = false
+                self.humidLabel.isHidden = false
+                self.longitudeLabel.isHidden = false
+                self.latitudeLabel.isHidden = false
+                self.ipLabel.isHidden = false
+                self.COGasPPMLabel.isHidden = false
                 
             } catch let error {
                 print("error: \(error)")
@@ -644,21 +625,16 @@ class ViewController: UIViewController {
         
         self.curDateLabel.isHidden = false
     }
-}
-
-extension ViewController: UICollectionViewDelegate {
     
-}
-
-
-extension ViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+    func changeDataLabelVisibleState(_ hiddenState: Bool) {
+        self.curDateLabel.isHidden = hiddenState
+        self.dateLabel.isHidden = hiddenState
+        self.timeLabel.isHidden = hiddenState
+        self.tempLabel.isHidden = hiddenState
+        self.humidLabel.isHidden = hiddenState
+        self.longitudeLabel.isHidden = hiddenState
+        self.latitudeLabel.isHidden = hiddenState
+        self.ipLabel.isHidden = hiddenState
+        self.COGasPPMLabel.isHidden = hiddenState
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
-    }
-    
-    
 }

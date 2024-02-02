@@ -314,6 +314,7 @@ final class MapVC: UIViewController {
             CustomAnnotationView.self,
             forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier
         )
+        
         mapView.addSubview(locationButton)
         setLocationButtonConstraints()
         mapView.addSubview(showRouteButton)
@@ -376,11 +377,8 @@ private extension MapVC {
             case .success(let sensorHelmets):
                 // MARK: - helmet1とhelmet2のデータを全部取得
                 sensorHelmets.forEach { helmetData in
-                    // MARK: - 緊急状態であるかどうかのメソッド
-                    self?.checkUserEmergencyState(targetData: helmetData)
-
                     // MARK: - データのリアルタイム更新
-                    self?.updateUIWithSensorData(targetData: helmetData)
+                    self?.updateSensorData(targetData: helmetData)
 
                     print(helmetData)
                 }
@@ -390,32 +388,10 @@ private extension MapVC {
         }
     }
     
-    func updateUIWithSensorData(targetData helmetData: InfoModel) {
+    // MARK: - Main Viewが表示されるときだけでなく、MapViewが表示されるときにもちゃんとデータが更新されるようにする
+    // MARK: ただし、UIを変更する作業ではないため、DispatchQueueを利用しない処理をする
+    func updateSensorData(targetData helmetData: InfoModel) {
         
-//        self.dateLabel.text = "日付: " + helmetData.date!
-//        self.timeLabel.text = "時間: " + helmetData.time!
-//        self.tempLabel.text = "気温: " + helmetData.temp!
-//        self.humidLabel.text = "湿度: " + helmetData.humid!
-//        self.longitudeLabel.text = "経度: " + helmetData.longitude!
-//        self.latitudeLabel.text = "緯度: " + helmetData.latitude!
-//        self.ipLabel.text = "IPアドレス: " + helmetData.ip!
-//        self.COGasPPMLabel.text = "COガスppm: " + helmetData.COGasPPM!
-        // 以下の処理で渡す
-        self.longitudeInfo = Double(helmetData.longitude!)!
-        self.latitudeInfo = Double(helmetData.latitude!)!
-        self.hasHelmetLocation = true
-        self.shelterLongitude = Double(helmetData.shelterLongitude!)!
-        self.shelterLatitude = Double(helmetData.shelterLatitude!)!
-    
-//        self.dateLabel.isHidden = false
-//        self.timeLabel.isHidden = false
-//        self.tempLabel.isHidden = false
-//        self.humidLabel.isHidden = false
-//        self.longitudeLabel.isHidden = false
-//        self.latitudeLabel.isHidden = false
-//        self.ipLabel.isHidden = false
-//        self.COGasPPMLabel.isHidden = false
-        self.curDateLabel.isHidden = false
     }
     
     // MARK: - Helmetの位置を更新してMapに表示すように
@@ -774,6 +750,7 @@ private extension MapVC {
         return requestLocationServiceAlert
     }
     
+    // MARK: - helmetのAnnotationViewをタップしたら、表示されるModalViewController
     func showHelmetUserInfoSheet() {
         let placeName = addressLabel.text
         var removedPlaceName = ""
