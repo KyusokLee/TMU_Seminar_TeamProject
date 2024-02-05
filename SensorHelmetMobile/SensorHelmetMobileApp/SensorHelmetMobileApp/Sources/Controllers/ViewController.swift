@@ -109,8 +109,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var curDateLabel: UILabel! {
         didSet {
-            curDateLabel.font = .systemFont(ofSize: 15, weight: .medium)
-            curDateLabel.textColor = UIColor.black.withAlphaComponent(0.85)
+            curDateLabel.font = .systemFont(ofSize: 15, weight: .bold)
+            curDateLabel.textColor = UIColor.systemGray
             curDateLabel.textAlignment = .center
             curDateLabel.layer.borderColor = UIColor.systemGray3.cgColor
             curDateLabel.layer.borderWidth = 2
@@ -370,7 +370,8 @@ class ViewController: UIViewController {
         appearance.backgroundColor = .systemBackground
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         
-        self.navigationItem.backButtonTitle = "Back"
+        // MARK: - このViewからスタートする次のViewControllerのNavigationBarのBackButton Titleは 全て[戻る] に設定する
+        self.navigationItem.backButtonTitle = "戻る"
         self.navigationController?.navigationBar.tintColor = UIColor.black
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
@@ -378,7 +379,34 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.compactScrollEdgeAppearance = appearance
         
         self.navigationController?.navigationBar.prefersLargeTitles = false
+        
+        // navigationBarにアイテム
+        let notificationImage = UIImage(systemName: "bell")?
+            .withTintColor(
+                UIColor(rgb: 0xFFA500),
+                renderingMode: .alwaysOriginal
+            )
+        let notificationBarButton = UIBarButtonItem(
+            image: notificationImage,
+            style:.plain,
+            target: self,
+            action: #selector(didTapNotificationBarButton)
+        )
         self.navigationItem.title = "Home View"
+        self.navigationItem.rightBarButtonItem = notificationBarButton
+    }
+    
+    @objc func didTapNotificationBarButton() {
+        guard let controller = UIStoryboard(
+            name: "NotificationView",
+            bundle: nil
+        ).instantiateViewController(
+            withIdentifier: "NotificationViewController"
+        ) as? NotificationViewController else {
+            fatalError("NotificationViewController could not be found.")
+        }
+                
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func handlePushNotification(_ notification: Notification) {
