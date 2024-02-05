@@ -146,4 +146,8 @@ extension HelmetInfoModalViewController: HelmetUserInfoTableViewCellDelegate {
         print("Tap MessageButton with: ", userName)
         // MARK: - userDataをVCに引き渡し、他のユーザの動画リストやセンサー情報も閲覧できるようにする
     }
+    
+    func showTappedLocationRoute() {
+        print("Show tapped location route")
+    }
 }

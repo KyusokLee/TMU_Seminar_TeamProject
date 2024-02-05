@@ -72,6 +72,8 @@ final class MapVC: UIViewController {
     // Disasterのモデルを渡す
     var disaster: DisasterModel?
     
+    // Final Class を用いてinstance化したfirestoreのもの
+    let customFireStore = CustomFirestore()
     // MARK: - 複数のhelmetユーザの位置を表示するためには、InfoModelを格納するlistが必修
     // MARK: - HomeViewでただ、持ってくるつもり
     var helmetSensorData: [InfoModel] = []
@@ -276,6 +278,8 @@ final class MapVC: UIViewController {
         super.viewDidLoad()
         setNavigationBar()
         getLocationUsagePermission()
+        // リアルタイムにデータベースの更新を行うため、Listenerを設定
+        registerSensorHelmetInfoListener()
 //        view.addSubview(dismissButton)
 //        view.addSubview(cancelNavitageRouteButton)
         view.addSubview(transportationSegmentedController)
@@ -310,6 +314,7 @@ final class MapVC: UIViewController {
             CustomAnnotationView.self,
             forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier
         )
+        
         mapView.addSubview(locationButton)
         setLocationButtonConstraints()
         mapView.addSubview(showRouteButton)
@@ -363,6 +368,35 @@ private extension MapVC {
         
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    //MARK: - Helmet1とHelmet2の現在位置をマップ上でリアルタイムに表示する
+    func registerSensorHelmetInfoListener() {
+        customFireStore.getAllHelmetSensorInfo { [weak self] result in
+            switch result {
+            case .success(let sensorHelmets):
+                // MARK: - helmet1とhelmet2のデータを全部取得
+                sensorHelmets.forEach { helmetData in
+                    // MARK: - データのリアルタイム更新
+                    self?.updateSensorData(targetData: helmetData)
+
+                    print(helmetData)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    // MARK: - Main Viewが表示されるときだけでなく、MapViewが表示されるときにもちゃんとデータが更新されるようにする
+    // MARK: ただし、UIを変更する作業ではないため、DispatchQueueを利用しない処理をする
+    func updateSensorData(targetData helmetData: InfoModel) {
+        
+    }
+    
+    // MARK: - Helmetの位置を更新してMapに表示すように
+    func updateHelmetLocation(targetData helmetData: InfoModel) {
+        
     }
     
     // Buttonのborderをanimateさせる
@@ -716,6 +750,7 @@ private extension MapVC {
         return requestLocationServiceAlert
     }
     
+    // MARK: - helmetのAnnotationViewをタップしたら、表示されるModalViewController
     func showHelmetUserInfoSheet() {
         let placeName = addressLabel.text
         var removedPlaceName = ""

@@ -31,6 +31,8 @@
 		9458484E2AEA90FA007C9A46 /* FireStation.png in Resources */ = {isa = PBXBuildFile; fileRef = 9458484D2AEA90FA007C9A46 /* FireStation.png */; };
 		945848502AEA922D007C9A46 /* PublicInstitutionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458484F2AEA922D007C9A46 /* PublicInstitutionModel.swift */; };
 		945E32CC2B120CE3000D3B11 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945E32CB2B120CE3000D3B11 /* DatabaseRepresentation.swift */; };
+		946C95AE2B713E6900C3E23D /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946C95AD2B713E6900C3E23D /* NotificationViewController.swift */; };
+		946C95B02B713E9000C3E23D /* NotificationView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946C95AF2B713E9000C3E23D /* NotificationView.storyboard */; };
 		9478262629645FA100051115 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9478262529645FA100051115 /* GoogleService-Info.plist */; };
 		94782629296462E700051115 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 94782628296462E700051115 /* FirebaseAnalytics */; };
 		9478262B296462E700051115 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9478262A296462E700051115 /* FirebaseFirestore */; };
@@ -128,6 +130,8 @@
 		9458484D2AEA90FA007C9A46 /* FireStation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FireStation.png; sourceTree = "<group>"; };
 		9458484F2AEA922D007C9A46 /* PublicInstitutionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicInstitutionModel.swift; sourceTree = "<group>"; };
 		945E32CB2B120CE3000D3B11 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
+		946C95AD2B713E6900C3E23D /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		946C95AF2B713E9000C3E23D /* NotificationView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationView.storyboard; sourceTree = "<group>"; };
 		9478262529645FA100051115 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9478262E29646A2E00051115 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
 		947826302964744100051115 /* TCPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPNetwork.swift; sourceTree = "<group>"; };
@@ -364,6 +368,7 @@
 				94BDDF632AE3E9150094AD1E /* NearbyPublicInstitutionListViewController.swift */,
 				942AD34B2AEFB9E7006EED1D /* ChatViewController.swift */,
 				94BDFD102B1C92FE00D62484 /* HelmetInfoModalViewController.swift */,
+				946C95AD2B713E6900C3E23D /* NotificationViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 				94BDDF652AE3E94E0094AD1E /* NearbyPublicInstitutionListView.storyboard */,
 				942AD3472AEFB97B006EED1D /* MessagesView.storyboard */,
 				94A281BB2B1DDF1A000E0D98 /* HelmetInfoModalView.storyboard */,
+				946C95AF2B713E9000C3E23D /* NotificationView.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -586,6 +592,7 @@
 				9458484A2AEA90CF007C9A46 /* Hospital.png in Resources */,
 				94A281C12B1E1890000E0D98 /* HelmetUserInfoTableViewCell.xib in Resources */,
 				940001562B4C007500287477 /* SensorDataLabelTableViewCollectionViewCell.xib in Resources */,
+				946C95B02B713E9000C3E23D /* NotificationView.storyboard in Resources */,
 				9458484E2AEA90FA007C9A46 /* FireStation.png in Resources */,
 				94A37124296ECB6D00D4EF76 /* VideoDetailView.storyboard in Resources */,
 				9400015A2B4C00C000287477 /* SensorDataLabelTableViewCell.xib in Resources */,
@@ -663,6 +670,7 @@
 				94D84A43297AD8130037AC39 /* LoadingView.swift in Sources */,
 				949FB2EA2B17127100F2B32D /* FirebaseStorageManager.swift in Sources */,
 				94B4BF9E297DACDF00B55117 /* CustomPaddingLabel.swift in Sources */,
+				946C95AE2B713E6900C3E23D /* NotificationViewController.swift in Sources */,
 				94BDFD112B1C92FE00D62484 /* HelmetInfoModalViewController.swift in Sources */,
 				94FFEAA42AFA42D400DBF046 /* Sender.swift in Sources */,
 				945E32CC2B120CE3000D3B11 /* DatabaseRepresentation.swift in Sources */,

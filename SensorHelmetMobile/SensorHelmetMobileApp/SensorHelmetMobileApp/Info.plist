@@ -2,16 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>アルバムを使用します</string>
+	<key>NSCameraUsageDescription</key>
+	<string>カメラを使用します</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>ユーザの現在位置を使います。</string>
+	<string>ユーザの現在位置を使います</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>ユーザの現在位置を使います。</string>
+	<string>ユーザの現在位置を使います</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>デバイスがBluetoothを使います。</string>
+	<string>デバイスがBluetoothを使います</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>アプリがBluetoothを使います。</string>
+	<string>アプリがBluetoothを使います</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -92,10 +92,10 @@ class VideoDetailVC: UIViewController {
     func setNavigationController() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(rgb: 0x64B5F6)
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.backgroundColor = .systemBackground
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         
-        self.navigationItem.backButtonTitle = "Back"
+        self.navigationItem.backButtonTitle = "戻る"
         self.navigationController?.navigationBar.tintColor = UIColor.black
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance

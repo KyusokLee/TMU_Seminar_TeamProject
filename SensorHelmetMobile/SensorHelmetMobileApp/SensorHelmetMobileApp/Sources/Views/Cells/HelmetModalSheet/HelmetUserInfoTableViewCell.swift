@@ -9,6 +9,7 @@ import UIKit
 
 protocol HelmetUserInfoTableViewCellDelegate: AnyObject {
     func createChatRoomView(userName: String)
+    func showTappedLocationRoute()
 }
 
 class HelmetUserInfoTableViewCell: UITableViewCell {
@@ -16,6 +17,7 @@ class HelmetUserInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var helmetImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var routeButton: UIButton!
     @IBOutlet weak var messageButton: UIButton!
     
     lazy var guideLabel: UILabel = {
@@ -69,6 +71,12 @@ class HelmetUserInfoTableViewCell: UITableViewCell {
         print("Tap Button in cell")
         delegate?.createChatRoomView(userName: self.userName)
     }
+    
+    @IBAction func didTapRouteButton(_ sender: Any) {
+        print("Tap show routeButton!")
+        
+    }
+    
 }
 
 extension HelmetUserInfoTableViewCell {
@@ -178,5 +186,10 @@ extension HelmetUserInfoTableViewCell {
             messageButton.isUserInteractionEnabled = false
             messageButton.isEnabled = false
         }
+    }
+    
+    // MARK: - タップした位置までの経路を表示するボタン
+    func setupRouteButton() {
+        
     }
 }
